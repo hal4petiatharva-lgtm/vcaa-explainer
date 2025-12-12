@@ -87,7 +87,7 @@ def explain():
             try:
                 import google.generativeai as genai  # type: ignore
                 model_name = os.getenv("GEMINI_MODEL", "gemini-1.5-flash-latest")
-                model = genai.GenerativeModel(model_name)
+                model = genai.GenerativeModel('gemini-pro')
                 resp = model.generate_content([system_message, question])
                 content = (getattr(resp, "text", "") or "").strip()
                 if not content:
