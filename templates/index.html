@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VCAA Command Term Explainer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header">
+        <div class="brand-super">ClueQ's</div>
+        <h1 class="tool-name">DECODE</h1>
+        <p class="tagline">Mastery of VCAA command terms</p>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="card input">
+        <form id="question-form">
+          <label for="question-input" class="sr-only">Question</label>
+          <textarea
+            id="question-input"
+            placeholder="Paste your VCE question here... e.g., 'Analyse how symbolism represents societal conflict in The Crucible'"
+            rows="8"
+            required
+          ></textarea>
+          <div class="actions">
+            <button id="explain-btn" type="submit">Explain Command Term</button>
+          </div>
+        </form>
+        <div id="loading" class="loading" aria-live="polite" hidden>
+          <div id="loading-spinner" class="spinner" aria-hidden="true"></div>
+          <span id="loading-text">Analyzing your question…</span>
+        </div>
+      </section>
+
+      <section class="examples">
+        <button class="example-btn" data-example="Evaluate the impact of economic globalization on developing nations.">Evaluate the impact of economic globalization on developing nations.</button>
+        <button class="example-btn" data-example="Analyse how character development reveals themes in The Dressmaker.">Analyse how character development reveals themes in The Dressmaker.</button>
+        <button class="example-btn" data-example="Discuss the role of neurotransmitters in mental health disorders.">Discuss the role of neurotransmitters in mental health disorders.</button>
+      </section>
+
+      <section id="results-card" class="card results" style="display: none;">
+        <h2>Analysis</h2>
+        <div id="analysis-content" class="markdown-output"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Built by VCE graduates to help students succeed</p>
+    </footer>
+
+    <script>
+      const form = document.getElementById('question-form');
+      const input = document.getElementById('question-input');
+      const btn = document.getElementById('explain-btn');
+      const loading = document.getElementById('loading');
+      const loadingSpinner = document.getElementById('loading-spinner');
+      const loadingText = document.getElementById('loading-text');
+      const resultsCard = document.getElementById('results-card');
+      const analysisContent = document.getElementById('analysis-content');
+
+      document.querySelectorAll('.example-btn').forEach((el) => {
+        el.addEventListener('click', () => {
+          input.value = el.dataset.example || '';
+          input.focus();
+        });
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const question = input.value.trim();
+        if (!question) return;
+
+        btn.disabled = true;
+        loading.hidden = false;
+        loadingSpinner.style.display = 'block';
+        loadingText.innerText = 'Analyzing your question...';
+        resultsCard.style.display = 'none';
+        analysisContent.innerHTML = '';
+
+        try {
+          const resp = await fetch('/explain', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question }),
+          });
+
+          const data = await resp.json();
+          if (!resp.ok) {
+            loadingSpinner.style.display = 'none';
+            loadingText.innerText = 'Analysis failed.';
+            analysisContent.textContent = data.error || 'Something went wrong.';
+            resultsCard.style.display = 'block';
+            setTimeout(() => { loading.hidden = true; }, 1500);
+          } else {
+            loadingSpinner.style.display = 'none';
+            loadingText.innerHTML = '✅ Completed!';
+            const md = data.analysis || '';
+            analysisContent.innerHTML = marked.parse(md);
+            resultsCard.style.display = 'block';
+            setTimeout(() => { loading.hidden = true; }, 1000);
+          }
+        } catch (err) {
+          loadingSpinner.style.display = 'none';
+          loadingText.innerText = 'Analysis failed.';
+          analysisContent.textContent = 'Network error. Please try again.';
+          resultsCard.style.display = 'block';
+          setTimeout(() => { loading.hidden = true; }, 1500);
+        } finally {
+          btn.disabled = false;
+        }
+      });
+    </script>
+  </body>
+  </html>
