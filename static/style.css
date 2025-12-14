@@ -196,3 +196,27 @@ button#explain-btn:disabled { opacity: 0.7; cursor: not-allowed; }
   }
   .panel { height: 100%; }
 }
+
+/* ====== ENHANCED MAIN INPUT READABILITY ====== */
+/* Targets the primary question input field */
+#question-input {
+  font-size: 1.15rem;       /* Increased base size for readability */
+  line-height: 1.5;         /* Better vertical spacing between lines */
+  padding: 14px 16px;       /* Comfortable internal padding */
+  font-family: inherit;     /* Matches the rest of the site's font */
+  min-height: 160px;        /* Keeps the existing comfortable height */
+  resize: vertical;         /* Allows users to resize if needed */
+}
+
+/* Improves the placeholder text visibility */
+#question-input::placeholder {
+  font-size: 1rem;          /* Slightly smaller than active text */
+  color: #6b7280;           /* Accessible, readable gray */
+  opacity: 1;               /* Normalize placeholder opacity across browsers */
+}
+
+/* Enhance focus state for better UX */
+#question-input:focus {
+  outline: 2px solid var(--primary); /* Clear focus indicator aligned with theme */
+  outline-offset: 2px;
+}
