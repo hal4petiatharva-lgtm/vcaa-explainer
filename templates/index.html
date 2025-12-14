@@ -30,7 +30,7 @@
             <button id="explain-btn" type="submit">Explain Command Term</button>
           </div>
         </form>
-        <div id="loading" class="loading" aria-live="polite" hidden>
+        <div id="loading" class="loading" aria-live="polite" style="display: none;">
           <div id="loading-spinner" class="spinner" aria-hidden="true"></div>
           <span id="loading-text">Analyzing your question…</span>
         </div>
@@ -44,7 +44,28 @@
 
       <section id="results-card" class="card results" style="display: none;">
         <h2>Analysis</h2>
-        <div id="analysis-content" class="markdown-output"></div>
+        <div id="history-indicator" class="history-indicator" style="display:none;">Loaded from history</div>
+        <div class="dashboard-container">
+          <div class="panel analysis-panel">
+            <h3>📘 Command Term Analysis</h3>
+            <div class="panel-content markdown-output" id="analysis-content"></div>
+          </div>
+          <div class="panel guide-panel">
+            <h3>💡 Your Thinking Guide</h3>
+            <div class="panel-content markdown-output" id="guide-content"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="history-panel" class="card history collapsed" aria-label="Session History">
+        <div class="history-header">
+          <h2>Session History</h2>
+          <div class="history-actions">
+            <button id="toggle-history" type="button" class="secondary">Show History</button>
+            <button id="clear-history" type="button" class="secondary">Clear History</button>
+          </div>
+        </div>
+        <ul id="history-list" class="history-list" aria-live="polite"></ul>
       </section>
     </main>
 
@@ -61,6 +82,143 @@
       const loadingText = document.getElementById('loading-text');
       const resultsCard = document.getElementById('results-card');
       const analysisContent = document.getElementById('analysis-content');
+      const guideContent = document.getElementById('guide-content');
+      const historyIndicator = document.getElementById('history-indicator');
+      const historyPanel = document.getElementById('history-panel');
+      const historyList = document.getElementById('history-list');
+      const toggleHistoryBtn = document.getElementById('toggle-history');
+      const clearHistoryBtn = document.getElementById('clear-history');
+      const HISTORY_KEY = 'vcaa_history';
+
+      // Load history from localStorage
+      function loadHistory() {
+        try {
+          const raw = localStorage.getItem(HISTORY_KEY);
+          return raw ? JSON.parse(raw) : [];
+        } catch {
+          return [];
+        }
+      }
+
+      // Save a new entry to history (prepend, limit to 7)
+      function saveHistory(question, answer) {
+        const entry = { question, answer, timestamp: Date.now() };
+        const history = loadHistory();
+        history.unshift(entry);
+        if (history.length > 7) history.length = 7;
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+      }
+
+      // Format timestamp to readable HH:MM
+      function formatTime(ts) {
+        return new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      }
+
+      // Truncate long text
+      function truncate(text, n = 50) {
+        if (!text) return '';
+        return text.length > n ? text.slice(0, n) + '…' : text;
+      }
+
+      // Basic Markdown render helper
+      function renderMarkdown(md) {
+        return marked.parse(md || '');
+      }
+
+      // Display results across two panels
+      function displayResults(fullText) {
+        analysisContent.innerHTML = '';
+        guideContent.innerHTML = '';
+        const splitMarker = '### Your Thinking Guide';
+        const idx = fullText.indexOf(splitMarker);
+        if (idx !== -1) {
+          const analysisText = fullText.substring(0, idx).trim();
+          const guideText = fullText.substring(idx + splitMarker.length).trim();
+          analysisContent.innerHTML = renderMarkdown(analysisText);
+          guideContent.innerHTML = renderMarkdown(guideText);
+        } else {
+          analysisContent.innerHTML = renderMarkdown(fullText);
+        }
+      }
+
+      // Split response into analysis and thinking guide by heading marker
+      function splitSections(md) {
+        const marker = /\n\s*###\s*Your Thinking Guide\s*/i;
+        const match = md.match(marker);
+        if (!match) return { analysisMd: md, guideMd: '' };
+        const idx = match.index || 0;
+        const before = md.slice(0, idx);
+        const after = md.slice(idx + match[0].length);
+        return { analysisMd: before.trim(), guideMd: ('### Your Thinking Guide\n' + after.trim()) };
+      }
+
+      // Render history list
+      function renderHistory() {
+        const history = loadHistory();
+        if (!history.length) {
+          historyList.innerHTML = '<li class="history-empty">No history yet.</li>';
+          return;
+        }
+        historyList.innerHTML = history
+          .map((item, idx) => {
+            const time = formatTime(item.timestamp);
+            const preview = truncate(item.question);
+            return `
+              <li class="history-item" data-index="${idx}" tabindex="0" role="button" aria-label="Load history item ${idx + 1}">
+                <div class="history-meta">
+                  <span class="history-time">${time}</span>
+                </div>
+                <div class="history-text">${preview}</div>
+              </li>
+            `;
+          })
+          .join('');
+
+        // Bind click handlers
+        document.querySelectorAll('.history-item').forEach((el) => {
+          el.addEventListener('click', () => {
+            const index = Number(el.getAttribute('data-index'));
+            const history = loadHistory();
+            const item = history[index];
+            if (!item) return;
+            // Populate input and display analysis from history
+            input.value = item.question || '';
+            resultsCard.style.display = 'block';
+            historyIndicator.style.display = 'inline-block';
+            historyIndicator.textContent = 'Loaded from history';
+            const md = item.answer || '';
+            displayResults(md);
+            resultsCard.classList.add('from-history');
+            setTimeout(() => {
+              historyIndicator.style.display = 'none';
+              resultsCard.classList.remove('from-history');
+            }, 1200);
+            resultsCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+          // Keyboard accessibility
+          el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') el.click();
+          });
+        });
+      }
+
+      // Toggle history panel visibility
+      function toggleHistory() {
+        const collapsed = historyPanel.classList.toggle('collapsed');
+        toggleHistoryBtn.textContent = collapsed ? 'Show History' : 'Hide History';
+      }
+      toggleHistoryBtn.addEventListener('click', toggleHistory);
+
+      // Clear history
+      clearHistoryBtn.addEventListener('click', () => {
+        localStorage.removeItem(HISTORY_KEY);
+        renderHistory();
+      });
+
+      // Initial render on page load
+      renderHistory();
+      // Keep panel collapsed by default on small screens
+      toggleHistoryBtn.textContent = 'Show History';
 
       document.querySelectorAll('.example-btn').forEach((el) => {
         el.addEventListener('click', () => {
@@ -75,11 +233,12 @@
         if (!question) return;
 
         btn.disabled = true;
-        loading.hidden = false;
+        loading.style.display = 'flex';
         loadingSpinner.style.display = 'block';
         loadingText.innerText = 'Analyzing your question...';
         resultsCard.style.display = 'none';
         analysisContent.innerHTML = '';
+        guideContent.innerHTML = '';
 
         try {
           const resp = await fetch('/explain', {
@@ -93,22 +252,27 @@
             loadingSpinner.style.display = 'none';
             loadingText.innerText = 'Analysis failed.';
             analysisContent.textContent = data.error || 'Something went wrong.';
+            guideContent.innerHTML = '';
             resultsCard.style.display = 'block';
-            setTimeout(() => { loading.hidden = true; }, 1500);
+            setTimeout(() => { loading.style.display = 'none'; }, 1500);
           } else {
             loadingSpinner.style.display = 'none';
             loadingText.innerHTML = '✅ Completed!';
             const md = data.analysis || '';
-            analysisContent.innerHTML = marked.parse(md);
+            displayResults(md);
             resultsCard.style.display = 'block';
-            setTimeout(() => { loading.hidden = true; }, 1000);
+            setTimeout(() => { loading.style.display = 'none'; }, 1000);
+            // Save to history on success
+            saveHistory(question, md);
+            renderHistory();
           }
         } catch (err) {
           loadingSpinner.style.display = 'none';
           loadingText.innerText = 'Analysis failed.';
           analysisContent.textContent = 'Network error. Please try again.';
+          guideContent.innerHTML = '';
           resultsCard.style.display = 'block';
-          setTimeout(() => { loading.hidden = true; }, 1500);
+          setTimeout(() => { loading.style.display = 'none'; }, 1500);
         } finally {
           btn.disabled = false;
         }
