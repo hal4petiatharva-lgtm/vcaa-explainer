@@ -1,26 +1,19 @@
 from flask import Flask, request, render_template, jsonify
-import openai
 import os
 from dotenv import load_dotenv
 import socket
-from openai.error import AuthenticationError, RateLimitError, APIConnectionError, Timeout, ServiceUnavailableError, InvalidRequestError
 import requests
+import groq
+from flask_cors import CORS
+import importlib.metadata as importlib_metadata
+import sys
 
 load_dotenv()
 app = Flask(__name__)
-AI_PROVIDER = (os.getenv("AI_PROVIDER") or "openai").lower()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY") or OPENAI_API_KEY
-if AI_PROVIDER == "openai":
-    openai.api_key = OPENAI_API_KEY
-elif AI_PROVIDER == "gemini":
-    os.environ.setdefault("PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION", "python")
-    try:
-        import google.generativeai as genai  # type: ignore
-        if GOOGLE_API_KEY:
-            genai.configure(api_key=GOOGLE_API_KEY)
-    except Exception:
-        genai = None
+CORS(app)
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
+client = groq.Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
 
 system_message = """You are an expert VCE consultant. Provide clear, professional, and actionable feedback on VCE exam questions.
 
@@ -39,9 +32,10 @@ List 3-4 frequent student errors, using bullet points.
 Provide one example of how a high-quality response could begin.
 
 **Important Formatting Rules:**
-- The first line of your response must be the command term in bold, followed by a colon. Example: **Evaluate:**
+- The first line of your response must be the command term(s) in bold, followed by a colon. If multiple terms appear, list them joined by " + ". Example: **Analyse + Evaluate:**
 - Use colons after each bold heading as shown above.
 - Do not include a separate 'Command Term Identified' section.
+- If multiple command terms are present, each section above should address how to respond to both terms, noting any interaction (e.g., analyse leading into an evidence-based evaluation).
 
 Tone: Be direct, supportive, and professional. Avoid filler phrases or dramatic language."""
 
@@ -59,62 +53,66 @@ def explain():
     if not question:
         return jsonify({"error": "Please paste a VCE question to analyze."}), 400
 
-    if AI_PROVIDER == "openai":
-        if not OPENAI_API_KEY:
-            return jsonify({"error": "Missing OpenAI API key. Set OPENAI_API_KEY in .env."}), 500
-    elif AI_PROVIDER == "gemini":
-        if not GOOGLE_API_KEY:
-            return jsonify({"error": "Missing Google Gemini API key. Set GOOGLE_API_KEY in .env."}), 500
-    else:
-        return jsonify({"error": "Invalid AI provider. Set AI_PROVIDER to 'openai' or 'gemini'."}), 400
+    if not GROQ_API_KEY:
+        return jsonify({"error": "Missing Groq API key. Set GROQ_API_KEY in .env."}), 500
 
     try:
-        if AI_PROVIDER == "openai":
-            resp = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "system", "content": system_message},
-                    {"role": "user", "content": question},
-                ],
-                temperature=0.2,
-                max_tokens=700,
-                request_timeout=20,
-            )
-            content = resp["choices"][0]["message"]["content"].strip()
-            return jsonify({"analysis": content})
-        else:
-            os.environ.setdefault("PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION", "python")
-            try:
-                import google.generativeai as genai  # type: ignore
-                model_name = os.getenv("GEMINI_MODEL", "gemini-1.5-flash-latest")
-                model = genai.GenerativeModel('gemini-pro')
-                resp = model.generate_content([system_message, question])
-                content = (getattr(resp, "text", "") or "").strip()
-                if not content:
-                    content, err = _gemini_rest_generate(system_message, question, model_name, GOOGLE_API_KEY)
-                    if not content:
-                        return jsonify({"error": f"Gemini generation failed: {err}"}), 502
-                return jsonify({"analysis": content})
-            except Exception:
-                model_name = os.getenv("GEMINI_MODEL", "gemini-1.5-flash-latest")
-                content, err = _gemini_rest_generate(system_message, question, model_name, GOOGLE_API_KEY)
-                if not content:
-                    return jsonify({"error": f"Gemini generation failed: {err}"}), 502
-                return jsonify({"analysis": content})
-    except AuthenticationError:
-        return jsonify({"error": "Invalid OpenAI API key. Update OPENAI_API_KEY in .env and restart the server."}), 401
-    except RateLimitError:
-        return jsonify({"error": "Rate limit reached. Please wait a minute and try again."}), 429
-    except Timeout:
-        return jsonify({"error": "AI request timed out. Check your internet connection and try again."}), 504
-    except APIConnectionError:
-        return jsonify({"error": "Network error contacting OpenAI. Ensure you have internet access."}), 503
-    except ServiceUnavailableError:
-        return jsonify({"error": "OpenAI service is temporarily unavailable. Please try again shortly."}), 503
-    except InvalidRequestError as e:
-        return jsonify({"error": f"Invalid request: {str(e)}"}), 400
-    except Exception:
-        return jsonify({"error": "Failed to contact AI service."}), 502
+        chat = client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": system_message},
+                {"role": "user", "content": question},
+            ],
+            model=GROQ_MODEL,
+            temperature=0.4,
+            max_tokens=700,
+            top_p=1,
+            stream=False,
+        )
+        content = (chat.choices[0].message.content if chat.choices else "") or ""
+        content = content.strip()
+        if not content:
+            return jsonify({"error": "Groq returned empty content."}), 502
+        return jsonify({"analysis": content})
+    except Exception as e:
+        msg = str(e)
+        if "rate limit" in msg.lower():
+            return jsonify({"error": "Rate limit reached. Please wait and try again."}), 429
+        if "Unauthorized" in msg or "401" in msg:
+            return jsonify({"error": "Invalid Groq API key."}), 401
+        return jsonify({"error": f"Groq API error: {msg}"}), 502
+
+@app.route("/debug", methods=["GET"])
+def debug():
+    packages = [f"{d.metadata.get('Name','unknown')}=={d.version}" for d in importlib_metadata.distributions()]
+    try:
+        importlib_metadata.version("groq")
+        groq_installed = True
+    except importlib_metadata.PackageNotFoundError:
+        groq_installed = False
+    try:
+        importlib_metadata.version("google-generativeai")
+        google_generativeai_installed = True
+    except importlib_metadata.PackageNotFoundError:
+        google_generativeai_installed = False
+    return jsonify({
+        "python_version": sys.version,
+        "installed_packages": packages,
+        "groq_installed": groq_installed,
+        "google_generativeai_installed": google_generativeai_installed,
+        "env_GROQ_API_KEY": bool(os.environ.get("GROQ_API_KEY")),
+        "env_AI_PROVIDER": os.environ.get("AI_PROVIDER"),
+    })
+
+@app.route("/test-groq", methods=["GET"])
+def test_groq():
+    try:
+        import groq as groq_mod
+        client_test = groq_mod.Groq(api_key=os.environ.get("GROQ_API_KEY", "test"))
+        return jsonify({"status": "Groq import successful", "client": str(client_test)})
+    except ImportError as e:
+        return jsonify({"error": f"Groq not installed: {str(e)}"}), 500
+    except Exception as e:
+        return jsonify({"error": f"Groq setup failed: {str(e)}"}), 500
 
 
 def _is_port_in_use(port: int) -> bool:
@@ -136,59 +134,7 @@ def _find_available_port(candidates=None) -> int:
         return s.getsockname()[1]
 
 
-def _gemini_list_models(api_key: str, timeout: int = 10):
-    url = "https://generativelanguage.googleapis.com/v1/models"
-    try:
-        r = requests.get(url, headers={"x-goog-api-key": api_key}, timeout=timeout)
-        if r.status_code != 200:
-            return []
-        data = r.json()
-        models = data.get("models", [])
-        names = [m.get("name") for m in models if m.get("name")]
-        return names
-    except Exception:
-        return []
-
-
-def _gemini_rest_generate(system_message: str, question: str, model_name: str, api_key: str, timeout: int = 20):
-    headers = {"x-goog-api-key": api_key}
-    payload = {
-        "contents": [
-            {"role": "user", "parts": [{"text": f"{system_message}\n\n{question}"}]}
-        ]
-    }
-    candidates = []
-    if model_name:
-        if model_name.startswith("models/"):
-            candidates.append(model_name)
-        else:
-            candidates.append(f"models/{model_name}")
-    discovered = _gemini_list_models(api_key)
-    for n in discovered:
-        if n not in candidates:
-            candidates.append(n)
-    last_error = None
-    for name in candidates:
-        url = f"https://generativelanguage.googleapis.com/v1/{name}:generateContent"
-        try:
-            r = requests.post(url, headers=headers, json=payload, timeout=timeout)
-            if r.status_code != 200:
-                try:
-                    err = r.json().get("error", {}).get("message")
-                except Exception:
-                    err = r.text
-                last_error = err or f"HTTP {r.status_code}"
-                continue
-            data = r.json()
-            parts = data.get("candidates", [{}])[0].get("content", {}).get("parts", [])
-            for p in parts:
-                t = p.get("text")
-                if t:
-                    return t.strip(), None
-            last_error = "Empty response parts"
-        except Exception as e:
-            last_error = str(e)
-    return None, last_error or "Unknown Gemini error"
+# Removed Gemini/OpenAI helper paths. Groq is now the sole provider.
 
 
 if __name__ == "__main__":
