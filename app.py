@@ -3,7 +3,8 @@ import os
 from dotenv import load_dotenv
 import socket
 import requests
-import groq
+from groq import Groq
+client = Groq(api_key=GROQ_API_KEY)
 from flask_cors import CORS
 import importlib.metadata as importlib_metadata
 import sys
