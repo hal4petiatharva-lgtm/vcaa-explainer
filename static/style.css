@@ -197,6 +197,17 @@ button#explain-btn:disabled { opacity: 0.7; cursor: not-allowed; }
   .panel { height: 100%; }
 }
 
+/* Typing animation cursor */
+.typing-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1em;
+  margin-left: 2px;
+  background: var(--primary);
+  animation: blink 1s infinite;
+  vertical-align: text-bottom;
+}
+@keyframes blink { 50% { opacity: 0; } }
 /* ====== ENHANCED MAIN INPUT READABILITY ====== */
 /* Targets the primary question input field */
 #question-input {
