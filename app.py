@@ -4,17 +4,28 @@ from dotenv import load_dotenv
 import socket
 import requests
 from groq import Groq
-client = Groq(api_key=GROQ_API_KEY)
 from flask_cors import CORS
 import importlib.metadata as importlib_metadata
 import sys
+import logging
 
 load_dotenv()
+
+# Load configuration before using it to initialize clients.
+# This ensures environment values are available when constructing SDK clients.
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+GROQ_MODEL = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
+
+# Initialize Groq client only if the key is present.
+client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
+
+# Create Flask app after configuration/client setup.
 app = Flask(__name__)
 CORS(app)
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
-client = groq.Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
+
+logging.basicConfig(level=logging.INFO)
+if client is None:
+    logging.warning("GROQ_API_KEY not set; Groq client not initialized.")
 
 system_message = """You are an expert VCE consultant. Provide clear, professional, and actionable feedback on VCE exam questions.
 
