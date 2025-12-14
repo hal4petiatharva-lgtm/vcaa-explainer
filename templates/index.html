@@ -125,8 +125,43 @@
         return marked.parse(md || '');
       }
 
+      // Typing animation with blinking cursor
+      let typingInterval = null;
+      function stopTyping() {
+        if (typingInterval) {
+          clearInterval(typingInterval);
+          typingInterval = null;
+        }
+      }
+      function typeWriter(text, element, speed = 35, onDone) {
+        stopTyping();
+        element.innerHTML = '';
+        const textNode = document.createTextNode('');
+        const cursor = document.createElement('span');
+        cursor.className = 'typing-cursor';
+        element.appendChild(textNode);
+        element.appendChild(cursor);
+        let i = 0;
+        const chunk = 3;
+        typingInterval = setInterval(() => {
+          i = Math.min(i + chunk, text.length);
+          textNode.textContent = text.slice(0, i);
+          if (i >= text.length) {
+            clearInterval(typingInterval);
+            typingInterval = null;
+            cursor.remove();
+            if (typeof onDone === 'function') onDone();
+          }
+        }, speed);
+      }
+
       // Display results across two panels
       function displayResults(fullText) {
+        // Begin auto-scroll to results
+        try {
+          resultsCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } catch {}
+        stopTyping();
         analysisContent.innerHTML = '';
         guideContent.innerHTML = '';
         const splitMarker = '### Your Thinking Guide';
@@ -134,10 +169,16 @@
         if (idx !== -1) {
           const analysisText = fullText.substring(0, idx).trim();
           const guideText = fullText.substring(idx + splitMarker.length).trim();
-          analysisContent.innerHTML = renderMarkdown(analysisText);
+          // Animate analysis text, then render formatted markdown
+          typeWriter(analysisText, analysisContent, 35, () => {
+            analysisContent.innerHTML = renderMarkdown(analysisText);
+          });
           guideContent.innerHTML = renderMarkdown(guideText);
         } else {
-          analysisContent.innerHTML = renderMarkdown(fullText);
+          // Fallback: animate full text in analysis panel
+          typeWriter(fullText.trim(), analysisContent, 35, () => {
+            analysisContent.innerHTML = renderMarkdown(fullText);
+          });
         }
       }
 
