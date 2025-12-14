@@ -125,6 +125,28 @@
         return marked.parse(md || '');
       }
 
+      function smoothScrollTo(element, duration = 800) {
+        const start = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        const rect = element.getBoundingClientRect();
+        const end = rect.top + start;
+        const distance = end - start;
+        let startTime = null;
+        function easing(t) {
+          return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+        function step(currentTime) {
+          if (startTime === null) startTime = currentTime;
+          const timeElapsed = currentTime - startTime;
+          const progress = Math.min(timeElapsed / duration, 1);
+          const y = start + distance * easing(progress);
+          window.scrollTo(0, y);
+          if (timeElapsed < duration) {
+            requestAnimationFrame(step);
+          }
+        }
+        requestAnimationFrame(step);
+      }
+
       // Display results across two panels
       function displayResults(fullText) {
         analysisContent.innerHTML = '';
@@ -148,7 +170,7 @@
               document.querySelector('[data-results]') ||
               resultsCard;
             if (resultsElement) {
-              resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              smoothScrollTo(resultsElement, 800);
             }
           } catch {}
         }, 100);
