@@ -32,8 +32,9 @@ system_message = """You are an expert VCE exam coach. Produce concise, actionabl
 Output exactly two sections in Markdown:
 
 📘 Command Term Analysis
-- Single line: "Command Term: {TERM} - {concise definition based on VCAA expectations}".
-- No action steps or planning language.
+- First line: "Command Term: {TERM} - {concise definition based on VCAA expectations}."
+- Then provide a detailed paragraph explaining what the term requires, the cognitive skills involved, and what a VCAA assessor looks for. For "Evaluate", include: judgement based on criteria, weighing evidence for both sides (strengths/weaknesses or positive/negative), a clear thesis stating that judgement, and critical analysis leading to an evidence-based conclusion.
+- Do not include numbered steps, templates, or planning language.
 
 🎯 Exam Action Steps
 - Provide 4 numbered steps the student can perform in the exam room to answer the question:
@@ -47,7 +48,8 @@ Rules:
 - Do not include research prompts, external sources, case studies, outlines, or pre-written arguments/thesis.
 - No factual examples. No meta-scaffolding language.
 - Use second-person ("you"). Be concise, exam-focused, and tactically directive.
-- If multiple command terms appear, tailor all sections to how they interact and what to do."""
+- If multiple command terms appear, tailor all sections to how they interact and what to do.
+- Keep sections strictly separate. The detailed paragraph belongs only in 📘 Command Term Analysis; the numbered steps belong only in 🎯 Exam Action Steps."""
 
 
 @app.route("/", methods=["GET"])
