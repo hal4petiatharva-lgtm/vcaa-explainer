@@ -51,7 +51,7 @@
             <div class="panel-content markdown-output" id="analysis-content"></div>
           </div>
           <div class="panel guide-panel">
-            <h3>💡 Exam Action Steps</h3>
+            <h3>🎯 Exam Action Steps</h3>
             <div class="panel-content markdown-output" id="guide-content"></div>
           </div>
         </div>
@@ -149,19 +149,9 @@
 
       // Display results across two panels
       function displayResults(fullText) {
-        analysisContent.innerHTML = '';
-        guideContent.innerHTML = '';
-        const splitMarker = '### Exam Action Steps';
-        const idx = fullText.indexOf(splitMarker);
-        if (idx !== -1) {
-          const analysisText = fullText.substring(0, idx).trim();
-          const guideText = fullText.substring(idx + splitMarker.length).trim();
-          analysisContent.innerHTML = renderMarkdown(analysisText);
-          guideContent.innerHTML = renderMarkdown(guideText);
-        } else {
-          analysisContent.innerHTML = renderMarkdown(fullText);
-          guideContent.innerHTML = '';
-        }
+        const { analysisMd, guideMd } = splitSections(fullText || '');
+        analysisContent.innerHTML = renderMarkdown(analysisMd);
+        guideContent.innerHTML = renderMarkdown(guideMd);
         setTimeout(() => {
           try {
             const resultsElement =
@@ -178,13 +168,36 @@
 
       // Split response into analysis and guide by heading marker
       function splitSections(md) {
-        const marker = /\n\s*###\s*Exam Action Steps\s*/i;
-        const match = md.match(marker);
-        if (!match) return { analysisMd: md, guideMd: '' };
-        const idx = match.index || 0;
-        const before = md.slice(0, idx);
-        const after = md.slice(idx + match[0].length);
-        return { analysisMd: before.trim(), guideMd: ('### Exam Action Steps\n' + after.trim()) };
+        const text = md || '';
+        const guideMarker = /(^|\n)\s*(?:#{1,6}\s*)?(?:🎯\s*)?Exam Action Steps\s*(\n|$)/i;
+        const analysisMarker = /(^|\n)\s*(?:#{1,6}\s*)?(?:📘\s*)?Command Term Analysis\s*(\n|$)/i;
+        const legacyGuideMarker = /\n\s*###\s*Exam Action Steps\s*/i;
+        const guideMatch = text.match(guideMarker);
+        const analysisMatch = text.match(analysisMarker);
+        if (guideMatch) {
+          const idx = guideMatch.index || 0;
+          const before = text.slice(0, idx);
+          const after = text.slice(idx + guideMatch[0].length);
+          const cleanedBefore = before.replace(/^\s*(?:#{1,6}\s*)?(?:📘\s*)?Command Term Analysis\s*\n/i, '').trim();
+          const cleanedAfter = after.replace(/^\s*(?:#{1,6}\s*)?(?:🎯\s*)?Exam Action Steps\s*\n/i, '').replace(/^\s*###\s*Exam Action Steps\s*\n/i, '').trim();
+          return { analysisMd: cleanedBefore, guideMd: cleanedAfter };
+        }
+        if (analysisMatch) {
+          const idx = analysisMatch.index || 0;
+          const before = text.slice(0, idx);
+          const after = text.slice(idx + analysisMatch[0].length);
+          const cleanedBefore = before.trim();
+          const cleanedAfter = after.replace(/^\s*(?:#{1,6}\s*)?(?:🎯\s*)?Exam Action Steps\s*\n/i, '').replace(/^\s*###\s*Exam Action Steps\s*\n/i, '').trim();
+          return { analysisMd: cleanedBefore, guideMd: cleanedAfter };
+        }
+        const legacyMatch = text.match(legacyGuideMarker);
+        if (legacyMatch) {
+          const idx = legacyMatch.index || 0;
+          const before = text.slice(0, idx);
+          const after = text.slice(idx + legacyMatch[0].length);
+          return { analysisMd: before.trim(), guideMd: after.trim() };
+        }
+        return { analysisMd: text, guideMd: '' };
       }
 
       // Render history list
