@@ -178,17 +178,13 @@
           const idx = guideMatch.index || 0;
           const before = text.slice(0, idx);
           const after = text.slice(idx + guideMatch[0].length);
-          const cleanedBefore = before.replace(/^\s*(?:#{1,6}\s*)?(?:📘\s*)?Command Term Analysis\s*\n/i, '').trim();
-          const cleanedAfter = after.replace(/^\s*(?:#{1,6}\s*)?(?:🎯\s*)?Exam Action Steps\s*\n/i, '').replace(/^\s*###\s*Exam Action Steps\s*\n/i, '').trim();
-          return { analysisMd: cleanedBefore, guideMd: cleanedAfter };
+          return { analysisMd: before.trim(), guideMd: after.trim() };
         }
         if (analysisMatch) {
           const idx = analysisMatch.index || 0;
           const before = text.slice(0, idx);
           const after = text.slice(idx + analysisMatch[0].length);
-          const cleanedBefore = before.trim();
-          const cleanedAfter = after.replace(/^\s*(?:#{1,6}\s*)?(?:🎯\s*)?Exam Action Steps\s*\n/i, '').replace(/^\s*###\s*Exam Action Steps\s*\n/i, '').trim();
-          return { analysisMd: cleanedBefore, guideMd: cleanedAfter };
+          return { analysisMd: before.trim(), guideMd: after.trim() };
         }
         const legacyMatch = text.match(legacyGuideMarker);
         if (legacyMatch) {
