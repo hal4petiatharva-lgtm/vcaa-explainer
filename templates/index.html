@@ -151,7 +151,7 @@
       function displayResults(fullText) {
         analysisContent.innerHTML = '';
         guideContent.innerHTML = '';
-        const splitMarker = '### Your Thinking Guide';
+        const splitMarker = '### Your Immediate Plan of Attack';
         const idx = fullText.indexOf(splitMarker);
         if (idx !== -1) {
           const analysisText = fullText.substring(0, idx).trim();
