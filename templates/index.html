@@ -51,7 +51,7 @@
             <div class="panel-content markdown-output" id="analysis-content"></div>
           </div>
           <div class="panel guide-panel">
-            <h3>💡 Your Thinking Guide</h3>
+            <h3>💡 Exam Action Steps</h3>
             <div class="panel-content markdown-output" id="guide-content"></div>
           </div>
         </div>
@@ -151,7 +151,7 @@
       function displayResults(fullText) {
         analysisContent.innerHTML = '';
         guideContent.innerHTML = '';
-        const splitMarker = '### Your Immediate Plan of Attack';
+        const splitMarker = '### Exam Action Steps';
         const idx = fullText.indexOf(splitMarker);
         if (idx !== -1) {
           const analysisText = fullText.substring(0, idx).trim();
@@ -176,15 +176,15 @@
         }, 100);
       }
 
-      // Split response into analysis and thinking guide by heading marker
+      // Split response into analysis and guide by heading marker
       function splitSections(md) {
-        const marker = /\n\s*###\s*Your Thinking Guide\s*/i;
+        const marker = /\n\s*###\s*Exam Action Steps\s*/i;
         const match = md.match(marker);
         if (!match) return { analysisMd: md, guideMd: '' };
         const idx = match.index || 0;
         const before = md.slice(0, idx);
         const after = md.slice(idx + match[0].length);
-        return { analysisMd: before.trim(), guideMd: ('### Your Thinking Guide\n' + after.trim()) };
+        return { analysisMd: before.trim(), guideMd: ('### Exam Action Steps\n' + after.trim()) };
       }
 
       // Render history list
