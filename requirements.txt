@@ -1,6 +1,8 @@
-Flask==2.3.3
-groq>=0.3.0
+echo "Flask==2.3.3
+groq==0.9.0           # Updated from 0.3.0
 requests==2.31.0
 python-dotenv==1.0.0
 gunicorn==20.1.0
-Flask-CORS==4.0.0
+numpy==1.24.3         # NEW for VCAA database
+sentence-transformers==2.2.2  # NEW for VCAA database
+pdfplumber>=0.10.3" > requirements.txt   # NEW for VCAA database

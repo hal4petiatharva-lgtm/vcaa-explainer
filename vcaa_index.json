@@ -1,0 +1,5996 @@
+[
+  {
+    "path": "vcaa_text_data/2022/Accounting/Exam-Papers/2022account-w.txt",
+    "subject": "Accounting",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Algorithmics--HESS/Exam-Papers/2022algorithmics-w.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Ancient-History/Exam-Papers/2022histancient-cpr-w.txt",
+    "subject": "Ancient-History",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Industry-and-Enterprise/Exam-Papers/2022indus-enter-w.txt",
+    "subject": "Industry-and-Enterprise",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/General-Mathematics/Exam-Papers/2022furmath1-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/General-Mathematics/Exam-Papers/2022furmath2-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Art-Creative-Practice/Exam-Papers/2022art-cpr-w.txt",
+    "subject": "Art-Creative-Practice",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Revolutions/Exam-Papers/2022histrev-w.txt",
+    "subject": "Revolutions",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Visual-Communication-Design/Exam-Papers/2022vcd-w.txt",
+    "subject": "Visual-Communication-Design",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Music-Composition/Exam-Papers/2022musicstylecomp-w.txt",
+    "subject": "Music-Composition",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/English-as-an-Additional-Language--EAL/Exam-Papers/2022EAL-w.txt",
+    "subject": "English-as-an-Additional-Language--EAL",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Literature/Exam-Papers/2022literature-w.txt",
+    "subject": "Literature",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Sociology/Exam-Papers/2022sociology-w.txt",
+    "subject": "Sociology",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Health-and-Human-Development/Exam-Papers/2022health-emark-cpr-w.txt",
+    "subject": "Health-and-Human-Development",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Environmental-Science/Exam-Papers/2022envsc-cpr-w.txt",
+    "subject": "Environmental-Science",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Theatre-Studies/Exam-Papers/2022theatre-cpr-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Theatre-Studies/Exam-Papers/2022ts-monologue-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/2022english-NHT-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/2022ChemistryNHT-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/2022mm1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/EAL-nht-specs-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/2022furmath2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/eal-nht-crit-descriptors-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/2022specmath1-NH-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/2022EAL-NHT-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/2022furmath1-NHT-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/2022physics-NHT-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/2022biol-NHT-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/2022chineseFL-NH-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/2022specmath2-NHT-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/2022accnt-NHT-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/chineseFL-written-specsV2-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/2022mm2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/english-nht-crit-descriptors-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/NHT-past-examinations-and-reports/Exam-Papers/english-nht-specs-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Applied-Computing--Software-Development/Exam-Papers/2022AC-softdev-w.txt",
+    "subject": "Applied-Computing--Software-Development",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Chemistry/Exam-Papers/2022chem-w.txt",
+    "subject": "Chemistry",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Extended-Investigation/Exam-Papers/2022CTT-w.txt",
+    "subject": "Extended-Investigation",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Texts-and-Traditions/Exam-Papers/2022textrad-w.txt",
+    "subject": "Texts-and-Traditions",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Psychology/Exam-Papers/2022psych-w.txt",
+    "subject": "Psychology",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Outdoor-and-Environmental-Studies/Exam-Papers/2022outdoor-w.txt",
+    "subject": "Outdoor-and-Environmental-Studies",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Music-Contemporary-Performance/Exam-Papers/2022musicperf-cpr-w.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Applied-Computing--Data-Analytics/Exam-Papers/2022AC-dataanalytics-w.txt",
+    "subject": "Applied-Computing--Data-Analytics",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Religion-and-Society/Exam-Papers/2022relsoc-w.txt",
+    "subject": "Religion-and-Society",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Australian-History/Exam-Papers/2022aushist-w.txt",
+    "subject": "Australian-History",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Agricultural-and-Horticultural-Studies/Exam-Papers/2022aghort-w.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/English/Exam-Papers/2022english-w.txt",
+    "subject": "English",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Music-Repertoire-Performance/Exam-Papers/2022musicperf-cpr-w.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/English-Language/Exam-Papers/2022englang-cpr-w.txt",
+    "subject": "English-Language",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Philosophy/Exam-Papers/2022philos-w.txt",
+    "subject": "Philosophy",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Dance/Exam-Papers/2022dance-w.txt",
+    "subject": "Dance",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Economics/Exam-Papers/2022economics-w.txt",
+    "subject": "Economics",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Mathematical-Methods/Exam-Papers/2022MM1-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Mathematical-Methods/Exam-Papers/2022MM2-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Art-Making-and-Exhibiting/Exam-Papers/2022studioarts-cpr-w.txt",
+    "subject": "Art-Making-and-Exhibiting",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Business-Management/Exam-Papers/2022busman-w.txt",
+    "subject": "Business-Management",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Physics/Exam-Papers/2022physics-w.txt",
+    "subject": "Physics",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Food-Studies/Exam-Papers/2022foodstudies-w.txt",
+    "subject": "Food-Studies",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Specialist-Mathematics/Exam-Papers/2022specmath1-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Specialist-Mathematics/Exam-Papers/2022specmath2-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Classical-Studies/Exam-Papers/2022classtud-cpr-w.txt",
+    "subject": "Classical-Studies",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Product-Design-and-Technologies/Exam-Papers/2022PDT-w.txt",
+    "subject": "Product-Design-and-Technologies",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Systems-Engineering/Exam-Papers/2022syseng-w.txt",
+    "subject": "Systems-Engineering",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Geography/Exam-Papers/2022geogexam-w.txt",
+    "subject": "Geography",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Legal-Studies/Exam-Papers/2022legal-emark-cpr-w.txt",
+    "subject": "Legal-Studies",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Physical-Education/Exam-Papers/2022physed-w.txt",
+    "subject": "Physical-Education",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Biology/Exam-Papers/2022biology-emark-cpr-w.txt",
+    "subject": "Biology",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Drama/Exam-Papers/2022drama-cpr-w.txt",
+    "subject": "Drama",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Drama/Exam-Papers/2022dramasoloperf-w.txt",
+    "subject": "Drama",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2022/Media/Exam-Papers/2022media-w.txt",
+    "subject": "Media",
+    "year": "2022",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Accounting/Exam-Papers/2025-Accounting.txt",
+    "subject": "Accounting",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Algorithmics--HESS/Exam-Papers/MCAS_Algorithmics.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Ancient-History/Exam-Papers/history-criteria-qualities-w.txt",
+    "subject": "Ancient-History",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Ancient-History/Exam-Papers/history-ancient-samp-w.txt",
+    "subject": "Ancient-History",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Ancient-History/Exam-Papers/history-ancient-samp-sources-w.txt",
+    "subject": "Ancient-History",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Industry-and-Enterprise/Exam-Papers/2025-IndustryAndEnterprise.txt",
+    "subject": "Industry-and-Enterprise",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Industry-and-Enterprise/Exam-Papers/indent-sampQ-w.txt",
+    "subject": "Industry-and-Enterprise",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/General-Mathematics/Exam-Papers/MCAS_GeneralMaths1.txt",
+    "subject": "General-Mathematics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/General-Mathematics/Exam-Papers/genmath1-sample-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/General-Mathematics/Exam-Papers/generalmaths2-formula-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/General-Mathematics/Exam-Papers/generalmaths1-formula-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/General-Mathematics/Exam-Papers/2025-GeneralMaths2.txt",
+    "subject": "General-Mathematics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/General-Mathematics/Exam-Papers/genmath2-sample-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/General-Mathematics/Exam-Papers/2025-GeneralMaths1_0.txt",
+    "subject": "General-Mathematics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Art-Creative-Practice/Exam-Papers/art-CP-sample-w.txt",
+    "subject": "Art-Creative-Practice",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Revolutions/Exam-Papers/histrev-sources-samp-w.txt",
+    "subject": "Revolutions",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Revolutions/Exam-Papers/history-criteria-qualities-w.txt",
+    "subject": "Revolutions",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Revolutions/Exam-Papers/hist-rev-sampV2-w.txt",
+    "subject": "Revolutions",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Music-Composition/Exam-Papers/musiccomp-samp-exam-w.txt",
+    "subject": "Music-Composition",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Music-Composition/Exam-Papers/musiccomp-excerpts-w.txt",
+    "subject": "Music-Composition",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/English-as-an-Additional-Language--EAL/Exam-Papers/EAL-samp-exam-w.txt",
+    "subject": "English-as-an-Additional-Language--EAL",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/English-as-an-Additional-Language--EAL/Exam-Papers/EAL-sample-answerbook-w.txt",
+    "subject": "English-as-an-Additional-Language--EAL",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Environmental-Science/Exam-Papers/MCAS_EnviroScience.txt",
+    "subject": "Environmental-Science",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Environmental-Science/Exam-Papers/envscience-samp-w.txt",
+    "subject": "Environmental-Science",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Theatre-Studies/Exam-Papers/2025theatre-monologue-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Theatre-Studies/Exam-Papers/theatre-sample-insert-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/NHT-past-examinations-and-reports/Exam-Papers/physics-specs-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/NHT-past-examinations-and-reports/Exam-Papers/chemistry-specs-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/NHT-past-examinations-and-reports/Exam-Papers/biology-specs-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Applied-Computing--Software-Development/Exam-Papers/MCAS_AppliedComputing-SoftwareDev.txt",
+    "subject": "Applied-Computing--Software-Development",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Chemistry/Exam-Papers/2025chemistry-databook.txt",
+    "subject": "Chemistry",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Chemistry/Exam-Papers/MCAS_Chemistry.txt",
+    "subject": "Chemistry",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Psychology/Exam-Papers/MCAS_Psychology.txt",
+    "subject": "Psychology",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Music-Contemporary-Performance/Exam-Papers/musiccontemperf-samp-exam-w.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Music-Contemporary-Performance/Exam-Papers/musiccontperf-excerpts-w.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Music-Contemporary-Performance/Exam-Papers/musiccontemperf-authen-record-form-w.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Foundation-Mathematics/Exam-Papers/FoundationMaths-formula-w.txt",
+    "subject": "Foundation-Mathematics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Foundation-Mathematics/Exam-Papers/foundation-math-sample-w.txt",
+    "subject": "Foundation-Mathematics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Foundation-Mathematics/Exam-Papers/2025-FoundationMaths.txt",
+    "subject": "Foundation-Mathematics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Foundation-Mathematics/Exam-Papers/MCAS_FoundationMath.txt",
+    "subject": "Foundation-Mathematics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Applied-Computing--Data-Analytics/Exam-Papers/MCAS_AppliedComputing-DataAnalytics.txt",
+    "subject": "Applied-Computing--Data-Analytics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Australian-History/Exam-Papers/hist-aust-samp-w.txt",
+    "subject": "Australian-History",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Australian-History/Exam-Papers/history-criteria-qualities-w.txt",
+    "subject": "Australian-History",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Australian-History/Exam-Papers/histaust-samp-sources-w.txt",
+    "subject": "Australian-History",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/English-Language/Exam-Papers/english-language-sample-w.txt",
+    "subject": "English-Language",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Dance/Exam-Papers/Dance-samp-w.txt",
+    "subject": "Dance",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Dance/Exam-Papers/2025-Dance.txt",
+    "subject": "Dance",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Economics/Exam-Papers/MCAS_Economics.txt",
+    "subject": "Economics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Economics/Exam-Papers/economics-samp-w.txt",
+    "subject": "Economics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Economics/Exam-Papers/2025-Economics_0.txt",
+    "subject": "Economics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Mathematical-Methods/Exam-Papers/MCAS_MathMethods2.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Mathematical-Methods/Exam-Papers/2025-MathMethods1.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Mathematical-Methods/Exam-Papers/2025-MathMethods2.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Art-Making-and-Exhibiting/Exam-Papers/ArtME-sample-w.txt",
+    "subject": "Art-Making-and-Exhibiting",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Business-Management/Exam-Papers/2025-BusinessManagement.txt",
+    "subject": "Business-Management",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Business-Management/Exam-Papers/busman-sampQ-w.txt",
+    "subject": "Business-Management",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Physics/Exam-Papers/MCAS_Physics.txt",
+    "subject": "Physics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Food-Studies/Exam-Papers/foodstudies-samp-w.txt",
+    "subject": "Food-Studies",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Food-Studies/Exam-Papers/2025-FoodStudies.txt",
+    "subject": "Food-Studies",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Food-Studies/Exam-Papers/MCAS_FoodStudies.txt",
+    "subject": "Food-Studies",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Specialist-Mathematics/Exam-Papers/2025-SpecialistMaths1.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Specialist-Mathematics/Exam-Papers/2025-SpecialistMaths2.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Specialist-Mathematics/Exam-Papers/MCAS_SpecialistMaths2.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Systems-Engineering/Exam-Papers/MCAS_SystemsEngineering.txt",
+    "subject": "Systems-Engineering",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Geography/Exam-Papers/geogdata-sample-w.txt",
+    "subject": "Geography",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Geography/Exam-Papers/geog-samp-w.txt",
+    "subject": "Geography",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Legal-Studies/Exam-Papers/2025-LegalStudies.txt",
+    "subject": "Legal-Studies",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Legal-Studies/Exam-Papers/LegalStudies-SampleQ-w.txt",
+    "subject": "Legal-Studies",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Physical-Education/Exam-Papers/MCAS_PhysicalEducation.txt",
+    "subject": "Physical-Education",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Biology/Exam-Papers/MCAS_Biology.txt",
+    "subject": "Biology",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Biology/Exam-Papers/biology-samp-w.txt",
+    "subject": "Biology",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Drama/Exam-Papers/2025drama-solo-performance-w.txt",
+    "subject": "Drama",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Drama/Exam-Papers/drama-sample-insert-w.txt",
+    "subject": "Drama",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2025/Media/Exam-Papers/2025-Media.txt",
+    "subject": "Media",
+    "year": "2025",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Ancient-History/Exam-Papers/2024history-ancient-w.txt",
+    "subject": "Ancient-History",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/General-Mathematics/Exam-Papers/2024genmaths1-markguideresponses.txt",
+    "subject": "General-Mathematics",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Revolutions/Exam-Papers/2024history-revs-w_1.txt",
+    "subject": "Revolutions",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Visual-Communication-Design/Exam-Papers/viscomm-resources-sample-w.txt",
+    "subject": "Visual-Communication-Design",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Visual-Communication-Design/Exam-Papers/viscomm-sample-w.txt",
+    "subject": "Visual-Communication-Design",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Sociology/Exam-Papers/Sociology-SampleQ-w.txt",
+    "subject": "Sociology",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Theatre-Studies/Exam-Papers/2024ts-monologue-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/NHT-past-examinations-and-reports/Exam-Papers/2024MM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/NHT-past-examinations-and-reports/Exam-Papers/2024physics-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/NHT-past-examinations-and-reports/Exam-Papers/2024EAL-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/NHT-past-examinations-and-reports/Exam-Papers/2024chineseFL-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/NHT-past-examinations-and-reports/Exam-Papers/2024SM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/NHT-past-examinations-and-reports/Exam-Papers/2024GM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/NHT-past-examinations-and-reports/Exam-Papers/2024accounting-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/NHT-past-examinations-and-reports/Exam-Papers/2024biology-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/NHT-past-examinations-and-reports/Exam-Papers/2024SM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/NHT-past-examinations-and-reports/Exam-Papers/2024english-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/NHT-past-examinations-and-reports/Exam-Papers/2024chemistry-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/NHT-past-examinations-and-reports/Exam-Papers/2024GM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/NHT-past-examinations-and-reports/Exam-Papers/2024MM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Chemistry/Exam-Papers/chemistry-sample-w.txt",
+    "subject": "Chemistry",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Extended-Investigation/Exam-Papers/2024CTT-w.txt",
+    "subject": "Extended-Investigation",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Texts-and-Traditions/Exam-Papers/TextandTraditions-sample-answer-book-w.txt",
+    "subject": "Texts-and-Traditions",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Psychology/Exam-Papers/2024psychology-w.txt",
+    "subject": "Psychology",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Outdoor-and-Environmental-Studies/Exam-Papers/outdoor-enviro-sample-w.txt",
+    "subject": "Outdoor-and-Environmental-Studies",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Foundation-Mathematics/Exam-Papers/2024foundation-maths-w.txt",
+    "subject": "Foundation-Mathematics",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/English/Exam-Papers/english-samp-w.txt",
+    "subject": "English",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/English-Language/Exam-Papers/2024english-language-w.txt",
+    "subject": "English-Language",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Physics/Exam-Papers/physics-formula-w.txt",
+    "subject": "Physics",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Physics/Exam-Papers/physics-samp-w.txt",
+    "subject": "Physics",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Physics/Exam-Papers/2024physics-w.txt",
+    "subject": "Physics",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Product-Design-and-Technologies/Exam-Papers/PDT-sample-w.txt",
+    "subject": "Product-Design-and-Technologies",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Biology/Exam-Papers/2024biology-w.txt",
+    "subject": "Biology",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Drama/Exam-Papers/2024dramasoloperf-w.txt",
+    "subject": "Drama",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Media/Exam-Papers/2024media-w.txt",
+    "subject": "Media",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2024/Media/Exam-Papers/media-samp-w.txt",
+    "subject": "Media",
+    "year": "2024",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Accounting/Exam-Papers/2023account-w.txt",
+    "subject": "Accounting",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Algorithmics--HESS/Exam-Papers/algorithmics-samp-w.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Algorithmics--HESS/Exam-Papers/2023algorithmics-w.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Ancient-History/Exam-Papers/2023histancient-w.txt",
+    "subject": "Ancient-History",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Industry-and-Enterprise/Exam-Papers/2023indus-enter-w.txt",
+    "subject": "Industry-and-Enterprise",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/General-Mathematics/Exam-Papers/2023genmath2-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/General-Mathematics/Exam-Papers/2023genmath1-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Art-Creative-Practice/Exam-Papers/2023art-CP-w.txt",
+    "subject": "Art-Creative-Practice",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Revolutions/Exam-Papers/2023histrev-w.txt",
+    "subject": "Revolutions",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Visual-Communication-Design/Exam-Papers/2023VisComDes-w.txt",
+    "subject": "Visual-Communication-Design",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Music-Composition/Exam-Papers/2023MusicCompositionEATSpecifications.txt",
+    "subject": "Music-Composition",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Music-Composition/Exam-Papers/2023musicscomposition-w.txt",
+    "subject": "Music-Composition",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/English-as-an-Additional-Language--EAL/Exam-Papers/2023EAL-w.txt",
+    "subject": "English-as-an-Additional-Language--EAL",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Literature/Exam-Papers/literature-ab-sample-w.txt",
+    "subject": "Literature",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Literature/Exam-Papers/2023literature-w.txt",
+    "subject": "Literature",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Literature/Exam-Papers/literature-sectionA-samp-w.txt",
+    "subject": "Literature",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Literature/Exam-Papers/literature-sectionB-samp-w.txt",
+    "subject": "Literature",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Sociology/Exam-Papers/2023sociology-w.txt",
+    "subject": "Sociology",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Health-and-Human-Development/Exam-Papers/2023health-w.txt",
+    "subject": "Health-and-Human-Development",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Environmental-Science/Exam-Papers/2023envsc-w.txt",
+    "subject": "Environmental-Science",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Theatre-Studies/Exam-Papers/2023theatre-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Theatre-Studies/Exam-Papers/2023ts-monologue-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/NHT-past-examinations-and-reports/Exam-Papers/2023FM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/NHT-past-examinations-and-reports/Exam-Papers/2023MM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/NHT-past-examinations-and-reports/Exam-Papers/specmaths-specs-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/NHT-past-examinations-and-reports/Exam-Papers/2023english-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/NHT-past-examinations-and-reports/Exam-Papers/2023EAL-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/NHT-past-examinations-and-reports/Exam-Papers/2023biology-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/NHT-past-examinations-and-reports/Exam-Papers/2023account-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/NHT-past-examinations-and-reports/Exam-Papers/2023SM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/NHT-past-examinations-and-reports/Exam-Papers/mathmethods-specs-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/NHT-past-examinations-and-reports/Exam-Papers/2023SM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/NHT-past-examinations-and-reports/Exam-Papers/2023chinFL-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/NHT-past-examinations-and-reports/Exam-Papers/genmath-specs-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/NHT-past-examinations-and-reports/Exam-Papers/2023FM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/NHT-past-examinations-and-reports/Exam-Papers/2023MM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/NHT-past-examinations-and-reports/Exam-Papers/2023physics-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/NHT-past-examinations-and-reports/Exam-Papers/2023chem-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Applied-Computing--Software-Development/Exam-Papers/2023AC-softdev-w.txt",
+    "subject": "Applied-Computing--Software-Development",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Chemistry/Exam-Papers/2023chemistry-w.txt",
+    "subject": "Chemistry",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Extended-Investigation/Exam-Papers/2023-CTT-w.txt",
+    "subject": "Extended-Investigation",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Texts-and-Traditions/Exam-Papers/2023textrad-w.txt",
+    "subject": "Texts-and-Traditions",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Texts-and-Traditions/Exam-Papers/textstrad-samp-w.txt",
+    "subject": "Texts-and-Traditions",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Psychology/Exam-Papers/2023psych-w.txt",
+    "subject": "Psychology",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Psychology/Exam-Papers/psychology-sampQ-w.txt",
+    "subject": "Psychology",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Outdoor-and-Environmental-Studies/Exam-Papers/2023outdoor-w.txt",
+    "subject": "Outdoor-and-Environmental-Studies",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Music-Contemporary-Performance/Exam-Papers/2023music-cont-perf-w.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Foundation-Mathematics/Exam-Papers/2023foundation-math-w.txt",
+    "subject": "Foundation-Mathematics",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Applied-Computing--Data-Analytics/Exam-Papers/2023AC-dataanalytics-w.txt",
+    "subject": "Applied-Computing--Data-Analytics",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Religion-and-Society/Exam-Papers/relsoc-samp-w.txt",
+    "subject": "Religion-and-Society",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Religion-and-Society/Exam-Papers/2023relsoc-w.txt",
+    "subject": "Religion-and-Society",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Australian-History/Exam-Papers/2023aushist-w.txt",
+    "subject": "Australian-History",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Agricultural-and-Horticultural-Studies/Exam-Papers/2023aghort-w.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/English/Exam-Papers/2023english-w.txt",
+    "subject": "English",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/English/Exam-Papers/english-sample-ab.txt",
+    "subject": "English",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Music-Repertoire-Performance/Exam-Papers/music-repperf-sample-w.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Music-Repertoire-Performance/Exam-Papers/2023music-repperf-w.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Music-Repertoire-Performance/Exam-Papers/musc-repperf-excerpts-w.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Music-Repertoire-Performance/Exam-Papers/music-repperf-written-specs-w.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/English-Language/Exam-Papers/2023englang-w.txt",
+    "subject": "English-Language",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Philosophy/Exam-Papers/2023philos-w.txt",
+    "subject": "Philosophy",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Dance/Exam-Papers/2023dance-w.txt",
+    "subject": "Dance",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Economics/Exam-Papers/2023economics-w.txt",
+    "subject": "Economics",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Mathematical-Methods/Exam-Papers/2023MM1-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Mathematical-Methods/Exam-Papers/mathmethods1-samp-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Mathematical-Methods/Exam-Papers/2023MM2-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Mathematical-Methods/Exam-Papers/mathmethods2-samp-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Mathematical-Methods/Exam-Papers/mathmethods2-formula-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Mathematical-Methods/Exam-Papers/mathmethods1-formula-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Art-Making-and-Exhibiting/Exam-Papers/2023artME-w.txt",
+    "subject": "Art-Making-and-Exhibiting",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Business-Management/Exam-Papers/2023busman-w.txt",
+    "subject": "Business-Management",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Physics/Exam-Papers/2023physics-w.txt",
+    "subject": "Physics",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Food-Studies/Exam-Papers/2023foodstudies-w.txt",
+    "subject": "Food-Studies",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Specialist-Mathematics/Exam-Papers/2023specmath1-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Specialist-Mathematics/Exam-Papers/specmaths1-formula-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Specialist-Mathematics/Exam-Papers/2023specmath2-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Specialist-Mathematics/Exam-Papers/specmaths2-formula-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Specialist-Mathematics/Exam-Papers/specmath1-samp-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Specialist-Mathematics/Exam-Papers/specmath2-samp-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Classical-Studies/Exam-Papers/2023classtud-w.txt",
+    "subject": "Classical-Studies",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Product-Design-and-Technologies/Exam-Papers/2023PDT-w.txt",
+    "subject": "Product-Design-and-Technologies",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Systems-Engineering/Exam-Papers/2023syseng-w.txt",
+    "subject": "Systems-Engineering",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Systems-Engineering/Exam-Papers/systemseng_examrep13.txt",
+    "subject": "Systems-Engineering",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Geography/Exam-Papers/2023geogexam-w.txt",
+    "subject": "Geography",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Legal-Studies/Exam-Papers/2023legal-emark-w.txt",
+    "subject": "Legal-Studies",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Music-Inquiry/Exam-Papers/musicinquiry-samp-exam-w.txt",
+    "subject": "Music-Inquiry",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Music-Inquiry/Exam-Papers/musicinquiry-excerpts-w.txt",
+    "subject": "Music-Inquiry",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Music-Inquiry/Exam-Papers/2023musicinquiry-w.txt",
+    "subject": "Music-Inquiry",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Physical-Education/Exam-Papers/2023physed-w.txt",
+    "subject": "Physical-Education",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Biology/Exam-Papers/2023biology-w.txt",
+    "subject": "Biology",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Drama/Exam-Papers/2023dramasoloperf-w.txt",
+    "subject": "Drama",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Drama/Exam-Papers/2023drama-w.txt",
+    "subject": "Drama",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2023/Media/Exam-Papers/2023media-w.txt",
+    "subject": "Media",
+    "year": "2023",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Accounting/Exam-Papers/2015account-w.txt",
+    "subject": "Accounting",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Accounting/Exam-Papers/accounting_examrep14.txt",
+    "subject": "Accounting",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Accounting/Exam-Papers/accounting_examrep15.txt",
+    "subject": "Accounting",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Algorithmics--HESS/Exam-Papers/2015algorithmics-w.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Algorithmics--HESS/Exam-Papers/algorithmics_examrep15.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Industry-and-Enterprise/Exam-Papers/2015ind-ent-cpr-w.txt",
+    "subject": "Industry-and-Enterprise",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Industry-and-Enterprise/Exam-Papers/indent_examrep15.txt",
+    "subject": "Industry-and-Enterprise",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/General-Mathematics/Exam-Papers/2015furmath2-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/General-Mathematics/Exam-Papers/2015furmath1-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/General-Mathematics/Exam-Papers/FM2_examrep15.txt",
+    "subject": "General-Mathematics",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/General-Mathematics/Exam-Papers/FM1_examrep15.txt",
+    "subject": "General-Mathematics",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Revolutions/Exam-Papers/histrevs_examrep15.txt",
+    "subject": "Revolutions",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Revolutions/Exam-Papers/2015histrevQB-cpr-w.txt",
+    "subject": "Revolutions",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Music-Composition/Exam-Papers/musicstyle_examrep15.txt",
+    "subject": "Music-Composition",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Music-Composition/Exam-Papers/musicstyleEAT_examrep15.txt",
+    "subject": "Music-Composition",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Music-Composition/Exam-Papers/2015musicstyles-cpr-w.txt",
+    "subject": "Music-Composition",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/English-as-an-Additional-Language--EAL/Exam-Papers/2015engishEAL-w.txt",
+    "subject": "English-as-an-Additional-Language--EAL",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/English-as-an-Additional-Language--EAL/Exam-Papers/eal_examrep15.txt",
+    "subject": "English-as-an-Additional-Language--EAL",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Sociology/Exam-Papers/2015sociology-cpr-w.txt",
+    "subject": "Sociology",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Sociology/Exam-Papers/sociology_examrep15.txt",
+    "subject": "Sociology",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Health-and-Human-Development/Exam-Papers/2015health-cpr-w.txt",
+    "subject": "Health-and-Human-Development",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Environmental-Science/Exam-Papers/enviroscience_examrep15.txt",
+    "subject": "Environmental-Science",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Environmental-Science/Exam-Papers/2015envsc-w.txt",
+    "subject": "Environmental-Science",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Chemistry/Exam-Papers/2015chem-w.txt",
+    "subject": "Chemistry",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Chemistry/Exam-Papers/chemistry_examrep15.txt",
+    "subject": "Chemistry",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Extended-Investigation/Exam-Papers/EIwritten_examrep15.txt",
+    "subject": "Extended-Investigation",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Extended-Investigation/Exam-Papers/CTT_examrep15.txt",
+    "subject": "Extended-Investigation",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Extended-Investigation/Exam-Papers/ctt_examrep14.txt",
+    "subject": "Extended-Investigation",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Extended-Investigation/Exam-Papers/EIoralpresentation_examrep15.txt",
+    "subject": "Extended-Investigation",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Texts-and-Traditions/Exam-Papers/textsandtrad_examrep15.txt",
+    "subject": "Texts-and-Traditions",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Texts-and-Traditions/Exam-Papers/2015textrad-w.txt",
+    "subject": "Texts-and-Traditions",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Psychology/Exam-Papers/2015psych-adm-w.txt",
+    "subject": "Psychology",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Psychology/Exam-Papers/psych_examrep15.txt",
+    "subject": "Psychology",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Outdoor-and-Environmental-Studies/Exam-Papers/outdoor_examrep15.txt",
+    "subject": "Outdoor-and-Environmental-Studies",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Outdoor-and-Environmental-Studies/Exam-Papers/2015outdoor-cpr-w.txt",
+    "subject": "Outdoor-and-Environmental-Studies",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Music-Contemporary-Performance/Exam-Papers/musicperf_examrep15.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Music-Contemporary-Performance/Exam-Papers/musicperfperf_assessrep15.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Music-Contemporary-Performance/Exam-Papers/2015musperf-cpr-w.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Religion-and-Society/Exam-Papers/2015relsoc-w.txt",
+    "subject": "Religion-and-Society",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Religion-and-Society/Exam-Papers/religionsoc_examrep15.txt",
+    "subject": "Religion-and-Society",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Australian-History/Exam-Papers/austhist_examrep15.txt",
+    "subject": "Australian-History",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Australian-History/Exam-Papers/2015histaus-cpr-w.txt",
+    "subject": "Australian-History",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Agricultural-and-Horticultural-Studies/Exam-Papers/2015aghort-w.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Agricultural-and-Horticultural-Studies/Exam-Papers/aghort_examrep15.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/English/Exam-Papers/english_examrep15.txt",
+    "subject": "English",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/English/Exam-Papers/2015english-w.txt",
+    "subject": "English",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Music-Repertoire-Performance/Exam-Papers/musicperf_examrep15.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Music-Repertoire-Performance/Exam-Papers/musicperfperf_assessrep15.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Music-Repertoire-Performance/Exam-Papers/2015musperf-cpr-w.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Philosophy/Exam-Papers/2015philos-w.txt",
+    "subject": "Philosophy",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Philosophy/Exam-Papers/philosophy_examrep15.txt",
+    "subject": "Philosophy",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Dance/Exam-Papers/danceperf_examrep15.txt",
+    "subject": "Dance",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Dance/Exam-Papers/dancew_examrep15.txt",
+    "subject": "Dance",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Dance/Exam-Papers/2015dance-w.txt",
+    "subject": "Dance",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Economics/Exam-Papers/economics_examrep15.txt",
+    "subject": "Economics",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Economics/Exam-Papers/2015economics-w.txt",
+    "subject": "Economics",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Mathematical-Methods/Exam-Papers/mm2_examrep15.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Mathematical-Methods/Exam-Papers/mm1_examrep15.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Mathematical-Methods/Exam-Papers/2015mmcas1-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Mathematical-Methods/Exam-Papers/2015mmcas2-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Business-Management/Exam-Papers/busman_examrep15.txt",
+    "subject": "Business-Management",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Business-Management/Exam-Papers/2015busman-w.txt",
+    "subject": "Business-Management",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Physics/Exam-Papers/physics_examrep15.txt",
+    "subject": "Physics",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Physics/Exam-Papers/2015physics-amd-w.txt",
+    "subject": "Physics",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Specialist-Mathematics/Exam-Papers/specialistmaths2_examrep15.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Specialist-Mathematics/Exam-Papers/specialistmaths1_examrep15.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Specialist-Mathematics/Exam-Papers/2015specmath1-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Specialist-Mathematics/Exam-Papers/2015specmath2-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Product-Design-and-Technologies/Exam-Papers/productdt_examrep15.txt",
+    "subject": "Product-Design-and-Technologies",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Product-Design-and-Technologies/Exam-Papers/2015prodestech-cpr-w.txt",
+    "subject": "Product-Design-and-Technologies",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Systems-Engineering/Exam-Papers/2015syseng-amd-w.txt",
+    "subject": "Systems-Engineering",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Systems-Engineering/Exam-Papers/systemseng_examrep15.txt",
+    "subject": "Systems-Engineering",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Legal-Studies/Exam-Papers/2015legal-w.txt",
+    "subject": "Legal-Studies",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Legal-Studies/Exam-Papers/legalstudies_examrep15.txt",
+    "subject": "Legal-Studies",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Music-Inquiry/Exam-Papers/musicinvperf_examrep15.txt",
+    "subject": "Music-Inquiry",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Physical-Education/Exam-Papers/2015physed-cpr-w.txt",
+    "subject": "Physical-Education",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Physical-Education/Exam-Papers/physed_examrep15.txt",
+    "subject": "Physical-Education",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Biology/Exam-Papers/2015biology-cpr-w.txt",
+    "subject": "Biology",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Biology/Exam-Papers/biology_examrep15.txt",
+    "subject": "Biology",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Media/Exam-Papers/media_examrep15.txt",
+    "subject": "Media",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2015/Media/Exam-Papers/2015media-w.txt",
+    "subject": "Media",
+    "year": "2015",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Accounting/Exam-Papers/accounting_examrep17.txt",
+    "subject": "Accounting",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Accounting/Exam-Papers/2017account-w.txt",
+    "subject": "Accounting",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Algorithmics--HESS/Exam-Papers/2017algorithmics-w.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Algorithmics--HESS/Exam-Papers/algorithmics_examrep17.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Ancient-History/Exam-Papers/2017histancient-cpr-w.txt",
+    "subject": "Ancient-History",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Ancient-History/Exam-Papers/ancienthistory_examrep17.txt",
+    "subject": "Ancient-History",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Industry-and-Enterprise/Exam-Papers/2017ind-ent-w.txt",
+    "subject": "Industry-and-Enterprise",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Industry-and-Enterprise/Exam-Papers/industryenterprise_examrep17.txt",
+    "subject": "Industry-and-Enterprise",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/General-Mathematics/Exam-Papers/fm2_examrep17.txt",
+    "subject": "General-Mathematics",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/General-Mathematics/Exam-Papers/fm1_examrep17.txt",
+    "subject": "General-Mathematics",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/General-Mathematics/Exam-Papers/2017furmath1-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/General-Mathematics/Exam-Papers/2017furmath2-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Art-Creative-Practice/Exam-Papers/art_examrep17.txt",
+    "subject": "Art-Creative-Practice",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Art-Creative-Practice/Exam-Papers/2017art-cpr-w.txt",
+    "subject": "Art-Creative-Practice",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Revolutions/Exam-Papers/2017histrevQB-cpr-w.txt",
+    "subject": "Revolutions",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Revolutions/Exam-Papers/historyrevs_examrep17.txt",
+    "subject": "Revolutions",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Visual-Communication-Design/Exam-Papers/viscomm_examrep17.txt",
+    "subject": "Visual-Communication-Design",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Visual-Communication-Design/Exam-Papers/2017vcd-cpr-w.txt",
+    "subject": "Visual-Communication-Design",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Music-Composition/Exam-Papers/musicstylewritten_examrep17.txt",
+    "subject": "Music-Composition",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Music-Composition/Exam-Papers/musicstyleEAT_examrep17.txt",
+    "subject": "Music-Composition",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Music-Composition/Exam-Papers/2017musicstyles-w.txt",
+    "subject": "Music-Composition",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/English-as-an-Additional-Language--EAL/Exam-Papers/2017EAL-w.txt",
+    "subject": "English-as-an-Additional-Language--EAL",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/English-as-an-Additional-Language--EAL/Exam-Papers/eal_examrep17.txt",
+    "subject": "English-as-an-Additional-Language--EAL",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Literature/Exam-Papers/2017literature-cpr-w.txt",
+    "subject": "Literature",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Literature/Exam-Papers/literature_examrep17.txt",
+    "subject": "Literature",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Sociology/Exam-Papers/2017sociology-w.txt",
+    "subject": "Sociology",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Sociology/Exam-Papers/sociology_examrep17.txt",
+    "subject": "Sociology",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Health-and-Human-Development/Exam-Papers/2017health-w.txt",
+    "subject": "Health-and-Human-Development",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Health-and-Human-Development/Exam-Papers/hhd_examrep17.txt",
+    "subject": "Health-and-Human-Development",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Environmental-Science/Exam-Papers/2017envsc-ed-w.txt",
+    "subject": "Environmental-Science",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Environmental-Science/Exam-Papers/enviroscience_examrep17.txt",
+    "subject": "Environmental-Science",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Theatre-Studies/Exam-Papers/theatrestudiesw_examrep17.txt",
+    "subject": "Theatre-Studies",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Theatre-Studies/Exam-Papers/2017theatre-cpr-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Theatre-Studies/Exam-Papers/2017ts-stagecraft-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Theatre-Studies/Exam-Papers/theatrestudiesperf_examrep17.txt",
+    "subject": "Theatre-Studies",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/2017account-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/2017biology-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/mm2nht_examrep17.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/2017MM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/biologynht_examrep17.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/2017FM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/2017SM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/chemistrynht_examrep17.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/fm2nht_examrep17.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/sm1nht_examrep17.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/ealnht_examrep17.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/2017physics-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/2017SM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/physicsnht_examrep17.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/2017chem-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/fm1nht_examrep17.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/accnht_examrep17.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/2017EAL-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/sm2nht_examrep17.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/mm1nht_examrep17.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/2017chinFL-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/2017MM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/2017FM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/NHT-past-examinations-and-reports/Exam-Papers/chineseflnht_examrep17.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Chemistry/Exam-Papers/chemistry_examrep17.txt",
+    "subject": "Chemistry",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Chemistry/Exam-Papers/2017chem-w.txt",
+    "subject": "Chemistry",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Extended-Investigation/Exam-Papers/eioral_examrep17.txt",
+    "subject": "Extended-Investigation",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Extended-Investigation/Exam-Papers/ctt_examrep17.txt",
+    "subject": "Extended-Investigation",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Extended-Investigation/Exam-Papers/eiwritten_examrep17.txt",
+    "subject": "Extended-Investigation",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Texts-and-Traditions/Exam-Papers/2017textrad-w.txt",
+    "subject": "Texts-and-Traditions",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Texts-and-Traditions/Exam-Papers/textstrad_examrep17.txt",
+    "subject": "Texts-and-Traditions",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Psychology/Exam-Papers/2017psych-w.txt",
+    "subject": "Psychology",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Psychology/Exam-Papers/psych_examrep17.txt",
+    "subject": "Psychology",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Outdoor-and-Environmental-Studies/Exam-Papers/outdoorenviro_examrep17.txt",
+    "subject": "Outdoor-and-Environmental-Studies",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Outdoor-and-Environmental-Studies/Exam-Papers/2017outdoor-w.txt",
+    "subject": "Outdoor-and-Environmental-Studies",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Music-Contemporary-Performance/Exam-Papers/musicperfperf_examrep17.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Music-Contemporary-Performance/Exam-Papers/2017musperf-w.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Music-Contemporary-Performance/Exam-Papers/musicperformance_examrep17.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Religion-and-Society/Exam-Papers/2017relsoc-w.txt",
+    "subject": "Religion-and-Society",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Religion-and-Society/Exam-Papers/religionandsoc_examrep17.txt",
+    "subject": "Religion-and-Society",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Australian-History/Exam-Papers/austhist_examrep17.txt",
+    "subject": "Australian-History",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Australian-History/Exam-Papers/2017histaus-cpr-w.txt",
+    "subject": "Australian-History",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Agricultural-and-Horticultural-Studies/Exam-Papers/aghort_examrep17.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Agricultural-and-Horticultural-Studies/Exam-Papers/2017aghort-w.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/English/Exam-Papers/english_examrep17.txt",
+    "subject": "English",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/English/Exam-Papers/2017english-w.txt",
+    "subject": "English",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Music-Repertoire-Performance/Exam-Papers/musicperfperf_examrep17.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Music-Repertoire-Performance/Exam-Papers/2017musperf-w.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Music-Repertoire-Performance/Exam-Papers/musicperformance_examrep17.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/English-Language/Exam-Papers/2017englang-cpr-w.txt",
+    "subject": "English-Language",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/English-Language/Exam-Papers/englang_examrep17.txt",
+    "subject": "English-Language",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Philosophy/Exam-Papers/philosophy_examrep17.txt",
+    "subject": "Philosophy",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Philosophy/Exam-Papers/2017philos-cpr-w.txt",
+    "subject": "Philosophy",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Dance/Exam-Papers/danceperf_examrep17.txt",
+    "subject": "Dance",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Dance/Exam-Papers/dancew_examrep17.txt",
+    "subject": "Dance",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Dance/Exam-Papers/2017dance-w.txt",
+    "subject": "Dance",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Economics/Exam-Papers/economics_examrep17.txt",
+    "subject": "Economics",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Economics/Exam-Papers/2017economics-w.txt",
+    "subject": "Economics",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Mathematical-Methods/Exam-Papers/2017MM1-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Mathematical-Methods/Exam-Papers/mm2_examrep17.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Mathematical-Methods/Exam-Papers/mm1_examrep17.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Mathematical-Methods/Exam-Papers/2017MM2-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Art-Making-and-Exhibiting/Exam-Papers/2017studioarts-cpr-w.txt",
+    "subject": "Art-Making-and-Exhibiting",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Art-Making-and-Exhibiting/Exam-Papers/studioarts_examrep17.txt",
+    "subject": "Art-Making-and-Exhibiting",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Business-Management/Exam-Papers/2017busman-w.txt",
+    "subject": "Business-Management",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Business-Management/Exam-Papers/busman_examrep17.txt",
+    "subject": "Business-Management",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Physics/Exam-Papers/2017physics-w.txt",
+    "subject": "Physics",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Physics/Exam-Papers/physics_examrep17.txt",
+    "subject": "Physics",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Food-Studies/Exam-Papers/2017food-tech-cpr-w.txt",
+    "subject": "Food-Studies",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Food-Studies/Exam-Papers/foodstudies_examrep17.txt",
+    "subject": "Food-Studies",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Specialist-Mathematics/Exam-Papers/2017specmath2-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Specialist-Mathematics/Exam-Papers/sm2_examrep17.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Specialist-Mathematics/Exam-Papers/sm1_examrep17.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Specialist-Mathematics/Exam-Papers/2017specmath1-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Classical-Studies/Exam-Papers/classicalstudies_examrep17.txt",
+    "subject": "Classical-Studies",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Classical-Studies/Exam-Papers/2017classtud-cpr-w.txt",
+    "subject": "Classical-Studies",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Product-Design-and-Technologies/Exam-Papers/productdesign_examrep17.txt",
+    "subject": "Product-Design-and-Technologies",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Product-Design-and-Technologies/Exam-Papers/2017prodestech-cpr-w.txt",
+    "subject": "Product-Design-and-Technologies",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Systems-Engineering/Exam-Papers/2017syseng-w.txt",
+    "subject": "Systems-Engineering",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Systems-Engineering/Exam-Papers/systemseng_examrep17.txt",
+    "subject": "Systems-Engineering",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Geography/Exam-Papers/2017geog-w.txt",
+    "subject": "Geography",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Geography/Exam-Papers/geography_examrep17.txt",
+    "subject": "Geography",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Legal-Studies/Exam-Papers/2017legal-w.txt",
+    "subject": "Legal-Studies",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Legal-Studies/Exam-Papers/legalstudies_examrep17.txt",
+    "subject": "Legal-Studies",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Music-Inquiry/Exam-Papers/musicinvperf_examrep17.txt",
+    "subject": "Music-Inquiry",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Physical-Education/Exam-Papers/physed_examrep17.txt",
+    "subject": "Physical-Education",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Physical-Education/Exam-Papers/2017physed-w.txt",
+    "subject": "Physical-Education",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Biology/Exam-Papers/2017biology-w.txt",
+    "subject": "Biology",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Biology/Exam-Papers/biology_examrep17.txt",
+    "subject": "Biology",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Drama/Exam-Papers/dramaw_examrep17.txt",
+    "subject": "Drama",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Drama/Exam-Papers/2017drama-cpr-w.txt",
+    "subject": "Drama",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Drama/Exam-Papers/2017dramasoloperf-w.txt",
+    "subject": "Drama",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Drama/Exam-Papers/dramaperf_examrep17.txt",
+    "subject": "Drama",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Media/Exam-Papers/media_examrep17.txt",
+    "subject": "Media",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2017/Media/Exam-Papers/2017media-w.txt",
+    "subject": "Media",
+    "year": "2017",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Accounting/Exam-Papers/2019account-w.txt",
+    "subject": "Accounting",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Accounting/Exam-Papers/accounting_examrep19.txt",
+    "subject": "Accounting",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Algorithmics--HESS/Exam-Papers/algorithmics_examrep19.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Algorithmics--HESS/Exam-Papers/2019algorithmics-w.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Ancient-History/Exam-Papers/ancienthist_examrep19.txt",
+    "subject": "Ancient-History",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Ancient-History/Exam-Papers/2019histancient-w.txt",
+    "subject": "Ancient-History",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Industry-and-Enterprise/Exam-Papers/industryenterp_examrep19.txt",
+    "subject": "Industry-and-Enterprise",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Industry-and-Enterprise/Exam-Papers/2019ind-ent-w.txt",
+    "subject": "Industry-and-Enterprise",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/General-Mathematics/Exam-Papers/FM1_examrep19.txt",
+    "subject": "General-Mathematics",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/General-Mathematics/Exam-Papers/FM2_examrep19.txt",
+    "subject": "General-Mathematics",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/General-Mathematics/Exam-Papers/2019furmath2-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/General-Mathematics/Exam-Papers/2019furmath1-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Art-Creative-Practice/Exam-Papers/art_examrep19.txt",
+    "subject": "Art-Creative-Practice",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Art-Creative-Practice/Exam-Papers/2019art-cpr-w.txt",
+    "subject": "Art-Creative-Practice",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Revolutions/Exam-Papers/2019histrevQB-cpr-w.txt",
+    "subject": "Revolutions",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Revolutions/Exam-Papers/historyrevolutions_examrep19.txt",
+    "subject": "Revolutions",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Visual-Communication-Design/Exam-Papers/2019vcd-cpr-w.txt",
+    "subject": "Visual-Communication-Design",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Visual-Communication-Design/Exam-Papers/viscommdesign_examrep19.txt",
+    "subject": "Visual-Communication-Design",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Music-Composition/Exam-Papers/musicstylecompEAT_examrep19.txt",
+    "subject": "Music-Composition",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Music-Composition/Exam-Papers/musicscw_examrep19.txt",
+    "subject": "Music-Composition",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Music-Composition/Exam-Papers/2019musicstyles-w.txt",
+    "subject": "Music-Composition",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/English-as-an-Additional-Language--EAL/Exam-Papers/eal_examrep19.txt",
+    "subject": "English-as-an-Additional-Language--EAL",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/English-as-an-Additional-Language--EAL/Exam-Papers/2019EAL-w.txt",
+    "subject": "English-as-an-Additional-Language--EAL",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Literature/Exam-Papers/literature_examrep19.txt",
+    "subject": "Literature",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Literature/Exam-Papers/2019literature-cpr-w.txt",
+    "subject": "Literature",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Sociology/Exam-Papers/sociology_examrep19.txt",
+    "subject": "Sociology",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Sociology/Exam-Papers/2019sociology-cpr-w.txt",
+    "subject": "Sociology",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Health-and-Human-Development/Exam-Papers/hhd_examrep19.txt",
+    "subject": "Health-and-Human-Development",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Health-and-Human-Development/Exam-Papers/2019health-cpr-w.txt",
+    "subject": "Health-and-Human-Development",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Environmental-Science/Exam-Papers/enviroscience_examrep.txt",
+    "subject": "Environmental-Science",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Environmental-Science/Exam-Papers/2019envsc-w.txt",
+    "subject": "Environmental-Science",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Theatre-Studies/Exam-Papers/theatrewritten_examrep19.txt",
+    "subject": "Theatre-Studies",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Theatre-Studies/Exam-Papers/2019ts-monologue-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Theatre-Studies/Exam-Papers/theatrestudiesmonologue_examrep19.txt",
+    "subject": "Theatre-Studies",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Theatre-Studies/Exam-Papers/2019theatre-cpr-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/accountingnht_examrep19.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/sm2nht_examrep19-revised.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/2019EAL-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/englishnht_examrep19.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/mm1nht_examrep19.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/chineseFLoralnht_examrep19.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/2019SM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/2019FM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/chineseFLwrittennht_examrep19.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/fm1nht_examrep19.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/2019MM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/2019account-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/physicsnht_examrep19.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/2019english-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/sm1nht_examrep19.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/fm2nht_examrep19.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/chemistrynht_examrep19.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/2019FM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/2019MM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/2019chinFL-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/ealnht_examrep19.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/2019chem-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/2019physics-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/2019SM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/NHT-past-examinations-and-reports/Exam-Papers/mm2nht_examrep19.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Chemistry/Exam-Papers/2019chem-w.txt",
+    "subject": "Chemistry",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Chemistry/Exam-Papers/chemistry_examrep19.txt",
+    "subject": "Chemistry",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Extended-Investigation/Exam-Reports/2019ExtendedInvestigationCTT-exam-report.txt",
+    "subject": "Extended-Investigation",
+    "year": "2019",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2019/Extended-Investigation/Exam-Papers/extendedinvestigationoral_examrep19.txt",
+    "subject": "Extended-Investigation",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Extended-Investigation/Exam-Papers/extendedinvestigationwritten_examrep19.txt",
+    "subject": "Extended-Investigation",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Texts-and-Traditions/Exam-Papers/textstraditions_examrep19.txt",
+    "subject": "Texts-and-Traditions",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Texts-and-Traditions/Exam-Papers/2019textrad-w.txt",
+    "subject": "Texts-and-Traditions",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Psychology/Exam-Papers/psychology_examrep19.txt",
+    "subject": "Psychology",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Psychology/Exam-Papers/2019psych-w.txt",
+    "subject": "Psychology",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Outdoor-and-Environmental-Studies/Exam-Papers/2019outdoor-w.txt",
+    "subject": "Outdoor-and-Environmental-Studies",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Outdoor-and-Environmental-Studies/Exam-Papers/outdoorenv_examrep19.txt",
+    "subject": "Outdoor-and-Environmental-Studies",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Music-Contemporary-Performance/Exam-Papers/musicperf_written_examrep19.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Music-Contemporary-Performance/Exam-Papers/2019musperf-w.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Music-Contemporary-Performance/Exam-Papers/musicperf_perf_examrep19.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Religion-and-Society/Exam-Papers/relsoc_examrep19.txt",
+    "subject": "Religion-and-Society",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Religion-and-Society/Exam-Papers/2019relsoc-w.txt",
+    "subject": "Religion-and-Society",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Australian-History/Exam-Papers/2019histaus-w.txt",
+    "subject": "Australian-History",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Australian-History/Exam-Papers/australianhistory_examrep19.txt",
+    "subject": "Australian-History",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Agricultural-and-Horticultural-Studies/Exam-Papers/2019aghort-w.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Agricultural-and-Horticultural-Studies/Exam-Papers/aghort_examrep19.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/English/Exam-Papers/2019english-w.txt",
+    "subject": "English",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/English/Exam-Papers/english_examrep19.txt",
+    "subject": "English",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Music-Repertoire-Performance/Exam-Papers/musicperf_written_examrep19.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Music-Repertoire-Performance/Exam-Papers/2019musperf-w.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Music-Repertoire-Performance/Exam-Papers/musicperf_perf_examrep19.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/English-Language/Exam-Papers/englishlang_examrep19.txt",
+    "subject": "English-Language",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/English-Language/Exam-Papers/2019englang-cpr-w.txt",
+    "subject": "English-Language",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Philosophy/Exam-Papers/philosophy_examrep19.txt",
+    "subject": "Philosophy",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Philosophy/Exam-Papers/2019philos-cpr-w.txt",
+    "subject": "Philosophy",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Dance/Exam-Papers/dancewritten_examrep19.txt",
+    "subject": "Dance",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Dance/Exam-Papers/2019dance-w.txt",
+    "subject": "Dance",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Dance/Exam-Papers/danceperf_examrep19.txt",
+    "subject": "Dance",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Economics/Exam-Papers/2019economics-w.txt",
+    "subject": "Economics",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Economics/Exam-Papers/economics_examrep19.txt",
+    "subject": "Economics",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Mathematical-Methods/Exam-Papers/2019MM2-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Mathematical-Methods/Exam-Papers/MM1_examrep19.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Mathematical-Methods/Exam-Papers/2019MM1-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Mathematical-Methods/Exam-Papers/MM2_examrep19.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Art-Making-and-Exhibiting/Exam-Papers/2019studioarts-cpr-w.txt",
+    "subject": "Art-Making-and-Exhibiting",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Art-Making-and-Exhibiting/Exam-Papers/studioarts_examrep19.txt",
+    "subject": "Art-Making-and-Exhibiting",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Business-Management/Exam-Papers/businessman_examrep19.txt",
+    "subject": "Business-Management",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Business-Management/Exam-Papers/2019busman-w.txt",
+    "subject": "Business-Management",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Physics/Exam-Papers/physics_examrep19.txt",
+    "subject": "Physics",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Physics/Exam-Papers/2019physics-w.txt",
+    "subject": "Physics",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Food-Studies/Exam-Papers/2019foodstudies-cpr-w.txt",
+    "subject": "Food-Studies",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Food-Studies/Exam-Papers/2019foodstudies-examrep.txt",
+    "subject": "Food-Studies",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Specialist-Mathematics/Exam-Papers/SM1_examrep.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Specialist-Mathematics/Exam-Papers/SM2_examrep19.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Specialist-Mathematics/Exam-Papers/2019specmath2-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Specialist-Mathematics/Exam-Papers/2019specmath1-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Classical-Studies/Exam-Papers/classicalstudies_examrep19.txt",
+    "subject": "Classical-Studies",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Classical-Studies/Exam-Papers/2019classtud-cpr-w.txt",
+    "subject": "Classical-Studies",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Product-Design-and-Technologies/Exam-Papers/2019productdesigntech-examrep.txt",
+    "subject": "Product-Design-and-Technologies",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Product-Design-and-Technologies/Exam-Papers/2019pdt-cpr-w.txt",
+    "subject": "Product-Design-and-Technologies",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Systems-Engineering/Exam-Papers/systemseng_examrep19.txt",
+    "subject": "Systems-Engineering",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Systems-Engineering/Exam-Papers/sysengin-samp-w.txt",
+    "subject": "Systems-Engineering",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Systems-Engineering/Exam-Papers/2019syseng-cpr-w.txt",
+    "subject": "Systems-Engineering",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Geography/Exam-Papers/2019geog-w.txt",
+    "subject": "Geography",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Geography/Exam-Papers/geography_examrep19.txt",
+    "subject": "Geography",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Legal-Studies/Exam-Papers/legalstudies_examrep19.txt",
+    "subject": "Legal-Studies",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Legal-Studies/Exam-Papers/2019legal-w.txt",
+    "subject": "Legal-Studies",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Music-Inquiry/Exam-Papers/musicinvestigationperf_examrep19.txt",
+    "subject": "Music-Inquiry",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Music-Inquiry/Exam-Papers/musicinvperf_examrep18.txt",
+    "subject": "Music-Inquiry",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Physical-Education/Exam-Papers/2019physed-w.txt",
+    "subject": "Physical-Education",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Physical-Education/Exam-Papers/physicaleducation_examrep19.txt",
+    "subject": "Physical-Education",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Biology/Exam-Papers/biology_examrep19.txt",
+    "subject": "Biology",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Biology/Exam-Papers/2019biology-cpr-w.txt",
+    "subject": "Biology",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Drama/Exam-Papers/dramasoloperf_examrep19.txt",
+    "subject": "Drama",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Drama/Exam-Papers/2019dramasoloperf-w.txt",
+    "subject": "Drama",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Drama/Exam-Papers/dramaw_examrep19.txt",
+    "subject": "Drama",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Drama/Exam-Papers/2019drama-cpr-w.txt",
+    "subject": "Drama",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Media/Exam-Papers/2019media-w.txt",
+    "subject": "Media",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2019/Media/Exam-Papers/media_examrep19.txt",
+    "subject": "Media",
+    "year": "2019",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Accounting/Exam-Reports/2021accounting-report.txt",
+    "subject": "Accounting",
+    "year": "2021",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2021/Accounting/Exam-Papers/2021account-w.txt",
+    "subject": "Accounting",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Algorithmics--HESS/Exam-Reports/2021algorithmics-report.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2021",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2021/Algorithmics--HESS/Exam-Papers/2021algorithmics-w.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Ancient-History/Exam-Reports/2021histancient-exam-report.txt",
+    "subject": "Ancient-History",
+    "year": "2021",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2021/Ancient-History/Exam-Papers/2021histancient-w.txt",
+    "subject": "Ancient-History",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Industry-and-Enterprise/Exam-Papers/2021ind-ent-w.txt",
+    "subject": "Industry-and-Enterprise",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/General-Mathematics/Exam-Papers/2021furmath1-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/General-Mathematics/Exam-Papers/2021furmath2-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Art-Creative-Practice/Exam-Papers/2021art-cpr-w.txt",
+    "subject": "Art-Creative-Practice",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Revolutions/Exam-Reports/2021histrev-exam-report.txt",
+    "subject": "Revolutions",
+    "year": "2021",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2021/Revolutions/Exam-Papers/2021histrevQB-w.txt",
+    "subject": "Revolutions",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Visual-Communication-Design/Exam-Papers/2021vcd-w.txt",
+    "subject": "Visual-Communication-Design",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Music-Composition/Exam-Papers/2021musicstyles-w.txt",
+    "subject": "Music-Composition",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/English-as-an-Additional-Language--EAL/Exam-Papers/2021EAL-w.txt",
+    "subject": "English-as-an-Additional-Language--EAL",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Literature/Exam-Papers/2021literature-cpr-w.txt",
+    "subject": "Literature",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Sociology/Exam-Papers/2021sociology-w.txt",
+    "subject": "Sociology",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Health-and-Human-Development/Exam-Reports/2021HHD-report.txt",
+    "subject": "Health-and-Human-Development",
+    "year": "2021",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2021/Health-and-Human-Development/Exam-Papers/2021health-cpr-w.txt",
+    "subject": "Health-and-Human-Development",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Environmental-Science/Exam-Papers/2021envsc-cpr-w.txt",
+    "subject": "Environmental-Science",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Theatre-Studies/Exam-Papers/2021theatre-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Theatre-Studies/Exam-Papers/2021ts-monologue-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/NHT-past-examinations-and-reports/Exam-Papers/2021FM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/NHT-past-examinations-and-reports/Exam-Papers/2021chem-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/NHT-past-examinations-and-reports/Exam-Papers/2021MM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/NHT-past-examinations-and-reports/Exam-Papers/2021SM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/NHT-past-examinations-and-reports/Exam-Papers/2021physics-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/NHT-past-examinations-and-reports/Exam-Papers/2021chinFL-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/NHT-past-examinations-and-reports/Exam-Papers/2021SM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/NHT-past-examinations-and-reports/Exam-Papers/2021EAL-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/NHT-past-examinations-and-reports/Exam-Papers/chineseFL-oral-specs-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/NHT-past-examinations-and-reports/Exam-Papers/2021account-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/NHT-past-examinations-and-reports/Exam-Papers/accnt-specs-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/NHT-past-examinations-and-reports/Exam-Papers/2021english-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/NHT-past-examinations-and-reports/Exam-Papers/2021FM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/NHT-past-examinations-and-reports/Exam-Papers/2021MM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Applied-Computing--Software-Development/Exam-Reports/2021softwaredev-report.txt",
+    "subject": "Applied-Computing--Software-Development",
+    "year": "2021",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2021/Applied-Computing--Software-Development/Exam-Papers/2021AC-softdev-w.txt",
+    "subject": "Applied-Computing--Software-Development",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Chemistry/Exam-Papers/2021chem-w.txt",
+    "subject": "Chemistry",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Extended-Investigation/Exam-Papers/2021CTT-w.txt",
+    "subject": "Extended-Investigation",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Texts-and-Traditions/Exam-Papers/2021textrad-w.txt",
+    "subject": "Texts-and-Traditions",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Psychology/Exam-Papers/2021psych-w.txt",
+    "subject": "Psychology",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Outdoor-and-Environmental-Studies/Exam-Papers/2021outdoor-w.txt",
+    "subject": "Outdoor-and-Environmental-Studies",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Music-Contemporary-Performance/Exam-Papers/2021musperf-w.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Applied-Computing--Data-Analytics/Exam-Reports/2021dataanalytics-report.txt",
+    "subject": "Applied-Computing--Data-Analytics",
+    "year": "2021",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2021/Applied-Computing--Data-Analytics/Exam-Papers/2021AC-dataanalytics-w.txt",
+    "subject": "Applied-Computing--Data-Analytics",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Religion-and-Society/Exam-Papers/2021relsoc-w.txt",
+    "subject": "Religion-and-Society",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Australian-History/Exam-Reports/2021histaus-exam-report.txt",
+    "subject": "Australian-History",
+    "year": "2021",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2021/Australian-History/Exam-Papers/2021histaus-w.txt",
+    "subject": "Australian-History",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Agricultural-and-Horticultural-Studies/Exam-Reports/2021aghort-report.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2021",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2021/Agricultural-and-Horticultural-Studies/Exam-Papers/2021aghort-cpr-w.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/English/Exam-Papers/2021english-w.txt",
+    "subject": "English",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Music-Repertoire-Performance/Exam-Papers/2021musperf-w.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/English-Language/Exam-Papers/2021englang-cpr-w.txt",
+    "subject": "English-Language",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Philosophy/Exam-Reports/2021philosophy-report.txt",
+    "subject": "Philosophy",
+    "year": "2021",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2021/Philosophy/Exam-Papers/2021philos-w.txt",
+    "subject": "Philosophy",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Dance/Exam-Papers/2021dance-w.txt",
+    "subject": "Dance",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Economics/Exam-Papers/2021economics-w.txt",
+    "subject": "Economics",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Mathematical-Methods/Exam-Papers/2021MM1-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Mathematical-Methods/Exam-Papers/2021MM2-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Art-Making-and-Exhibiting/Exam-Papers/2021studioarts-cpr-w.txt",
+    "subject": "Art-Making-and-Exhibiting",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Business-Management/Exam-Papers/2021busman-w.txt",
+    "subject": "Business-Management",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Physics/Exam-Papers/2021physics-w.txt",
+    "subject": "Physics",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Food-Studies/Exam-Papers/2021foodstudies-w.txt",
+    "subject": "Food-Studies",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Specialist-Mathematics/Exam-Papers/2021specmath2-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Specialist-Mathematics/Exam-Papers/2021specmath1-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Classical-Studies/Exam-Papers/2021classtud-cpr-w.txt",
+    "subject": "Classical-Studies",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Product-Design-and-Technologies/Exam-Papers/2021pdt-w.txt",
+    "subject": "Product-Design-and-Technologies",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Systems-Engineering/Exam-Reports/2021systemseng-report-2021.txt",
+    "subject": "Systems-Engineering",
+    "year": "2021",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2021/Systems-Engineering/Exam-Papers/2021syseng-w.txt",
+    "subject": "Systems-Engineering",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Geography/Exam-Reports/2021geog-report.txt",
+    "subject": "Geography",
+    "year": "2021",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2021/Geography/Exam-Papers/2021geog-cpr-w.txt",
+    "subject": "Geography",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Legal-Studies/Exam-Papers/2021legal-w.txt",
+    "subject": "Legal-Studies",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Physical-Education/Exam-Reports/2021physed-report.txt",
+    "subject": "Physical-Education",
+    "year": "2021",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2021/Physical-Education/Exam-Papers/2021physed-w.txt",
+    "subject": "Physical-Education",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Biology/Exam-Papers/2021biology-cpr-w.txt",
+    "subject": "Biology",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Drama/Exam-Papers/2021dramasoloperf-w.txt",
+    "subject": "Drama",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Drama/Exam-Papers/2021drama-w.txt",
+    "subject": "Drama",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2021/Media/Exam-Papers/2021media-w.txt",
+    "subject": "Media",
+    "year": "2021",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Accounting/Exam-Reports/2020VCEAccountingExaminationReport.txt",
+    "subject": "Accounting",
+    "year": "2020",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2020/Accounting/Exam-Papers/2020account-w.txt",
+    "subject": "Accounting",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Algorithmics--HESS/Exam-Reports/2020algorithmics-exam-report.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2020",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2020/Algorithmics--HESS/Exam-Papers/2020algorithmics-w.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Ancient-History/Exam-Reports/2020ancient-history-exam-report.txt",
+    "subject": "Ancient-History",
+    "year": "2020",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2020/Ancient-History/Exam-Papers/2020histancient-cpr-w.txt",
+    "subject": "Ancient-History",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Industry-and-Enterprise/Exam-Papers/2020ind-ent-w.txt",
+    "subject": "Industry-and-Enterprise",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/General-Mathematics/Exam-Papers/2020furmath2-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/General-Mathematics/Exam-Papers/2020furmath1-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Art-Creative-Practice/Exam-Papers/2020art-cpr-w.txt",
+    "subject": "Art-Creative-Practice",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Revolutions/Exam-Reports/2020history-revs-exam-report.txt",
+    "subject": "Revolutions",
+    "year": "2020",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2020/Revolutions/Exam-Papers/2020histrevQB-cpr-w.txt",
+    "subject": "Revolutions",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Visual-Communication-Design/Exam-Papers/2020vcd-cpr-w.txt",
+    "subject": "Visual-Communication-Design",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Music-Composition/Exam-Papers/2020musicstyles-w.txt",
+    "subject": "Music-Composition",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/English-as-an-Additional-Language--EAL/Exam-Papers/2020EAL-w.txt",
+    "subject": "English-as-an-Additional-Language--EAL",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Literature/Exam-Papers/2020literature-cpr-w.txt",
+    "subject": "Literature",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Sociology/Exam-Papers/2020sociology-w.txt",
+    "subject": "Sociology",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Health-and-Human-Development/Exam-Reports/2020health-exam-report.txt",
+    "subject": "Health-and-Human-Development",
+    "year": "2020",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2020/Health-and-Human-Development/Exam-Papers/2020health-w.txt",
+    "subject": "Health-and-Human-Development",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Environmental-Science/Exam-Papers/2020envsc-w.txt",
+    "subject": "Environmental-Science",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Theatre-Studies/Exam-Papers/2020theatre-cpr-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Theatre-Studies/Exam-Papers/2020ts-monologue-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Applied-Computing--Software-Development/Exam-Papers/2020AC-softdev-w.txt",
+    "subject": "Applied-Computing--Software-Development",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Chemistry/Exam-Papers/2020chem-w.txt",
+    "subject": "Chemistry",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Texts-and-Traditions/Exam-Papers/2020textrad-w.txt",
+    "subject": "Texts-and-Traditions",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Psychology/Exam-Papers/2020psych-w.txt",
+    "subject": "Psychology",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Outdoor-and-Environmental-Studies/Exam-Papers/2020outdoor-w.txt",
+    "subject": "Outdoor-and-Environmental-Studies",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Music-Contemporary-Performance/Exam-Papers/2020musperf-cpraudio-w.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Applied-Computing--Data-Analytics/Exam-Reports/2020appliedcomp-dataanalytics-exam-report.txt",
+    "subject": "Applied-Computing--Data-Analytics",
+    "year": "2020",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2020/Applied-Computing--Data-Analytics/Exam-Papers/2020AC-dataanalytics-w.txt",
+    "subject": "Applied-Computing--Data-Analytics",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Religion-and-Society/Exam-Papers/2020relsoc-w.txt",
+    "subject": "Religion-and-Society",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Australian-History/Exam-Reports/2020aushistory-exam-report.txt",
+    "subject": "Australian-History",
+    "year": "2020",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2020/Australian-History/Exam-Papers/2020histaus-w.txt",
+    "subject": "Australian-History",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Agricultural-and-Horticultural-Studies/Exam-Reports/2020aghort-exam-report.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2020",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2020/Agricultural-and-Horticultural-Studies/Exam-Papers/aghort-samp-w.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Agricultural-and-Horticultural-Studies/Exam-Papers/2020aghort-w.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/English/Exam-Papers/2020english-w.txt",
+    "subject": "English",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Music-Repertoire-Performance/Exam-Papers/2020musperf-cpraudio-w.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/English-Language/Exam-Papers/2020englang-w.txt",
+    "subject": "English-Language",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Philosophy/Exam-Reports/2020philosophy-exam-report.txt",
+    "subject": "Philosophy",
+    "year": "2020",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2020/Philosophy/Exam-Papers/2020philos-cpr-w.txt",
+    "subject": "Philosophy",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Dance/Exam-Papers/2020dance-w.txt",
+    "subject": "Dance",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Economics/Exam-Papers/2020economics-w.txt",
+    "subject": "Economics",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Mathematical-Methods/Exam-Papers/2020MM1-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Mathematical-Methods/Exam-Papers/2020MM2-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Art-Making-and-Exhibiting/Exam-Papers/2020studioarts-cpr-w.txt",
+    "subject": "Art-Making-and-Exhibiting",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Business-Management/Exam-Papers/2020busman-w.txt",
+    "subject": "Business-Management",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Physics/Exam-Papers/2020physics-w.txt",
+    "subject": "Physics",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Food-Studies/Exam-Papers/2020foodstudies-cpr-w.txt",
+    "subject": "Food-Studies",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Specialist-Mathematics/Exam-Papers/2020specmath2-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Specialist-Mathematics/Exam-Papers/2020specmath1-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Classical-Studies/Exam-Papers/2020classtud-cpr-w.txt",
+    "subject": "Classical-Studies",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Product-Design-and-Technologies/Exam-Papers/2020pdt-w.txt",
+    "subject": "Product-Design-and-Technologies",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Systems-Engineering/Exam-Reports/2020SystEngineering-exam-report.txt",
+    "subject": "Systems-Engineering",
+    "year": "2020",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2020/Systems-Engineering/Exam-Papers/2020syseng-w.txt",
+    "subject": "Systems-Engineering",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Geography/Exam-Reports/2020geography-exam-report.txt",
+    "subject": "Geography",
+    "year": "2020",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2020/Geography/Exam-Papers/2020geog-cpr-w.txt",
+    "subject": "Geography",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Legal-Studies/Exam-Papers/2020legal-w.txt",
+    "subject": "Legal-Studies",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Physical-Education/Exam-Reports/2020physed-exam-report.txt",
+    "subject": "Physical-Education",
+    "year": "2020",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2020/Physical-Education/Exam-Papers/2020physed-w.txt",
+    "subject": "Physical-Education",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Biology/Exam-Papers/2020biology-cpr-w.txt",
+    "subject": "Biology",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Drama/Exam-Papers/2020dramasoloperf-w.txt",
+    "subject": "Drama",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Drama/Exam-Papers/2020drama-w.txt",
+    "subject": "Drama",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2020/Media/Exam-Papers/2020media-w.txt",
+    "subject": "Media",
+    "year": "2020",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Accounting/Exam-Papers/2018account-w.txt",
+    "subject": "Accounting",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Accounting/Exam-Papers/accounting_examrep18.txt",
+    "subject": "Accounting",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Algorithmics--HESS/Exam-Papers/algorithmics_examrep18.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Algorithmics--HESS/Exam-Papers/2018algorithmics-w.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Ancient-History/Exam-Papers/2018histancient-cpr-w.txt",
+    "subject": "Ancient-History",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Ancient-History/Exam-Papers/ancienthistory_examrep18.txt",
+    "subject": "Ancient-History",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Industry-and-Enterprise/Exam-Papers/industryenterprise_examrep18.txt",
+    "subject": "Industry-and-Enterprise",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Industry-and-Enterprise/Exam-Papers/2018ind-ent-w.txt",
+    "subject": "Industry-and-Enterprise",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/General-Mathematics/Exam-Papers/2018furmath1-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/General-Mathematics/Exam-Papers/fm1_examrep18.txt",
+    "subject": "General-Mathematics",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/General-Mathematics/Exam-Papers/FM2_examrep18.txt",
+    "subject": "General-Mathematics",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/General-Mathematics/Exam-Papers/2018furmath2-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Art-Creative-Practice/Exam-Papers/2018art-cpr-w.txt",
+    "subject": "Art-Creative-Practice",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Art-Creative-Practice/Exam-Papers/art_examrep18.txt",
+    "subject": "Art-Creative-Practice",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Revolutions/Exam-Papers/historyrevs_examrep18.txt",
+    "subject": "Revolutions",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Revolutions/Exam-Papers/2018histrevQB-cpr-w.txt",
+    "subject": "Revolutions",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Visual-Communication-Design/Exam-Papers/2018vcd-cpr-w.txt",
+    "subject": "Visual-Communication-Design",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Visual-Communication-Design/Exam-Papers/viscomm_examrep18.txt",
+    "subject": "Visual-Communication-Design",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Music-Composition/Exam-Papers/musicstyleEAT_examrep18.txt",
+    "subject": "Music-Composition",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Music-Composition/Exam-Papers/musicstyle_examrep18.txt",
+    "subject": "Music-Composition",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Music-Composition/Exam-Papers/2018musicstyles-w.txt",
+    "subject": "Music-Composition",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/English-as-an-Additional-Language--EAL/Exam-Papers/eal_examrep18.txt",
+    "subject": "English-as-an-Additional-Language--EAL",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/English-as-an-Additional-Language--EAL/Exam-Papers/2018EAL-deltxt-w.txt",
+    "subject": "English-as-an-Additional-Language--EAL",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Literature/Exam-Papers/literature_examrep18.txt",
+    "subject": "Literature",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Literature/Exam-Papers/2018literature-cpr-w.txt",
+    "subject": "Literature",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Sociology/Exam-Papers/sociology_examrep18.txt",
+    "subject": "Sociology",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Sociology/Exam-Papers/2018sociology-cpr-w.txt",
+    "subject": "Sociology",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Health-and-Human-Development/Exam-Papers/hhd_examrep18.txt",
+    "subject": "Health-and-Human-Development",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Health-and-Human-Development/Exam-Papers/2018health-cpr-w.txt",
+    "subject": "Health-and-Human-Development",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Environmental-Science/Exam-Papers/2018envsc-cpr-w.txt",
+    "subject": "Environmental-Science",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Environmental-Science/Exam-Papers/enviro_examrep18.txt",
+    "subject": "Environmental-Science",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Theatre-Studies/Exam-Papers/theatrestudiesperf_examrep18.txt",
+    "subject": "Theatre-Studies",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Theatre-Studies/Exam-Papers/2018ts-stagecraft-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Theatre-Studies/Exam-Papers/2018theatre-cpr-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Theatre-Studies/Exam-Papers/theatrestudies_examrep18.txt",
+    "subject": "Theatre-Studies",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Reports/chineseFLoralnht_examreport18.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Reports/chineseFLwrittennht_examreport18.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/accountingNHT_examrep18.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/2018SM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/englishnht_examrep18.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/2018EAL-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/2018account-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/2018chem-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/2018english-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/specialistmaths1nht_examrep18.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/2018biology-nht-cpr-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/mathsmethods1nht_examrep18.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/2018FM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/furthermaths2nht_examrep18.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/2018MM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/physicsnht_examrep18.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/chemistrynht_examrep18.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/ealnht_examrep18.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/specialistmaths2nht_examrep18.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/furthermaths1nht_examrep18.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/2018FM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/2018physics-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/mathsmethods2nht_examrep18.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/2018MM2-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/english-nht-samp-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/2018SM1-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/biologyNHT_examrep18.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/eal-nht-samp-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/NHT-past-examinations-and-reports/Exam-Papers/2018chinFL-nht-w.txt",
+    "subject": "NHT-past-examinations-and-reports",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Chemistry/Exam-Papers/2018chem-w.txt",
+    "subject": "Chemistry",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Chemistry/Exam-Papers/chemistryexamrep18.txt",
+    "subject": "Chemistry",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Extended-Investigation/Exam-Papers/ctt_examrep18.txt",
+    "subject": "Extended-Investigation",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Extended-Investigation/Exam-Papers/eiwritten_examrep18.txt",
+    "subject": "Extended-Investigation",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Extended-Investigation/Exam-Papers/eioral_examrep18.txt",
+    "subject": "Extended-Investigation",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Texts-and-Traditions/Exam-Papers/2018textrad-w.txt",
+    "subject": "Texts-and-Traditions",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Texts-and-Traditions/Exam-Papers/textsandtraditions_examrep18.txt",
+    "subject": "Texts-and-Traditions",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Psychology/Exam-Papers/psych_examrep18.txt",
+    "subject": "Psychology",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Psychology/Exam-Papers/2018psych-w.txt",
+    "subject": "Psychology",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Outdoor-and-Environmental-Studies/Exam-Papers/outdoor_examrep18.txt",
+    "subject": "Outdoor-and-Environmental-Studies",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Outdoor-and-Environmental-Studies/Exam-Papers/2018outdoor-w.txt",
+    "subject": "Outdoor-and-Environmental-Studies",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Music-Contemporary-Performance/Exam-Papers/2018musperf-w.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Music-Contemporary-Performance/Exam-Papers/musicperfperf_examrep18.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Music-Contemporary-Performance/Exam-Papers/musicperf_examrep18.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Religion-and-Society/Exam-Papers/religionandsoc_examrep18.txt",
+    "subject": "Religion-and-Society",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Religion-and-Society/Exam-Papers/2018relsoc-w.txt",
+    "subject": "Religion-and-Society",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Australian-History/Exam-Papers/aushistory_examrep18.txt",
+    "subject": "Australian-History",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Australian-History/Exam-Papers/2018histaus-cpr-w.txt",
+    "subject": "Australian-History",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Agricultural-and-Horticultural-Studies/Exam-Papers/2018aghort-w.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Agricultural-and-Horticultural-Studies/Exam-Papers/aghort_examrep18.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/English/Exam-Papers/2018english-deltxt-w.txt",
+    "subject": "English",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/English/Exam-Papers/english_examrep18.txt",
+    "subject": "English",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Music-Repertoire-Performance/Exam-Papers/2018musperf-w.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Music-Repertoire-Performance/Exam-Papers/musicperfperf_examrep18.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Music-Repertoire-Performance/Exam-Papers/musicperf_examrep18.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/English-Language/Exam-Papers/2018englang-cpr-w.txt",
+    "subject": "English-Language",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/English-Language/Exam-Papers/englang_examrep18.txt",
+    "subject": "English-Language",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Philosophy/Exam-Papers/2018philos-w.txt",
+    "subject": "Philosophy",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Philosophy/Exam-Papers/philosophy_examrep18.txt",
+    "subject": "Philosophy",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Dance/Exam-Papers/dancew_examrep18.txt",
+    "subject": "Dance",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Dance/Exam-Papers/danceperf_examrep18.txt",
+    "subject": "Dance",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Dance/Exam-Papers/2018dance-w.txt",
+    "subject": "Dance",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Economics/Exam-Papers/economics_examrep18.txt",
+    "subject": "Economics",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Economics/Exam-Papers/2018economics-w.txt",
+    "subject": "Economics",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Mathematical-Methods/Exam-Papers/2018MM2-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Mathematical-Methods/Exam-Papers/2018MM1-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Mathematical-Methods/Exam-Papers/mm1_examrep18.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Mathematical-Methods/Exam-Papers/mm2_examrep18.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Art-Making-and-Exhibiting/Exam-Papers/2018studioarts-cpr-w.txt",
+    "subject": "Art-Making-and-Exhibiting",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Art-Making-and-Exhibiting/Exam-Papers/studioartsexamrep18.txt",
+    "subject": "Art-Making-and-Exhibiting",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Business-Management/Exam-Papers/2018busman-w.txt",
+    "subject": "Business-Management",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Business-Management/Exam-Papers/busman_examrep18.txt",
+    "subject": "Business-Management",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Physics/Exam-Papers/physics_examrep18.txt",
+    "subject": "Physics",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Physics/Exam-Papers/2018physics-w.txt",
+    "subject": "Physics",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Food-Studies/Exam-Papers/2018foodstudies-cpr-w.txt",
+    "subject": "Food-Studies",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Food-Studies/Exam-Papers/foodstudies_examrep18.txt",
+    "subject": "Food-Studies",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Specialist-Mathematics/Exam-Papers/sm1_examrep18.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Specialist-Mathematics/Exam-Papers/sm2_examrep18.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Specialist-Mathematics/Exam-Papers/2018specmath2-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Specialist-Mathematics/Exam-Papers/2018specmath1-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Classical-Studies/Exam-Papers/2018classtud-cpr-w.txt",
+    "subject": "Classical-Studies",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Classical-Studies/Exam-Papers/classicalstudies_examrep18.txt",
+    "subject": "Classical-Studies",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Product-Design-and-Technologies/Exam-Papers/pdt_examrep18.txt",
+    "subject": "Product-Design-and-Technologies",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Product-Design-and-Technologies/Exam-Papers/2018pdt-cpr-w.txt",
+    "subject": "Product-Design-and-Technologies",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Systems-Engineering/Exam-Papers/2018syseng-w.txt",
+    "subject": "Systems-Engineering",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Systems-Engineering/Exam-Papers/systemseng_examrep18.txt",
+    "subject": "Systems-Engineering",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Systems-Engineering/Exam-Papers/systemseng_examrep16.txt",
+    "subject": "Systems-Engineering",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Geography/Exam-Papers/geography_examrep18.txt",
+    "subject": "Geography",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Geography/Exam-Papers/2018geog-w.txt",
+    "subject": "Geography",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Legal-Studies/Exam-Papers/legalstudies_examrep18.txt",
+    "subject": "Legal-Studies",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Legal-Studies/Exam-Papers/2018legal-w.txt",
+    "subject": "Legal-Studies",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Music-Inquiry/Exam-Papers/musicinvperf_examrep18.txt",
+    "subject": "Music-Inquiry",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Physical-Education/Exam-Papers/physed_examrep18.txt",
+    "subject": "Physical-Education",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Physical-Education/Exam-Papers/2018physed-cpr-w.txt",
+    "subject": "Physical-Education",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Biology/Exam-Papers/biology_examrep18.txt",
+    "subject": "Biology",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Biology/Exam-Papers/2018biology-cpr-w.txt",
+    "subject": "Biology",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Drama/Exam-Papers/dramasoloperf_examrep18.txt",
+    "subject": "Drama",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Drama/Exam-Papers/2018dramasoloperf-w.txt",
+    "subject": "Drama",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Drama/Exam-Papers/dramawritten_examrep18.txt",
+    "subject": "Drama",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Drama/Exam-Papers/2018drama-cpr-w.txt",
+    "subject": "Drama",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Media/Exam-Papers/2018media-w.txt",
+    "subject": "Media",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2018/Media/Exam-Papers/media_examrep18.txt",
+    "subject": "Media",
+    "year": "2018",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Accounting/Exam-Papers/accounting_examrep16.txt",
+    "subject": "Accounting",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Accounting/Exam-Papers/2016account-w.txt",
+    "subject": "Accounting",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Algorithmics--HESS/Exam-Papers/2016algorithmics-w.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Algorithmics--HESS/Exam-Papers/algorithmics_examrep16.txt",
+    "subject": "Algorithmics--HESS",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Ancient-History/Exam-Papers/ancienthistory_examrep16.txt",
+    "subject": "Ancient-History",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Ancient-History/Exam-Papers/2016histanc-cpr-w.txt",
+    "subject": "Ancient-History",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Industry-and-Enterprise/Exam-Papers/2016ind-ent-cpr-w.txt",
+    "subject": "Industry-and-Enterprise",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Industry-and-Enterprise/Exam-Papers/industryenterprise_examrep16.txt",
+    "subject": "Industry-and-Enterprise",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/General-Mathematics/Exam-Papers/2016furmath2-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/General-Mathematics/Exam-Papers/2016furmath1-w.txt",
+    "subject": "General-Mathematics",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/General-Mathematics/Exam-Papers/FM2_examrep16.txt",
+    "subject": "General-Mathematics",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/General-Mathematics/Exam-Papers/FM1_examrep16.txt",
+    "subject": "General-Mathematics",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Art-Creative-Practice/Exam-Papers/2016art-w.txt",
+    "subject": "Art-Creative-Practice",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Art-Creative-Practice/Exam-Papers/art_examrep16.txt",
+    "subject": "Art-Creative-Practice",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Revolutions/Exam-Papers/2016histrevQB-cpr-w.txt",
+    "subject": "Revolutions",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Revolutions/Exam-Papers/historyrevs_examrep16.txt",
+    "subject": "Revolutions",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Visual-Communication-Design/Exam-Papers/viscomm_examrep16.txt",
+    "subject": "Visual-Communication-Design",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Visual-Communication-Design/Exam-Papers/2016vcd-cpr-w.txt",
+    "subject": "Visual-Communication-Design",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Music-Composition/Exam-Papers/musicstyle_examrep16.txt",
+    "subject": "Music-Composition",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Music-Composition/Exam-Papers/musicstyleEAT_examrep16.txt",
+    "subject": "Music-Composition",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Music-Composition/Exam-Papers/2016musicstyles-w.txt",
+    "subject": "Music-Composition",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/English-as-an-Additional-Language--EAL/Exam-Papers/2016englishEAL-cpr-w.txt",
+    "subject": "English-as-an-Additional-Language--EAL",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/English-as-an-Additional-Language--EAL/Exam-Papers/eal_examrep16.txt",
+    "subject": "English-as-an-Additional-Language--EAL",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Sociology/Exam-Papers/2016sociology-cpr-w.txt",
+    "subject": "Sociology",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Sociology/Exam-Papers/sociology_examrep16.txt",
+    "subject": "Sociology",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Health-and-Human-Development/Exam-Papers/2016health-cpr-w.txt",
+    "subject": "Health-and-Human-Development",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Health-and-Human-Development/Exam-Papers/healthhuman_examrep16.txt",
+    "subject": "Health-and-Human-Development",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Health-and-Human-Development/Exam-Papers/hhd_examrep15.txt",
+    "subject": "Health-and-Human-Development",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Environmental-Science/Exam-Papers/2016envsc-w.txt",
+    "subject": "Environmental-Science",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Environmental-Science/Exam-Papers/enviroscience_examrep16.txt",
+    "subject": "Environmental-Science",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Theatre-Studies/Exam-Papers/theatrestudies_examrep16.txt",
+    "subject": "Theatre-Studies",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Theatre-Studies/Exam-Papers/theatrestagecraft_examrep16.txt",
+    "subject": "Theatre-Studies",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Theatre-Studies/Exam-Papers/2016ts-stagecraft-p.txt",
+    "subject": "Theatre-Studies",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Theatre-Studies/Exam-Papers/2016theatre-cpr-w.txt",
+    "subject": "Theatre-Studies",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Chemistry/Exam-Papers/chemistry_examrep16.txt",
+    "subject": "Chemistry",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Chemistry/Exam-Papers/2016chem-amd-w.txt",
+    "subject": "Chemistry",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Extended-Investigation/Exam-Papers/eioral_examrep16.txt",
+    "subject": "Extended-Investigation",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Extended-Investigation/Exam-Papers/ctt_examrep16.txt",
+    "subject": "Extended-Investigation",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Extended-Investigation/Exam-Papers/eiwritten_examrep16.txt",
+    "subject": "Extended-Investigation",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Texts-and-Traditions/Exam-Papers/2016textrad-w.txt",
+    "subject": "Texts-and-Traditions",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Texts-and-Traditions/Exam-Papers/textstraditions_examrep16.txt",
+    "subject": "Texts-and-Traditions",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Psychology/Exam-Papers/psychology_examrep16.txt",
+    "subject": "Psychology",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Psychology/Exam-Papers/2016psych-w.txt",
+    "subject": "Psychology",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Outdoor-and-Environmental-Studies/Exam-Papers/outdoorenviro_examrep16.txt",
+    "subject": "Outdoor-and-Environmental-Studies",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Outdoor-and-Environmental-Studies/Exam-Papers/2016outdoor-w.txt",
+    "subject": "Outdoor-and-Environmental-Studies",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Music-Contemporary-Performance/Exam-Papers/musicperf_examrep16.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Music-Contemporary-Performance/Exam-Papers/musicperfperf_examrep16.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Music-Contemporary-Performance/Exam-Papers/2016musperf-w.txt",
+    "subject": "Music-Contemporary-Performance",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Religion-and-Society/Exam-Papers/2016relsoc-w.txt",
+    "subject": "Religion-and-Society",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Religion-and-Society/Exam-Papers/religionandsoc_examrep16.txt",
+    "subject": "Religion-and-Society",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Australian-History/Exam-Reports/historyaustralianassessreportnov05.txt",
+    "subject": "Australian-History",
+    "year": "2016",
+    "type": "Exam-Reports"
+  },
+  {
+    "path": "vcaa_text_data/2016/Australian-History/Exam-Papers/2016histaus-w.txt",
+    "subject": "Australian-History",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Australian-History/Exam-Papers/austhistory_examrep16.txt",
+    "subject": "Australian-History",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Agricultural-and-Horticultural-Studies/Exam-Papers/aghort_examrep16.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Agricultural-and-Horticultural-Studies/Exam-Papers/2016aghort-w.txt",
+    "subject": "Agricultural-and-Horticultural-Studies",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/English/Exam-Papers/english_examrep16.txt",
+    "subject": "English",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/English/Exam-Papers/2016english-cpr-w.txt",
+    "subject": "English",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Music-Repertoire-Performance/Exam-Papers/musicperf_examrep16.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Music-Repertoire-Performance/Exam-Papers/musicperfperf_examrep16.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Music-Repertoire-Performance/Exam-Papers/2016musperf-w.txt",
+    "subject": "Music-Repertoire-Performance",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/English-Language/Exam-Papers/2016englang-cpr-w.txt",
+    "subject": "English-Language",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/English-Language/Exam-Papers/englishlang_examrep16.txt",
+    "subject": "English-Language",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Philosophy/Exam-Papers/philosophy_examrep16.txt",
+    "subject": "Philosophy",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Philosophy/Exam-Papers/2016philos-w.txt",
+    "subject": "Philosophy",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Dance/Exam-Papers/2016dance-w.txt",
+    "subject": "Dance",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Dance/Exam-Papers/danceperf_examrep16.txt",
+    "subject": "Dance",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Dance/Exam-Papers/dancewritten_examrep16.txt",
+    "subject": "Dance",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Economics/Exam-Papers/economics_examrep16.txt",
+    "subject": "Economics",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Economics/Exam-Papers/2016economics-w.txt",
+    "subject": "Economics",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Mathematical-Methods/Exam-Papers/2016MM1-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Mathematical-Methods/Exam-Papers/mm2_examrep16.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Mathematical-Methods/Exam-Papers/mm1_examrep16.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Mathematical-Methods/Exam-Papers/2016MM2-w.txt",
+    "subject": "Mathematical-Methods",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Art-Making-and-Exhibiting/Exam-Papers/2016studioarts-cpr-w.txt",
+    "subject": "Art-Making-and-Exhibiting",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Art-Making-and-Exhibiting/Exam-Papers/studioarts_examrep16.txt",
+    "subject": "Art-Making-and-Exhibiting",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Business-Management/Exam-Papers/businessmanagement_examrep16.txt",
+    "subject": "Business-Management",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Business-Management/Exam-Papers/2016busman-w.txt",
+    "subject": "Business-Management",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Physics/Exam-Papers/2016physics-amd-w.txt",
+    "subject": "Physics",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Physics/Exam-Papers/physics_examrep16.txt",
+    "subject": "Physics",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Food-Studies/Exam-Papers/2016food-tech-w.txt",
+    "subject": "Food-Studies",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Food-Studies/Exam-Papers/foodtech_examrep16.txt",
+    "subject": "Food-Studies",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Specialist-Mathematics/Exam-Papers/SM2_examrep16.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Specialist-Mathematics/Exam-Papers/SM1_examrep16.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Specialist-Mathematics/Exam-Papers/2016specmath2-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Specialist-Mathematics/Exam-Papers/2016specmath1-w.txt",
+    "subject": "Specialist-Mathematics",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Product-Design-and-Technologies/Exam-Papers/productdesign_examrep16.txt",
+    "subject": "Product-Design-and-Technologies",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Product-Design-and-Technologies/Exam-Papers/2016prodestech-cpr-w.txt",
+    "subject": "Product-Design-and-Technologies",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Systems-Engineering/Exam-Papers/2016syseng-w.txt",
+    "subject": "Systems-Engineering",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Geography/Exam-Papers/geography_examrep16.txt",
+    "subject": "Geography",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Geography/Exam-Papers/2016geog-cpr-w.txt",
+    "subject": "Geography",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Legal-Studies/Exam-Papers/2016legal-w.txt",
+    "subject": "Legal-Studies",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Legal-Studies/Exam-Papers/legalstudies_examrep16.txt",
+    "subject": "Legal-Studies",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Music-Inquiry/Exam-Papers/musicinvestigationperf_examrep16.txt",
+    "subject": "Music-Inquiry",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Physical-Education/Exam-Papers/physed_examrep16.txt",
+    "subject": "Physical-Education",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Physical-Education/Exam-Papers/2016physed-cpr-w.txt",
+    "subject": "Physical-Education",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Biology/Exam-Papers/2016biology-w.txt",
+    "subject": "Biology",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Biology/Exam-Papers/biology_examrep16.txt",
+    "subject": "Biology",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Drama/Exam-Papers/2016dramasoloperf-p.txt",
+    "subject": "Drama",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Drama/Exam-Papers/drama_examrep16.txt",
+    "subject": "Drama",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Drama/Exam-Papers/2016drama-cpr-w.txt",
+    "subject": "Drama",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Drama/Exam-Papers/dramasoloperf_examrep16.txt",
+    "subject": "Drama",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Media/Exam-Papers/media_examrep16.txt",
+    "subject": "Media",
+    "year": "2016",
+    "type": "Exam-Papers"
+  },
+  {
+    "path": "vcaa_text_data/2016/Media/Exam-Papers/2016media-w.txt",
+    "subject": "Media",
+    "year": "2016",
+    "type": "Exam-Papers"
+  }
+]
