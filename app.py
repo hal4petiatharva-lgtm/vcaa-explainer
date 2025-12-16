@@ -27,6 +27,21 @@ logging.basicConfig(level=logging.INFO)
 if client is None:
     logging.warning("GROQ_API_KEY not set; Groq client not initialized.")
 
+VCAA_DB_LOADED = False
+vce_db = None
+try:
+    from vce_knowledge_base import VCEDatabase
+    try:
+        vce_db = VCEDatabase()
+        _ = vce_db.search("test", k=1)
+        VCAA_DB_LOADED = True
+        logging.info("[VCEInsider] VCAA database loaded successfully")
+    except Exception as e:
+        logging.warning(f"[VCEInsider] Database load failed: {e}")
+        VCAA_DB_LOADED = False
+except ImportError:
+    logging.info("[VCEInsider] vce_knowledge_base.py not found; running without VCAA database.")
+
 system_message = """You are an expert VCE exam coach. Produce concise, actionable output a student can execute during timed assessments.
 
 Output exactly two sections in Markdown:
@@ -80,11 +95,39 @@ def explain():
     if not GROQ_API_KEY:
         return jsonify({"error": "Missing Groq API key. Set GROQ_API_KEY in .env."}), 500
 
+    vcaa_results = []
+    vcaa_context = ""
+    if VCAA_DB_LOADED and vce_db:
+        try:
+            vcaa_results = vce_db.search(question, k=3) or []
+            lines = []
+            for i, tup in enumerate(vcaa_results):
+                try:
+                    chunk, meta, score = tup
+                except ValueError:
+                    chunk = tup[0] if len(tup) > 0 else ""
+                    meta = tup[1] if len(tup) > 1 else {}
+                    score = tup[2] if len(tup) > 2 else 0.0
+                subject = str(meta.get("subject", "Unknown"))
+                year = str(meta.get("year", "Unknown"))
+                typ = str(meta.get("type", "Unknown"))
+                snippet = (chunk or "")[:250].replace("\n", " ").strip()
+                lines.append(f"{i+1}. {subject} {year} ({typ}): {snippet}")
+            if lines:
+                vcaa_context = "RELEVANT VCAA CONTEXT:\n" + "\n".join(lines)
+        except Exception as e:
+            logging.warning(f"[VCEInsider] VCAA search error: {e}")
+            vcaa_results = []
+            vcaa_context = ""
+
     try:
+        user_content = question
+        if vcaa_context:
+            user_content = f"{question}\n\n{vcaa_context}\n"
         chat = client.chat.completions.create(
             messages=[
                 {"role": "system", "content": system_message},
-                {"role": "user", "content": question},
+                {"role": "user", "content": user_content},
             ],
             model=GROQ_MODEL,
             temperature=0.4,
@@ -96,7 +139,16 @@ def explain():
         content = content.strip()
         if not content:
             return jsonify({"error": "Groq returned empty content."}), 502
-        return jsonify({"analysis": content})
+        citations = [
+            {
+                "subject": str(meta.get("subject", "Unknown")),
+                "year": str(meta.get("year", "Unknown")),
+                "type": str(meta.get("type", "Unknown")),
+                "relevance": float(score),
+            }
+            for (chunk, meta, score) in vcaa_results
+        ] if vcaa_results else []
+        return jsonify({"analysis": content, "citations": citations, "database_used": bool(vcaa_results)})
     except Exception as e:
         msg = str(e)
         if "rate limit" in msg.lower():
