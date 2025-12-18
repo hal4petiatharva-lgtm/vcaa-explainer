@@ -177,7 +177,7 @@
             citations.forEach(c => {
                 const li = document.createElement('li');
                 li.style.marginBottom = '0.5rem';
-                li.innerHTML = `<strong>[${c.subject || 'VCE'}, ${c.year || 'Unknown'}]</strong> ${c.type || 'Exam Paper'} - <em>Relevance: ${Math.round(c.relevance * 100)}%</em>`;
+                li.innerHTML = `<strong>[${c.subject || 'VCE'}, ${c.year || 'Unknown'}]</strong> ${c.type || 'Exam Paper'} - <em>Relevance: ${Math.round(c.relevance * 100)}%</em><br><small style="color:#64748b; display:block; margin-top:0.2rem;">${c.snippet || ''}</small>`;
                 sourcesUl.appendChild(li);
             });
             toggleSourcesBtn.style.display = 'flex';
