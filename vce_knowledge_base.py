@@ -34,10 +34,26 @@ class VCEDatabase:
             self.metas = []
             self.tfidf_matrix = None
     
-    def search(self, query, k=3):
+    def search(self, query, k=3, subject_filter=None):
         if not self.chunks: return []
         query_vec = self.vectorizer.transform([query])
         similarities = (self.tfidf_matrix * query_vec.T).toarray().flatten()
+        
+        # Apply subject filtering if provided
+        if subject_filter:
+            # Normalize allowed subjects to lowercase
+            allowed = set(s.lower() for s in subject_filter)
+            # Mask out irrelevant subjects
+            for i in range(len(similarities)):
+                if similarities[i] <= 0: continue
+                
+                # Get chunk subject
+                subj_meta = str(self.metas[i].get('subject', '')).lower()
+                # If the chunk's subject doesn't match any of our allowed subjects, zero the score
+                # We check if any allowed subject string appears in the meta subject string
+                if not any(a in subj_meta for a in allowed):
+                    similarities[i] = 0.0
+
         top_idx = np.argsort(similarities)[-k:][::-1]
         return [(self.chunks[i], self.metas[i], float(similarities[i]))
                 for i in top_idx if similarities[i] > 0.05][:k]
