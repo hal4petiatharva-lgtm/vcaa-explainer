@@ -72,6 +72,8 @@ Format:
 For "Evaluate", include: judgement based on criteria; weighing evidence for both sides (strengths/weaknesses or positive/negative); a clear thesis stating that judgement; critical analysis leading to an evidence-based conclusion.
 Do not include numbered steps, templates, or planning language in this section.
 
+IMPORTANT: If "OFFICIAL VCAA DATABASE CONTEXT" is provided in the prompt, you MUST incorporate it into your analysis. Use it to clarify the specific VCAA interpretation of the command term or concept.
+
 🎯 Exam Action Steps
 - Provide 4 numbered steps the student can perform in the exam room to answer the question:
   1. Define & Judge (Intro): Define key concepts and state overall judgement upfront.
@@ -109,6 +111,7 @@ def explain():
     vcaa_context = ""
     if VCAA_AVAILABLE:
         try:
+            # Force a slightly lower k to ensure we get best matches, but handle empty results gracefully
             vcaa_results = vce_db.search(question, k=3) or []
             lines = []
             for i, tup in enumerate(vcaa_results):
@@ -121,19 +124,30 @@ def explain():
                 subject = str(meta.get("subject", "Unknown"))
                 year = str(meta.get("year", "Unknown"))
                 typ = str(meta.get("type", "Unknown"))
-                snippet = (chunk or "")[:250].replace("\n", " ").strip()
-                lines.append(f"{i+1}. {subject} {year} ({typ}): {snippet}")
+                # Clean up chunk text
+                snippet = (chunk or "")[:350].replace("\n", " ").strip()
+                lines.append(f"SOURCE {i+1} [{subject} {year} {typ}]: {snippet}")
             if lines:
-                vcaa_context = "RELEVANT VCAA CONTEXT:\n" + "\n".join(lines)
+                vcaa_context = "\n".join(lines)
         except Exception as e:
             logging.warning(f"[VCEInsider] VCAA search error: {e}")
             vcaa_results = []
             vcaa_context = ""
 
     try:
-        user_content = question
+        # Construct a very explicit prompt for the model
+        user_content = f"QUESTION TO ANALYZE:\n{question}"
+        
         if vcaa_context:
-            user_content = f"{question}\n\n{vcaa_context}\n"
+            user_content = (
+                f"QUESTION TO ANALYZE:\n{question}\n\n"
+                f"OFFICIAL VCAA DATABASE CONTEXT (MUST USE):\n"
+                f"{vcaa_context}\n\n"
+                f"INSTRUCTION: The above context contains similar past VCAA questions or report comments. "
+                f"Use this information to make your analysis specific to VCAA standards. "
+                f"Reference the context where relevant to justify your advice."
+            )
+
         chat = client.chat.completions.create(
             messages=[
                 {"role": "system", "content": system_message},
