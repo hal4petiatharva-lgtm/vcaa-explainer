@@ -55,6 +55,15 @@
             <div class="panel-content markdown-output" id="guide-content"></div>
           </div>
         </div>
+        
+        <div class="sources-container" style="margin-top: 1.5rem; text-align: left;">
+            <button id="toggle-sources-btn" class="secondary-btn" style="background:none; border:none; color: #64748b; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0;">
+                <span>📚</span> View Sources
+            </button>
+            <div id="sources-list" style="display: none; margin-top: 1rem; padding: 1rem; background: #f8fafc; border-radius: 8px; font-size: 0.85rem; color: #475569;">
+                <ul id="sources-ul" style="list-style: none; padding: 0; margin: 0;"></ul>
+            </div>
+        </div>
       </section>
 
       <section id="history-panel" class="card history collapsed" aria-label="Session History">
@@ -83,6 +92,9 @@
       const resultsCard = document.getElementById('results-card');
       const analysisContent = document.getElementById('analysis-content');
       const guideContent = document.getElementById('guide-content');
+      const sourcesList = document.getElementById('sources-list');
+      const sourcesUl = document.getElementById('sources-ul');
+      const toggleSourcesBtn = document.getElementById('toggle-sources-btn');
       const historyIndicator = document.getElementById('history-indicator');
       const historyPanel = document.getElementById('history-panel');
       const historyList = document.getElementById('history-list');
@@ -147,11 +159,35 @@
         requestAnimationFrame(step);
       }
 
+      toggleSourcesBtn.addEventListener('click', () => {
+        const isHidden = sourcesList.style.display === 'none';
+        sourcesList.style.display = isHidden ? 'block' : 'none';
+        toggleSourcesBtn.innerHTML = isHidden ? '<span>📖</span> Hide Sources' : '<span>📚</span> View Sources';
+      });
+
       // Display results across two panels
-      function displayResults(fullText) {
+      function displayResults(fullText, citations = []) {
         const { analysisMd, guideMd } = splitSections(fullText || '');
         analysisContent.innerHTML = renderMarkdown(analysisMd);
         guideContent.innerHTML = renderMarkdown(guideMd);
+        
+        // Render sources
+        sourcesUl.innerHTML = '';
+        if (citations && citations.length > 0) {
+            citations.forEach(c => {
+                const li = document.createElement('li');
+                li.style.marginBottom = '0.5rem';
+                li.innerHTML = `<strong>[${c.subject || 'VCE'}, ${c.year || 'Unknown'}]</strong> ${c.type || 'Exam Paper'} - <em>Relevance: ${Math.round(c.relevance * 100)}%</em>`;
+                sourcesUl.appendChild(li);
+            });
+            toggleSourcesBtn.style.display = 'flex';
+            sourcesList.style.display = 'none'; // Collapse by default
+            toggleSourcesBtn.innerHTML = '<span>📚</span> View Sources';
+        } else {
+            toggleSourcesBtn.style.display = 'none';
+            sourcesList.style.display = 'none';
+        }
+
         setTimeout(() => {
           try {
             const resultsElement =
@@ -303,7 +339,8 @@
             loadingSpinner.style.display = 'none';
             loadingText.innerHTML = '✅ Completed!';
             const md = data.analysis || '';
-            displayResults(md);
+            const citations = data.citations || [];
+            displayResults(md, citations);
             resultsCard.style.display = 'block';
             setTimeout(() => { loading.style.display = 'none'; }, 1000);
             // Save to history on success
