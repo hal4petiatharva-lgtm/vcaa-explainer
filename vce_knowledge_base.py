@@ -20,10 +20,12 @@ class VCEDatabase:
                 data = pickle.load(f)
             self.chunks = data.get("chunks", [])
             self.metas = data.get("metas", [])
-            if "tfidf_matrix" in data and data["tfidf_matrix"] is not None:
-                self.tfidf_matrix = data["tfidf_matrix"]
-            else:
-                self.tfidf_matrix = self.vectorizer.fit_transform(self.chunks)
+            if self.chunks:
+                self.vectorizer.fit(self.chunks)
+                if "tfidf_matrix" in data and data["tfidf_matrix"] is not None:
+                    self.tfidf_matrix = data["tfidf_matrix"]
+                else:
+                    self.tfidf_matrix = self.vectorizer.transform(self.chunks)
         except Exception:
             self.chunks = []
             self.metas = []
