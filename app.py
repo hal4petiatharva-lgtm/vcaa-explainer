@@ -27,30 +27,16 @@ logging.basicConfig(level=logging.INFO)
 if client is None:
     logging.warning("GROQ_API_KEY not set; Groq client not initialized.")
 
-class VCEAIDatabase:
-    def __init__(self):
-        self.db = None
-        self.available = False
-        self._init()
-    def _init(self):
-        try:
-            from vce_knowledge_base import VCEDatabase
-            self.db = VCEDatabase()
-            _ = self.db.search("test", k=1)
-            self.available = True
-            logging.info("VCAA database loaded")
-        except Exception as e:
-            logging.warning(f"VCAA database unavailable: {e}")
-            self.available = False
-    def search(self, query, k=3):
-        if not self.available:
+try:
+    from vce_knowledge_base import VCEDatabase
+    vce_db = VCEDatabase()
+    VCAA_AVAILABLE = bool(getattr(vce_db, "chunks", []))
+except Exception:
+    class DummyDB:
+        def search(self, query, k=3):
             return []
-        try:
-            return self.db.search(query, k=k)
-        except Exception:
-            return []
-
-vcea_db = VCEAIDatabase()
+    vce_db = DummyDB()
+    VCAA_AVAILABLE = False
 
 system_message = """You are an expert VCE exam coach. Produce concise, actionable output a student can execute during timed assessments.
 
@@ -107,9 +93,9 @@ def explain():
 
     vcaa_results = []
     vcaa_context = ""
-    if vcea_db.available:
+    if VCAA_AVAILABLE:
         try:
-            vcaa_results = vcea_db.search(question, k=3) or []
+            vcaa_results = vce_db.search(question, k=3) or []
             lines = []
             for i, tup in enumerate(vcaa_results):
                 try:
@@ -158,7 +144,7 @@ def explain():
             }
             for (chunk, meta, score) in vcaa_results
         ] if vcaa_results else []
-        return jsonify({"analysis": content, "citations": citations, "database_used": bool(vcaa_results), "vcaa_available": vcea_db.available})
+        return jsonify({"analysis": content, "citations": citations, "database_used": bool(vcaa_results), "vcaa_available": VCAA_AVAILABLE})
     except Exception as e:
         msg = str(e)
         if "rate limit" in msg.lower():
@@ -184,7 +170,7 @@ def call_your_ai_function(prompt: str) -> str:
         return "Analysis temporarily unavailable."
 
 def analyze_with_vcaa(question: str):
-    vcaa_results = vcea_db.search(question, k=3) if vcea_db.available else []
+    vcaa_results = vce_db.search(question, k=3) if VCAA_AVAILABLE else []
     parts = []
     parts.append(f"VCE QUESTION: {question}")
     if vcaa_results:
@@ -197,7 +183,7 @@ def analyze_with_vcaa(question: str):
     parts.append("ANALYSIS REQUIREMENTS:\n1. Identify command term(s)\n2. Explain VCAA expectations\n3. Provide step-by-step response plan\n4. Note common pitfalls\n5. Give example opening\n\nKeep response concise and exam-focused.")
     prompt = "\n".join(parts)
     analysis = call_your_ai_function(prompt)
-    resp = {"analysis": analysis, "vcaa_available": vcea_db.available, "citations": []}
+    resp = {"analysis": analysis, "vcaa_available": VCAA_AVAILABLE, "citations": []}
     if vcaa_results:
         resp["citations"] = [
             {
@@ -224,7 +210,7 @@ def analyze_endpoint():
 
 @app.route("/status", methods=["GET"])
 def status():
-    return jsonify({"vcaa_database": vcea_db.available, "status": ("operational" if vcea_db.available else "degraded")})
+    return jsonify({"vcaa_database": VCAA_AVAILABLE, "status": ("operational" if VCAA_AVAILABLE else "degraded")})
 @app.route("/debug", methods=["GET"])
 def debug():
     packages = [f"{d.metadata.get('Name','unknown')}=={d.version}" for d in importlib_metadata.distributions()]
