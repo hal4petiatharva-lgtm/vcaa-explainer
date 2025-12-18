@@ -60,7 +60,7 @@
             <button id="toggle-sources-btn" class="secondary-btn" style="background:none; border:none; color: #64748b; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0;">
                 <span>📚</span> View Sources
             </button>
-            <div id="sources-list" style="display: none; margin-top: 1rem; padding: 1rem; background: #f8fafc; border-radius: 8px; font-size: 0.85rem; color: #475569;">
+            <div id="sources-list" style="display: none; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; font-size: 0.85rem; color: #475569;">
                 <ul id="sources-ul" style="list-style: none; padding: 0; margin: 0;"></ul>
             </div>
         </div>
@@ -165,6 +165,21 @@
         toggleSourcesBtn.innerHTML = isHidden ? '<span>📖</span> Hide Sources' : '<span>📚</span> View Sources';
       });
 
+      // Global toggle function for source text
+      window.toggleSourceText = function(id, btn) {
+        const preview = document.getElementById(id + '-preview');
+        const full = document.getElementById(id + '-full');
+        if (full.style.display === 'none') {
+            full.style.display = 'inline';
+            preview.style.display = 'none';
+            btn.innerHTML = 'See less [-]';
+        } else {
+            full.style.display = 'none';
+            preview.style.display = 'inline';
+            btn.innerHTML = 'See more [+]';
+        }
+      };
+
       // Display results across two panels
       function displayResults(fullText, citations = []) {
         const { analysisMd, guideMd } = splitSections(fullText || '');
@@ -174,10 +189,28 @@
         // Render sources
         sourcesUl.innerHTML = '';
         if (citations && citations.length > 0) {
-            citations.forEach(c => {
+            citations.forEach((c, index) => {
                 const li = document.createElement('li');
-                li.style.marginBottom = '0.5rem';
-                li.innerHTML = `<strong>[${c.subject || 'VCE'}, ${c.year || 'Unknown'}]</strong> ${c.type || 'Exam Paper'} - <em>Relevance: ${Math.round(c.relevance * 100)}%</em><br><small style="color:#64748b; display:block; margin-top:0.2rem;">${c.snippet || ''}</small>`;
+                li.style.marginBottom = '1rem';
+                li.style.padding = '1rem';
+                li.style.background = '#ffffff';
+                li.style.borderRadius = '8px';
+                li.style.border = '1px solid #e2e8f0';
+                li.style.boxShadow = '0 1px 2px rgba(0,0,0,0.05)';
+                
+                const uniqueId = `source-${index}`;
+                
+                li.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.5rem;">
+                        <strong style="color:#1e293b; font-size:0.9rem;">[${c.subject || 'VCE'} ${c.year || 'Unknown'}] ${c.type || 'Exam Paper'}</strong>
+                        <span style="color:#64748b; font-size:0.8rem; background:#f1f5f9; padding:2px 6px; border-radius:4px;">${Math.round(c.relevance * 100)}% Match</span>
+                    </div>
+                    <div style="font-size:0.9rem; color:#475569; line-height:1.6;">
+                        <span id="${uniqueId}-preview">${c.snippet || ''}</span>
+                        <span id="${uniqueId}-full" style="display:none;">${c.full_text || c.snippet || ''}</span>
+                        <button onclick="toggleSourceText('${uniqueId}', this)" style="background:none; border:none; color:#3b82f6; cursor:pointer; font-size:0.85rem; padding:0; margin-left:0.5rem; font-weight:500;">See more [+]</button>
+                    </div>
+                `;
                 sourcesUl.appendChild(li);
             });
             toggleSourcesBtn.style.display = 'flex';
