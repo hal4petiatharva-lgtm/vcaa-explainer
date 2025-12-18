@@ -7,3 +7,4 @@ gunicorn==21.2.0
 scikit-learn==1.5.2
 numpy==2.1.0
 joblib==1.4.2
+Flask-Cors==4.0.1  # <-- Add this line
