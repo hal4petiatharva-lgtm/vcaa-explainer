@@ -43,20 +43,20 @@ def detect_subject(query):
     query = query.lower()
     # Map keywords to VCAA subject names found in the database
     subjects = {
-        'Psychology': ['psychology', 'neurotransmitter', 'nervous system', 'mental health', 'gaba', 'dopamine', 'stress', 'learning', 'memory', 'phobia'],
-        'Legal Studies': ['legal studies', 'constitution', 'parliament', 'court', 'legislation', 'precedent', 'justice', 'rights', 'civil', 'criminal'],
-        'Business Management': ['business', 'management', 'stakeholder', 'operations', 'human resource', 'corporate', 'strategies', 'kpi'],
-        'Health and Human Development': ['hhd', 'health', 'human development', 'sdg', 'who', 'morbidity', 'burden of disease', 'nutrition'],
-        'Economics': ['economics', 'demand', 'supply', 'market', 'inflation', 'budget', 'monetary', 'aggregate'],
-        'Geography': ['geography', 'land use', 'population', 'tourism', 'environment', 'hazards', 'spatial'],
-        'Global Politics': ['global politics', 'globalization', 'sovereignty', 'power', 'national interest', 'foreign policy', 'ngos', 'un'],
-        'History': ['history', 'revolution', 'colonies', 'ancient', 'modern', 'war', 'crisis'],
-        'Biology': ['biology', 'cell', 'enzyme', 'dna', 'protein', 'photosynthesis', 'respiration', 'pathogen', 'immunity', 'evolution'],
-        'Chemistry': ['chemistry', 'molecule', 'reaction', 'equilibrium', 'stoichiometry', 'organic', 'analysis', 'bonding'],
-        'Physics': ['physics', 'motion', 'energy', 'field', 'relativity', 'electricity', 'magnetism', 'wave'],
-        'English': ['english', 'language', 'text', 'author', 'theme', 'character', 'structure', 'argument', 'persuasive'],
-        'Literature': ['literature', 'literary', 'criticism', 'passage', 'perspective'],
-        'Media': ['media', 'audience', 'representation', 'codes', 'conventions', 'narrative'],
+        'Psychology': ['psychology', 'neurotransmitter', 'nervous system', 'mental health', 'gaba', 'dopamine', 'stress', 'learning', 'memory', 'phobia', 'biopsychosocial', 'conditioning', 'plasticity'],
+        'Legal Studies': ['legal studies', 'constitution', 'parliament', 'court', 'legislation', 'precedent', 'justice', 'rights', 'civil', 'criminal', 'sanction', 'remedy', 'high court'],
+        'Business Management': ['business', 'management', 'stakeholder', 'operations', 'human resource', 'corporate', 'strategies', 'kpi', 'maslow', 'locke', 'motivation', 'change management'],
+        'Health and Human Development': ['hhd', 'health', 'human development', 'sdg', 'who', 'morbidity', 'burden of disease', 'nutrition', 'life expectancy', 'daly', 'yzk'],
+        'Economics': ['economics', 'demand', 'supply', 'market', 'inflation', 'budget', 'monetary', 'aggregate', 'fiscal', 'living standards', 'growth'],
+        'Geography': ['geography', 'land use', 'population', 'tourism', 'environment', 'hazards', 'spatial', 'mega city', 'desertification', 'glacier', 'volcano'],
+        'Global Politics': ['global politics', 'globalization', 'sovereignty', 'power', 'national interest', 'foreign policy', 'ngos', 'un', 'imf', 'icc', 'terrorism', 'asymmetric'],
+        'History': ['history', 'revolution', 'colonies', 'ancient', 'modern', 'war', 'crisis', 'french', 'russian', 'chinese', 'american'],
+        'Biology': ['biology', 'cell', 'enzyme', 'dna', 'protein', 'photosynthesis', 'respiration', 'pathogen', 'immunity', 'evolution', 'crispr', 'mitochondria'],
+        'Chemistry': ['chemistry', 'molecule', 'reaction', 'equilibrium', 'stoichiometry', 'organic', 'analysis', 'bonding', 'titration', 'redox', 'nmr', 'hplc'],
+        'Physics': ['physics', 'motion', 'energy', 'field', 'relativity', 'electricity', 'magnetism', 'wave', 'newton', 'einstein', 'projectile'],
+        'English': ['english', 'language', 'text', 'author', 'theme', 'character', 'structure', 'argument', 'persuasive', 'contention'],
+        'Literature': ['literature', 'literary', 'criticism', 'passage', 'perspective', 'view', 'interpretation'],
+        'Media': ['media', 'audience', 'representation', 'codes', 'conventions', 'narrative', 'genre', 'ideology'],
     }
     
     detected = []
@@ -64,10 +64,13 @@ def detect_subject(query):
         if any(k in query for k in keywords):
             detected.append(subj)
             
-    # If "globalization" is found, it could be Geography or Global Politics or Economics. 
-    # The loop above adds all matches.
+    # Handle overlap for "globalization"
+    if 'globalization' in query:
+        if 'Geography' not in detected: detected.append('Geography')
+        if 'Global Politics' not in detected: detected.append('Global Politics')
+        if 'Economics' not in detected: detected.append('Economics')
     
-    return detected if detected else None
+    return list(set(detected)) if detected else None
 
 # Debug route to check database status in detail
 @app.route('/debug/db')
@@ -169,20 +172,34 @@ def explain():
 
     try:
         # Construct a very explicit prompt for the model
-        user_content = f"QUESTION TO ANALYZE:\n{question}"
+        subj_str = ", ".join(detected_subjects) if detected_subjects else "General VCE"
+        
+        user_content = (
+            f"You are a VCE expert. You must strictly adhere to the current VCE Study Design (2023-2027) for {subj_str}.\n"
+            f"Validate that all terms/concepts in your response are part of the current study design. If the user asks about an outdated term (e.g., 'spontaneous recovery' in Psychology), explicitly note this and refocus on current knowledge.\n\n"
+            f"User Question: {question}\n\n"
+        )
         
         if vcaa_context:
-            subj_str = ", ".join(detected_subjects) if detected_subjects else "General VCE"
-            user_content = (
-                f"You are a VCE expert. Below are excerpts from official VCAA exam papers and reports for [Detected Subject: {subj_str}].\n\n"
+            user_content += (
                 f"OFFICIAL VCAA DATABASE CONTEXT (MUST USE):\n"
                 f"{vcaa_context}\n\n"
-                f"User Question: {question}\n\n"
-                f"Provide a response in two parts:\n"
-                f"1. **Command Term Analysis**: Explain the term. Use phrases like \"VCAA examiners have highlighted...\" and cite specific years if data exists (e.g., \"In the 2021 report, 45% of students...\").\n"
-                f"2. **Exam Action Steps**: Give practical steps. Where possible, warn: \"A common pitfall noted in [Year] was... To avoid this,...\".\n\n"
-                f"Format the response clearly. Do NOT use inline brackets like [SOURCE X]. All source information will be displayed separately."
+                f"INSTRUCTIONS:\n"
+                f"1. Actively extract specific data from the context. Use phrases like:\n"
+                f"   - \"The 2022 Exam Report highlights that approximately 40% of students...\"\n"
+                f"   - \"A common pitfall noted by assessors was...\"\n"
+                f"   - \"High-scoring responses consistently demonstrated...\"\n"
+                f"2. Explain your subject focus: \"Analyzing this from a {subj_str} perspective...\"\n\n"
             )
+        else:
+            user_content += "No specific VCAA report excerpts available. Provide general expert VCE advice based on the current study design.\n\n"
+            
+        user_content += (
+            f"Provide a response in two parts:\n"
+            f"1. **Command Term Analysis**: Explain the term. Weave in the VCAA data/insights requested above.\n"
+            f"2. **Exam Action Steps**: Give practical steps. Warn about common pitfalls found in the context.\n\n"
+            f"Format: Markdown. Do NOT use inline brackets like [SOURCE X]. All source information will be displayed separately."
+        )
 
         chat = client.chat.completions.create(
             messages=[
@@ -205,6 +222,7 @@ def explain():
                 "year": str(meta.get("year", "Unknown")),
                 "type": str(meta.get("type", "Unknown")),
                 "relevance": float(score),
+                "snippet": (chunk or "")[:150].replace("\n", " ").strip() + "..."
             }
             for (chunk, meta, score) in vcaa_results
         ] if vcaa_results else []
