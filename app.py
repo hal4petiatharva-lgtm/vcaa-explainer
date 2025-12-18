@@ -94,16 +94,16 @@ Output exactly two sections in Markdown:
 First, detect ALL command terms in the question by scanning for standard VCAA verbs across the entire input. Common terms include: Analyse, Evaluate, Compare, Contrast, Discuss, Explain, Justify, Describe, Identify, Classify, Outline, Assess, Argue, To what extent.
 
 Format:
-- If ONE term is detected:
-  - **Command Term:** {TERM}
-  - **Definition:** {a single, concise sentence defining the term in plain English}
-  - Then a new paragraph with 2–4 sentences explaining what the term requires, the cognitive skills involved, and what a VCAA assessor looks for. Write as one coherent paragraph, not a list.
-- If MULTIPLE terms are detected:
-  - **Detected Command Terms:** {TERM_1}, {TERM_2}[, ...]
-  - **Combined Task:** {one sentence that explains how the terms combine into a single task}
-  - Then a new paragraph with 2–4 sentences describing how to execute the combined task for VCAA: set criteria, apply to all contexts, balance the requirements of each term, and produce a justified, evidence-based conclusion. Do not output separate blocks per term.
+- Start with: **Command Term:** {TERM}
+- Then, provide 3-5 concise bullet points analyzing the term(s). Each bullet must focus on a key aspect:
+  * Definition & Meaning
+  * VCAA Assessment Criteria (what examiners look for)
+  * Structural Requirements
+  * Common Pitfalls or Key Differentiators
+- Do NOT restate the section header "Command Term Analysis".
+- Do NOT use a separate paragraph block. Use only bullet points.
 
-For "Evaluate", include: judgement based on criteria; weighing evidence for both sides (strengths/weaknesses or positive/negative); a clear thesis stating that judgement; critical analysis leading to an evidence-based conclusion.
+For "Evaluate", ensure one bullet addresses the need for a clear judgement and weighing of evidence.
 Do not include numbered steps, templates, or planning language in this section.
 
 IMPORTANT: If "OFFICIAL VCAA DATABASE CONTEXT" is provided in the prompt, you MUST incorporate it into your analysis. Use it to clarify the specific VCAA interpretation of the command term or concept.
@@ -222,7 +222,8 @@ def explain():
                 "year": str(meta.get("year", "Unknown")),
                 "type": str(meta.get("type", "Unknown")),
                 "relevance": float(score),
-                "snippet": (chunk or "")[:150].replace("\n", " ").strip() + "..."
+                "snippet": (chunk or "")[:150].replace("\n", " ").strip() + "...",
+                "full_text": (chunk or "").replace("\n", " ").strip()
             }
             for (chunk, meta, score) in vcaa_results
         ] if vcaa_results else []
