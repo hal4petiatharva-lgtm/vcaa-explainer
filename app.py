@@ -38,6 +38,37 @@ except Exception:
     vce_db = DummyDB()
     VCAA_AVAILABLE = False
 
+def detect_subject(query):
+    """Detect probable VCE subject from query keywords."""
+    query = query.lower()
+    # Map keywords to VCAA subject names found in the database
+    subjects = {
+        'Psychology': ['psychology', 'neurotransmitter', 'nervous system', 'mental health', 'gaba', 'dopamine', 'stress', 'learning', 'memory', 'phobia'],
+        'Legal Studies': ['legal studies', 'constitution', 'parliament', 'court', 'legislation', 'precedent', 'justice', 'rights', 'civil', 'criminal'],
+        'Business Management': ['business', 'management', 'stakeholder', 'operations', 'human resource', 'corporate', 'strategies', 'kpi'],
+        'Health and Human Development': ['hhd', 'health', 'human development', 'sdg', 'who', 'morbidity', 'burden of disease', 'nutrition'],
+        'Economics': ['economics', 'demand', 'supply', 'market', 'inflation', 'budget', 'monetary', 'aggregate'],
+        'Geography': ['geography', 'land use', 'population', 'tourism', 'environment', 'hazards', 'spatial'],
+        'Global Politics': ['global politics', 'globalization', 'sovereignty', 'power', 'national interest', 'foreign policy', 'ngos', 'un'],
+        'History': ['history', 'revolution', 'colonies', 'ancient', 'modern', 'war', 'crisis'],
+        'Biology': ['biology', 'cell', 'enzyme', 'dna', 'protein', 'photosynthesis', 'respiration', 'pathogen', 'immunity', 'evolution'],
+        'Chemistry': ['chemistry', 'molecule', 'reaction', 'equilibrium', 'stoichiometry', 'organic', 'analysis', 'bonding'],
+        'Physics': ['physics', 'motion', 'energy', 'field', 'relativity', 'electricity', 'magnetism', 'wave'],
+        'English': ['english', 'language', 'text', 'author', 'theme', 'character', 'structure', 'argument', 'persuasive'],
+        'Literature': ['literature', 'literary', 'criticism', 'passage', 'perspective'],
+        'Media': ['media', 'audience', 'representation', 'codes', 'conventions', 'narrative'],
+    }
+    
+    detected = []
+    for subj, keywords in subjects.items():
+        if any(k in query for k in keywords):
+            detected.append(subj)
+            
+    # If "globalization" is found, it could be Geography or Global Politics or Economics. 
+    # The loop above adds all matches.
+    
+    return detected if detected else None
+
 # Debug route to check database status in detail
 @app.route('/debug/db')
 def debug_database():
@@ -109,10 +140,12 @@ def explain():
 
     vcaa_results = []
     vcaa_context = ""
+    detected_subjects = detect_subject(question)
+    
     if VCAA_AVAILABLE:
         try:
             # Force a slightly lower k to ensure we get best matches, but handle empty results gracefully
-            vcaa_results = vce_db.search(question, k=3) or []
+            vcaa_results = vce_db.search(question, k=5, subject_filter=detected_subjects) or []
             lines = []
             for i, tup in enumerate(vcaa_results):
                 try:
@@ -139,13 +172,16 @@ def explain():
         user_content = f"QUESTION TO ANALYZE:\n{question}"
         
         if vcaa_context:
+            subj_str = ", ".join(detected_subjects) if detected_subjects else "General VCE"
             user_content = (
-                f"QUESTION TO ANALYZE:\n{question}\n\n"
+                f"You are a VCE expert. Below are excerpts from official VCAA exam papers and reports for [Detected Subject: {subj_str}].\n\n"
                 f"OFFICIAL VCAA DATABASE CONTEXT (MUST USE):\n"
                 f"{vcaa_context}\n\n"
-                f"INSTRUCTION: The above context contains similar past VCAA questions or report comments. "
-                f"Use this information to make your analysis specific to VCAA standards. "
-                f"Reference the context where relevant to justify your advice."
+                f"User Question: {question}\n\n"
+                f"Provide a response in two parts:\n"
+                f"1. **Command Term Analysis**: Explain the term. Use phrases like \"VCAA examiners have highlighted...\" and cite specific years if data exists (e.g., \"In the 2021 report, 45% of students...\").\n"
+                f"2. **Exam Action Steps**: Give practical steps. Where possible, warn: \"A common pitfall noted in [Year] was... To avoid this,...\".\n\n"
+                f"Format the response clearly. Do NOT use inline brackets like [SOURCE X]. All source information will be displayed separately."
             )
 
         chat = client.chat.completions.create(
