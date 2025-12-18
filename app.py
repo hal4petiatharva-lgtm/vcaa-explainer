@@ -8,6 +8,7 @@ from flask_cors import CORS
 import importlib.metadata as importlib_metadata
 import sys
 import logging
+import re
 
 load_dotenv()
 
@@ -85,6 +86,78 @@ def debug_database():
         'files_in_directory': str(os.listdir('.'))
     }
     return jsonify(debug_info)
+
+def clean_source_excerpt(chunk, query):
+    """
+    Cleans and extracts the most relevant excerpt from a source chunk.
+    Removes noise (copyright, page numbers) and extracts 50-150 words around keywords.
+    """
+    if not chunk:
+        return ""
+    
+    # 1. Pre-process: Remove noise lines
+    lines = chunk.split('\n')
+    cleaned_lines = []
+    for line in lines:
+        # Skip noise lines
+        if re.search(r'© VCAA \d{4}', line): continue
+        if re.search(r'Page \d+', line): continue
+        if re.search(r'SECTION [A-Z]', line): continue
+        if re.match(r'Question \d+', line, re.IGNORECASE): continue
+        # Skip MCQ options if they start with A. B. C. D.
+        if re.match(r'^[A-D]\.', line.strip()): continue 
+        cleaned_lines.append(line)
+        
+    text = " ".join(cleaned_lines)
+    text = re.sub(r'\s+', ' ', text).strip()
+    
+    if not text:
+        return "Source content not available."
+
+    # 2. Extract Relevant Sentences
+    # Simple sentence splitter (heuristic)
+    sentences = re.split(r'(?<=[.!?])\s+', text)
+    if not sentences:
+        sentences = [text]
+        
+    query_terms = [w.lower() for w in re.findall(r'\w+', query) if len(w) > 3] # Filter small words
+    
+    best_score = -1
+    best_window = (0, 1) # start, end (exclusive)
+    
+    # Sliding window of 1-3 sentences to find best context
+    for window_size in range(1, 4):
+        if window_size > len(sentences): break
+        for i in range(len(sentences) - window_size + 1):
+            window_text = " ".join(sentences[i : i + window_size])
+            # Score: count keyword matches
+            score = sum(1 for term in query_terms if term in window_text.lower())
+            
+            # Prefer shorter windows if scores are equal to be concise
+            if score > best_score:
+                best_score = score
+                best_window = (i, i + window_size)
+    
+    # If no matches found, just take the first few sentences
+    if best_score <= 0:
+        start, end = 0, min(3, len(sentences))
+    else:
+        start, end = best_window
+        
+    excerpt = " ".join(sentences[start:end])
+    
+    # 3. Enforce Length & Fluency
+    words = excerpt.split()
+    if len(words) > 120:
+        excerpt = " ".join(words[:120]) + "..."
+    
+    # Add context indicators if we skipped text
+    if start > 0:
+        excerpt = "[...] " + excerpt
+    if end < len(sentences):
+        excerpt = excerpt + " [...]"
+        
+    return excerpt
 
 system_message = """You are an expert VCE exam coach. Produce concise, actionable output a student can execute during timed assessments.
 
@@ -216,17 +289,22 @@ def explain():
         content = content.strip()
         if not content:
             return jsonify({"error": "Groq returned empty content."}), 502
-        citations = [
-            {
-                "subject": str(meta.get("subject", "Unknown")),
-                "year": str(meta.get("year", "Unknown")),
-                "type": str(meta.get("type", "Unknown")),
-                "relevance": float(score),
-                "snippet": (chunk or "")[:150].replace("\n", " ").strip() + "...",
-                "full_text": (chunk or "").replace("\n", " ").strip()
-            }
-            for (chunk, meta, score) in vcaa_results
-        ] if vcaa_results else []
+        citations = []
+        if vcaa_results:
+            for (chunk, meta, score) in vcaa_results:
+                cleaned_text = clean_source_excerpt(chunk, question)
+                # Create a short preview (first ~25 words) from the cleaned text
+                snippet_words = cleaned_text.split()[:25]
+                snippet = " ".join(snippet_words) + ("..." if len(cleaned_text.split()) > 25 else "")
+                
+                citations.append({
+                    "subject": str(meta.get("subject", "Unknown")),
+                    "year": str(meta.get("year", "Unknown")),
+                    "type": str(meta.get("type", "Unknown")),
+                    "relevance": float(score),
+                    "snippet": snippet,
+                    "full_text": cleaned_text
+                })
         return jsonify({"analysis": content, "citations": citations, "database_used": bool(vcaa_results), "vcaa_available": VCAA_AVAILABLE})
     except Exception as e:
         msg = str(e)
