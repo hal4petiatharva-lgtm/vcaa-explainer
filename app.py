@@ -87,77 +87,141 @@ def debug_database():
     }
     return jsonify(debug_info)
 
-def clean_source_excerpt(chunk, query):
+def clean_vcaa_chunk(raw_chunk, user_query):
     """
-    Cleans and extracts the most relevant excerpt from a source chunk.
-    Removes noise (copyright, page numbers) and extracts 50-150 words around keywords.
+    Robust cleaning function for VCAA source chunks.
+    Stages:
+    1. Remove universal noise (copyright, headers, marks).
+    2. Detect and remove gibberish/corruption (reversed text, fragments).
+    3. Intelligent context extraction (keyword-based, sentence extraction).
+    4. Final fluency and length check (15-50 words).
     """
-    if not chunk:
-        return ""
-    
-    # 1. Pre-process: Remove noise lines
-    lines = chunk.split('\n')
+    if not raw_chunk:
+        return "Source content not available."
+
+    # --- Stage 1: Remove Universal Noise Patterns ---
+    # Split into lines to handle line-based noise first
+    lines = raw_chunk.split('\n')
     cleaned_lines = []
+    
+    noise_patterns = [
+        r'©\s*VCAA\s*\d{4}',            # Copyright
+        r'Version\s*\d+\s*[–-]\s*\w+\s*\d{4}', # Version info
+        r'Page\s*\d+',                   # Page numbers
+        r'SECTION\s*[A-Z]',              # Section headers
+        r'Question\s*\d+',               # Question labels
+        r'Source\s*\d+:',                # Source labels
+        r'TURN\s*OVER',                  # Turn over instruction
+        r'^\s*\d+\s*marks?\s*$',         # Isolated mark allocations
+        r'\(\d+\s*marks?\)',             # Parenthetical marks
+        r'^\s*[A-D]\.\s',                # MCQ options start
+        r'^\s*table\s*$',                # Common table artifact
+        r'^\s*figure\s*\d+',             # Figure labels
+    ]
+    
     for line in lines:
-        # Skip noise lines
-        if re.search(r'© VCAA \d{4}', line): continue
-        if re.search(r'Page \d+', line): continue
-        if re.search(r'SECTION [A-Z]', line): continue
-        if re.match(r'Question \d+', line, re.IGNORECASE): continue
-        # Skip MCQ options if they start with A. B. C. D.
-        if re.match(r'^[A-D]\.', line.strip()): continue 
+        line = line.strip()
+        if not line: continue
+        
+        is_noise = False
+        for pat in noise_patterns:
+            if re.search(pat, line, re.IGNORECASE):
+                is_noise = True
+                break
+        if is_noise: continue
+        
         cleaned_lines.append(line)
         
     text = " ".join(cleaned_lines)
+    
+    # --- Stage 2: Detect and Remove Gibberish/Corruption ---
+    
+    # Heuristic for reversed text or spaced text: "t h i s  i s  t e x t"
+    # Remove sequences of single chars separated by spaces (min length 10 chars)
+    # e.g. "a e r a s i h t"
+    text = re.sub(r'(?:\b\w\s+){5,}\w', ' ', text)
+    
+    # Specific known reversed phrases or common corrupted headers
+    text = re.sub(r'e t i r w t o n o d', '', text, flags=re.IGNORECASE) # "do not write" reversed
+    text = re.sub(r'a e r a', '', text, flags=re.IGNORECASE) # "area" spaced
+    
+    # Remove any remaining long sequences of non-word patterns
     text = re.sub(r'\s+', ' ', text).strip()
     
-    if not text:
-        return "Source content not available."
+    # If text is too short or just punctuation/numbers after cleaning
+    if len(text) < 10 or not re.search(r'[a-zA-Z]{3,}', text):
+        return "Excerpt from VCAA exam paper."
 
-    # 2. Extract Relevant Sentences
-    # Simple sentence splitter (heuristic)
+    # --- Stage 3: Intelligent Context Extraction ---
+    
+    # Split into sentences
     sentences = re.split(r'(?<=[.!?])\s+', text)
     if not sentences:
         sentences = [text]
         
-    query_terms = [w.lower() for w in re.findall(r'\w+', query) if len(w) > 3] # Filter small words
+    # Filter out sentences that look like MCQ options or fragments
+    valid_sentences = []
+    for s in sentences:
+        s = s.strip()
+        if not s: continue
+        if re.match(r'^[A-D]\.', s): continue # MCQ option A. B. C. D.
+        if len(s.split()) < 3: continue # Too short
+        valid_sentences.append(s)
+        
+    if not valid_sentences:
+        return "Excerpt from VCAA exam paper."
+        
+    # Keyword scoring
+    query_terms = [w.lower() for w in re.findall(r'\w+', user_query) if len(w) > 3]
     
     best_score = -1
-    best_window = (0, 1) # start, end (exclusive)
+    best_excerpt = ""
     
-    # Sliding window of 1-3 sentences to find best context
-    for window_size in range(1, 4):
-        if window_size > len(sentences): break
-        for i in range(len(sentences) - window_size + 1):
-            window_text = " ".join(sentences[i : i + window_size])
-            # Score: count keyword matches
-            score = sum(1 for term in query_terms if term in window_text.lower())
+    # Window size 1-2 sentences
+    for i in range(len(valid_sentences)):
+        # Single sentence check
+        s1 = valid_sentences[i]
+        score = sum(1 for term in query_terms if term in s1.lower())
+        
+        if score > best_score:
+            best_score = score
+            best_excerpt = s1
             
-            # Prefer shorter windows if scores are equal to be concise
-            if score > best_score:
-                best_score = score
-                best_window = (i, i + window_size)
-    
-    # If no matches found, just take the first few sentences
+        # Two sentence check
+        if i < len(valid_sentences) - 1:
+            s2 = valid_sentences[i+1]
+            combined = s1 + " " + s2
+            score_combined = sum(1 for term in query_terms if term in combined.lower())
+            
+            # Boost score slightly for combined to prefer context if relevant
+            if score_combined > best_score + 0.5:
+                best_score = score_combined
+                best_excerpt = combined
+
+    # If no good match, take the first substantial sentence
     if best_score <= 0:
-        start, end = 0, min(3, len(sentences))
-    else:
-        start, end = best_window
-        
-    excerpt = " ".join(sentences[start:end])
+        best_excerpt = valid_sentences[0]
+        if len(valid_sentences) > 1 and len(best_excerpt.split()) < 20:
+             best_excerpt += " " + valid_sentences[1]
+
+    # --- Stage 4: Final Fluency & Length Check ---
     
-    # 3. Enforce Length & Fluency
-    words = excerpt.split()
-    if len(words) > 120:
-        excerpt = " ".join(words[:120]) + "..."
+    words = best_excerpt.split()
     
-    # Add context indicators if we skipped text
-    if start > 0:
-        excerpt = "[...] " + excerpt
-    if end < len(sentences):
-        excerpt = excerpt + " [...]"
+    # Truncate to ~50 words max
+    if len(words) > 50:
+        best_excerpt = " ".join(words[:50]) + "..."
+    elif len(words) < 3: # Too short fallback
+        return "Excerpt from VCAA exam paper."
         
-    return excerpt
+    # Capitalize first letter
+    best_excerpt = best_excerpt[0].upper() + best_excerpt[1:]
+    
+    # Ensure it ends with punctuation if it's a full sentence (not truncated with ...)
+    if not best_excerpt.endswith('.') and not best_excerpt.endswith('...') and not best_excerpt.endswith('?'):
+        best_excerpt += '.'
+        
+    return best_excerpt
 
 system_message = """You are an expert VCE exam coach. Produce concise, actionable output a student can execute during timed assessments.
 
@@ -292,7 +356,7 @@ def explain():
         citations = []
         if vcaa_results:
             for (chunk, meta, score) in vcaa_results:
-                cleaned_text = clean_source_excerpt(chunk, question)
+                cleaned_text = clean_vcaa_chunk(chunk, question)
                 # Create a short preview (first ~25 words) from the cleaned text
                 snippet_words = cleaned_text.split()[:25]
                 snippet = " ".join(snippet_words) + ("..." if len(cleaned_text.split()) > 25 else "")
