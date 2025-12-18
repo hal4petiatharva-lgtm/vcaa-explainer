@@ -38,6 +38,20 @@ except Exception:
     vce_db = DummyDB()
     VCAA_AVAILABLE = False
 
+# Debug route to check database status in detail
+@app.route('/debug/db')
+def debug_database():
+    import os
+    debug_info = {
+        'database_loaded': VCAA_AVAILABLE,
+        'chunks_in_memory': len(vce_db.chunks) if VCAA_AVAILABLE else 0,
+        'embedding_file_exists': os.path.exists('vcaa_simple_embeddings.pkl'),
+        'embedding_file_size': os.path.getsize('vcaa_simple_embeddings.pkl') if os.path.exists('vcaa_simple_embeddings.pkl') else 0,
+        'current_working_directory': os.getcwd(),
+        'files_in_directory': str(os.listdir('.'))
+    }
+    return jsonify(debug_info)
+
 system_message = """You are an expert VCE exam coach. Produce concise, actionable output a student can execute during timed assessments.
 
 Output exactly two sections in Markdown:
