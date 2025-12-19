@@ -3,25 +3,40 @@
 {% block head_extra %}
 <style>
   .methods-container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
-        .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 2rem; box-shadow: var(--shadow); margin-bottom: 2rem; }
-        .question-meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .question-text { font-size: 1.25rem; font-weight: 500; margin-bottom: 1.5rem; line-height: 1.6; }
-        .input-group { margin-bottom: 1.5rem; }
-        .input-group label { display: block; margin-bottom: 0.5rem; color: var(--muted); font-size: 0.9rem; }
-        .form-input { width: 100%; padding: 1rem; background: #0b1220; color: var(--text); border: 1px solid var(--border); border-radius: var(--radius); font-size: 1rem; }
-        .feedback-card { background: rgba(59,130,246,0.1); border: 1px solid var(--primary); border-radius: var(--radius); padding: 1.5rem; margin-top: 1.5rem; animation: slideIn 0.3s ease-out; }
-        .feedback-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
-        .mark-badge { background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 999px; font-weight: 600; font-size: 0.9rem; }
-        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; padding: 1rem 2rem; border-radius: var(--radius); font-weight: 600; cursor: pointer; width: 100%; font-size: 1rem; transition: transform 0.2s; }
-        .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
-        .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 1rem 2rem; border-radius: var(--radius); cursor: pointer; width: 100%; margin-top: 1rem; }
-        .btn-secondary:hover { background: rgba(255,255,255,0.05); }
+  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 2rem; box-shadow: var(--shadow); margin-bottom: 2rem; }
+  .question-meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .question-text { font-size: 1.25rem; font-weight: 500; margin-bottom: 1.5rem; line-height: 1.6; }
+  .input-group { margin-bottom: 1.5rem; }
+  .input-group label { display: block; margin-bottom: 0.5rem; color: var(--muted); font-size: 0.9rem; }
+  .form-input { width: 100%; padding: 1rem; background: #0b1220; color: var(--text); border: 1px solid var(--border); border-radius: var(--radius); font-size: 1rem; }
+  .feedback-card { background: rgba(59,130,246,0.1); border: 1px solid var(--primary); border-radius: var(--radius); padding: 1.5rem; margin-top: 1.5rem; animation: slideIn 0.3s ease-out; }
+  .feedback-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+  .mark-badge { background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 999px; font-weight: 600; font-size: 0.9rem; }
+  .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; padding: 1rem 2rem; border-radius: var(--radius); font-weight: 600; cursor: pointer; width: 100%; font-size: 1rem; transition: transform 0.2s; }
+  .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+  .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 1rem 2rem; border-radius: var(--radius); cursor: pointer; width: 100%; margin-top: 1rem; }
+  .btn-secondary:hover { background: rgba(255,255,255,0.05); }
   .warning-box { background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.3); color: #fde047; padding: 1rem; border-radius: var(--radius); margin-bottom: 1.5rem; }
+  .mcq-options { display:grid; gap:0.75rem; }
+  .mcq-label { display:flex; align-items:center; gap:0.75rem; cursor:pointer; }
+  .mcq-radio { position:absolute; opacity:0; pointer-events:none; }
+  .mcq-card {
+    flex:1;
+    display:block;
+    padding:0.9rem 1rem;
+    border:1px solid var(--border);
+    border-radius: var(--radius);
+    background:#121a2b;
+    color: var(--text);
+    transition: all 0.15s ease;
+  }
+  .mcq-label:hover .mcq-card { border-color: var(--primary); }
+  .mcq-radio:checked + .mcq-card {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border-color: transparent;
+  }
 </style>
-<script>
-  window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }, svg: { fontCache: 'global' } };
-</script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" defer></script>
 {% endblock %}
 {% block top_actions %}
 <a href="{{ url_for('index') }}" style="color: var(--muted); text-decoration: none; font-size: 0.9rem;">← Back to Command Term Analyser</a>
@@ -41,11 +56,17 @@
     </div>
     {% if timed_on %}
     <div id="timer" style="margin-bottom: 1rem; color:#e2e8f0;">
-      ⏱ Time remaining: <strong><span id="time-left">{{ time_remaining }}</span>s</strong>
+      ⏱ Time remaining: <strong><span id="time-left">{{ time_remaining }}</span></strong>
     </div>
     {% endif %}
     <div class="question-text">
       {{ question.latex | safe }}
+    </div>
+    <div class="input-group" style="margin-top:0.75rem;">
+      <label>Topic Selection (Coming Soon)</label>
+      <select disabled style="width:100%; padding:0.5rem; border-radius:0.5rem; background:#0b1220; color:var(--muted); border:1px solid var(--border);">
+        <option>— Select Topic —</option>
+      </select>
     </div>
 
     {% if feedback %}
@@ -79,11 +100,11 @@
         {% if question.type|lower == 'mcq' %}
         <div class="input-group">
           <label>Choose your answer</label>
-          <div style="display:grid; gap:0.5rem;">
+          <div class="mcq-options">
             {% for key, val in question.options.items() %}
-            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-              <input type="radio" name="choice" value="{{ key }}" required />
-              <span>{{ val | safe }}</span>
+            <label class="mcq-label">
+              <input class="mcq-radio" type="radio" name="choice" value="{{ key }}" required />
+              <span class="mcq-card"><strong>{{ key }}.</strong> {{ val | safe }}</span>
             </label>
             {% endfor %}
           </div>
@@ -95,9 +116,7 @@
         </div>
         {% endif %}
         
-        <button type="submit" class="btn-primary">
-          {% if feedback %}Try Again{% else %}Submit Answer{% endif %}
-        </button>
+        <button type="submit" class="btn-primary">Submit Answer</button>
     </form>
     {% endif %}
 
@@ -128,15 +147,21 @@
       window.location.href = '/methods-practice?action=toggle_timed&on=' + on;
     });
   }
-  // Countdown timer
+  // Countdown timer MM:SS
   const timeLeftEl = document.getElementById('time-left');
   const formEl = document.getElementById('methods-form');
   const expiredEl = document.getElementById('time-expired');
   if (timeLeftEl && formEl && expiredEl) {
+    const toMMSS = (sec) => {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    };
     let remaining = parseInt(timeLeftEl.textContent || '0', 10);
+    timeLeftEl.textContent = toMMSS(remaining);
     const tick = () => {
       remaining = Math.max(0, remaining - 1);
-      timeLeftEl.textContent = remaining.toString();
+      timeLeftEl.textContent = toMMSS(remaining);
       if (remaining <= 0) {
         expiredEl.value = '1';
         formEl.submit();
@@ -146,9 +171,6 @@
     };
     setTimeout(tick, 1000);
   }
-  // Ensure MathJax renders
-  if (window.MathJax && window.MathJax.typesetPromise) {
-    window.MathJax.typesetPromise();
-  }
+  if (window.MathJax && window.MathJax.typeset) { window.MathJax.typeset(); }
 </script>
 {% endblock %}
