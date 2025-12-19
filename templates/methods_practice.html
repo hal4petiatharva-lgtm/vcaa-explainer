@@ -18,23 +18,15 @@
   .btn-secondary:hover { background: rgba(255,255,255,0.05); }
   .warning-box { background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.3); color: #fde047; padding: 1rem; border-radius: var(--radius); margin-bottom: 1.5rem; }
   .mcq-options { display:grid; gap:0.75rem; }
-  .mcq-label { display:flex; align-items:center; gap:0.75rem; cursor:pointer; }
-  .mcq-radio { position:absolute; opacity:0; pointer-events:none; }
-  .mcq-card {
-    flex:1;
-    display:block;
-    padding:0.9rem 1rem;
-    border:1px solid var(--border);
-    border-radius: var(--radius);
-    background:#121a2b;
-    color: var(--text);
-    transition: all 0.15s ease;
+  .mcq-option { display:flex; align-items:center; gap:0.75rem; cursor:pointer; }
+  .mcq-option input { position:absolute; opacity:0; pointer-events:none; }
+  .mcq-option span {
+    flex:1; display:block; padding:0.9rem 1rem; border:1px solid var(--border);
+    border-radius: var(--radius); background:#121a2b; color: var(--text); transition: all 0.15s ease;
   }
-  .mcq-label:hover .mcq-card { border-color: var(--primary); }
-  .mcq-radio:checked + .mcq-card {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
-    border-color: transparent;
+  .mcq-option:hover span { border-color: var(--primary); }
+  .mcq-option input:checked + span {
+    background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border-color: transparent;
   }
 </style>
 {% endblock %}
@@ -60,7 +52,7 @@
     </div>
     {% endif %}
     <div class="question-text">
-      {{ question.latex | safe }}
+      {{ question.text | safe }}
     </div>
     <div class="input-group" style="margin-top:0.75rem;">
       <label>Topic Selection (Coming Soon)</label>
@@ -100,14 +92,14 @@
         {% if question.type|lower == 'mcq' %}
         <div class="input-group">
           <label>Choose your answer</label>
-          <div class="mcq-options">
-            {% for key, val in question.options.items() %}
-            <label class="mcq-label">
-              <input class="mcq-radio" type="radio" name="choice" value="{{ key }}" required />
-              <span class="mcq-card"><strong>{{ key }}.</strong> {{ val | safe }}</span>
-            </label>
-            {% endfor %}
-          </div>
+        <div class="mcq-options">
+          {% for key, val in question.options.items() %}
+          <label class="mcq-option">
+            <input type="radio" name="choice" value="{{ key }}" required />
+            <span><strong>{{ key }}.</strong> {{ val | safe }}</span>
+          </label>
+          {% endfor %}
+        </div>
         </div>
         {% else %}
         <div class="input-group">
@@ -127,12 +119,10 @@
       </a>
     </div>
     {% endif %}
-    {% if feedback and not feedback.is_correct %}
-    <div style="margin-top: 1rem;">
-      <a href="{{ url_for('methods_practice', action='retry') }}">
-        <button class="btn-secondary">Try Again</button>
-      </a>
-    </div>
+    {% if show_try_again %}
+      <div style="margin-top: 1rem;">
+        <a href="{{ url_for('methods_practice', action='retry') }}"><button class="btn-secondary">Try Again</button></a>
+      </div>
     {% endif %}
   </div>
 </main>
@@ -152,16 +142,16 @@
   const formEl = document.getElementById('methods-form');
   const expiredEl = document.getElementById('time-expired');
   if (timeLeftEl && formEl && expiredEl) {
-    const toMMSS = (sec) => {
-      const m = Math.floor(sec / 60);
-      const s = sec % 60;
-      return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-    };
+    function formatTime(totalSeconds) {
+      const m = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+      const s = (totalSeconds % 60).toString().padStart(2, '0');
+      return `${m}:${s}`;
+    }
     let remaining = parseInt(timeLeftEl.textContent || '0', 10);
-    timeLeftEl.textContent = toMMSS(remaining);
+    timeLeftEl.textContent = formatTime(remaining);
     const tick = () => {
       remaining = Math.max(0, remaining - 1);
-      timeLeftEl.textContent = toMMSS(remaining);
+      timeLeftEl.textContent = formatTime(remaining);
       if (remaining <= 0) {
         expiredEl.value = '1';
         formEl.submit();
