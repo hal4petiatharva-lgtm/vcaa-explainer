@@ -3,9 +3,38 @@
 {% block head_extra %}
 <style>
   .methods-container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
-  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 2rem; box-shadow: var(--shadow); margin-bottom: 2rem; min-height: 400px; display: flex; flex-direction: column; }
+  
+  /* Dynamic Question Box Sizing */
+  .question-card { 
+    background: var(--surface); 
+    border: 1px solid var(--border); 
+    border-radius: var(--radius-xl); 
+    padding: 2rem; 
+    box-shadow: var(--shadow); 
+    margin-bottom: 2rem; 
+    min-height: 400px; 
+    height: auto; 
+    display: flex; 
+    flex-direction: column; 
+    width: 100%;
+    overflow-wrap: break-word;
+  }
+  
   .question-meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; justify-content: space-between; }
-  .question-text { font-size: 1.25rem; font-weight: 500; margin-bottom: 1.5rem; line-height: 1.6; text-align:center; flex: 1; display: flex; align-items: center; justify-content: center; }
+  
+  .question-text { 
+    font-size: 1.15rem; /* Slightly reduced size */
+    font-weight: 500; 
+    margin-bottom: 1.5rem; 
+    line-height: 1.6; 
+    text-align: center; 
+    flex: 1; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    overflow-x: auto; /* Handle long equations */
+  }
+
   .input-group { margin-bottom: 1.5rem; }
   .input-group label { display: block; margin-bottom: 0.5rem; color: var(--muted); font-size: 0.9rem; }
   .form-input { width: 100%; padding: 1rem; background: #0b1220; color: var(--text); border: 1px solid var(--border); border-radius: var(--radius); font-size: 1rem; }
@@ -29,11 +58,41 @@
     background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border-color: transparent;
   }
   .quiz-status { font-size: 0.9rem; color: var(--muted); padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 999px; border: 1px solid var(--border); margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+
+  /* Exit Button & Modal */
+  .btn-exit {
+    background: transparent; color: #ef4444; border: 1px solid #ef4444;
+    padding: 0.5rem 1rem; border-radius: var(--radius);
+    font-size: 0.85rem; font-weight: 600; cursor: pointer;
+    transition: all 0.2s; text-decoration: none; display: inline-block;
+  }
+  .btn-exit:hover { background: rgba(239, 68, 68, 0.1); }
+  
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s;
+    backdrop-filter: blur(2px);
+  }
+  .modal-overlay.active { opacity: 1; pointer-events: auto; }
+  .modal-box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-xl); padding: 2rem;
+    max-width: 400px; width: 90%;
+    text-align: center; box-shadow: var(--shadow);
+    transform: scale(0.95); transition: transform 0.2s;
+  }
+  .modal-overlay.active .modal-box { transform: scale(1); }
+  .modal-actions { display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center; }
 </style>
 {% endblock %}
+
 {% block top_actions %}
-<a href="{{ url_for('index') }}" style="color: var(--muted); text-decoration: none; font-size: 0.9rem;">← Back to Command Term Analyser</a>
+<button id="btn-exit-trigger" class="btn-exit">Exit Quiz</button>
 {% endblock %}
+
 {% block content %}
 <main class="methods-container">
   
@@ -118,10 +177,24 @@
       <div style="margin-top: 1rem;"><a href="{{ url_for('methods_practice', action='retry') }}"><button class="btn-secondary">Try Again</button></a></div>
     {% endif %}
   </div>
+
+  <!-- Exit Modal -->
+  <div id="exit-modal" class="modal-overlay">
+    <div class="modal-box">
+      <h3 style="margin-bottom: 0.5rem; color: var(--text);">Exit Quiz?</h3>
+      <p style="color: var(--muted); margin-bottom: 1.5rem;">Are you sure? Exiting will reset your progress for this quiz.</p>
+      <div class="modal-actions">
+        <button id="btn-modal-cancel" class="btn-secondary" style="margin-top:0; width:auto; padding:0.5rem 1.5rem;">Cancel</button>
+        <a href="{{ url_for('methods_exit') }}" class="btn-primary" style="text-decoration:none; width:auto; padding:0.5rem 1.5rem; background: #ef4444; border:none; display: inline-block; line-height: 1.5;">Exit</a>
+      </div>
+    </div>
+  </div>
+
 </main>
 {% endblock %}
 {% block scripts %}
 <script>
+  // Timer Logic
   const timeLeftEl = document.getElementById('time-left');
   const formEl = document.getElementById('methods-form');
   const expiredEl = document.getElementById('time-expired');
@@ -140,6 +213,29 @@
     };
     setTimeout(tick, 1000);
   }
+
+  // MathJax
   if (window.MathJax && window.MathJax.typeset) { window.MathJax.typeset(); }
+
+  // Modal Logic
+  const exitBtn = document.getElementById('btn-exit-trigger');
+  const modal = document.getElementById('exit-modal');
+  const cancelBtn = document.getElementById('btn-modal-cancel');
+  
+  if (exitBtn && modal && cancelBtn) {
+    exitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.classList.add('active');
+    });
+    cancelBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+    // Close on click outside
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+  }
 </script>
 {% endblock %}
