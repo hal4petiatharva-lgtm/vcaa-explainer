@@ -580,47 +580,48 @@ def _next_question_id(sess):
     # If all done, wrap to first
     return ids[0]
 
-@app.route("/methods-practice", methods=["GET", "POST"])
-def methods_practice():
-    # Ensure session key exists
-    if 'methods_session' not in session:
+@app.route("/methods-setup", methods=["GET", "POST"])
+def methods_setup():
+    if request.method == "POST":
+        topic = request.form.get("topic")
+        timed_mode = request.form.get("timed_mode") == "on"
+        time_limit = int(request.form.get("time_limit", 5)) * 60  # minutes to seconds
+
         session['methods_session'] = {
             "questions_asked": [],
             "correctly_answered": [],
-            "timed_on": False,
-            "time_limit": 0,
-            "timer_expires_at": None
+            "timed_on": timed_mode,
+            "time_limit": time_limit if timed_mode else 0,
+            "timer_expires_at": None,
+            "topic": topic,
+            "config_set": True
         }
+        return redirect(url_for('methods_practice'))
+    
+    return render_template("methods_setup.html")
+
+@app.route("/methods-practice", methods=["GET", "POST"])
+def methods_practice():
+    # Ensure session is configured
+    if 'methods_session' not in session or not session['methods_session'].get('config_set'):
+        return redirect(url_for('methods_setup'))
     
     sess = session['methods_session']
     
     action = request.args.get('action')
-    if action == 'toggle_timed':
-        on = request.args.get('on', '0') == '1'
-        sess['timed_on'] = on
-        # Recompute timer for current question
-        q = next((q for q in methods_questions if q['id'] == sess.get('current_q_id')), None)
-        if q and on:
-            limit = 300 if (q.get('type') == 'short') else 180
-            sess['time_limit'] = limit
-            sess['timer_expires_at'] = time.time() + limit
-        else:
-            sess['time_limit'] = 0
-            sess['timer_expires_at'] = None
-        session.modified = True
-        return redirect(url_for('methods_practice'))
+    # Toggle logic removed as it's now locked in setup
+    
     if action == 'retry':
         sess['last_answer'] = ""
         sess['feedback'] = None
         sess['attempts'] = sess.get('attempts', 0) + 1
         # Reset timer if timed mode
-        q = next((q for q in methods_questions if q['id'] == sess.get('current_q_id')), None)
-        if q and sess.get('timed_on'):
-            limit = 300 if (q.get('type') == 'short') else 180
-            sess['time_limit'] = limit
+        if sess.get('timed_on'):
+            limit = sess.get('time_limit', 300)
             sess['timer_expires_at'] = time.time() + limit
         session.modified = True
         return redirect(url_for('methods_practice'))
+
     # Load new or initial question in sequential order
     if action == 'next' or 'current_q_id' not in sess:
         next_id = _next_question_id(sess)
@@ -630,12 +631,9 @@ def methods_practice():
         sess['feedback'] = None
         sess['last_answer'] = ""
         if sess.get('timed_on'):
-            q = next((q for q in methods_questions if q['id'] == next_id), None)
-            limit = 300 if (q and q.get('type') == 'short') else 180
-            sess['time_limit'] = limit
+            limit = sess.get('time_limit', 300)
             sess['timer_expires_at'] = time.time() + limit
         else:
-            sess['time_limit'] = 0
             sess['timer_expires_at'] = None
         session.modified = True
         return redirect(url_for('methods_practice'))
@@ -693,12 +691,14 @@ def methods_practice():
                     f"Correct Answer: {question.get('correct_answer') or question.get('correct_option')}\n"
                     f"Student Answer: {choice or user_answer}\n"
                     f"Rubric: {question.get('rubric')}\n"
+                    f"Marks Available: {question.get('marks', 1)}\n"
+                    "Note: If correct, say 'Correct. [Reasoning]'. If incorrect, say 'Incorrect. [Hint/Reasoning]'. Explicitly mention marks awarded (e.g. 1/2)."
                 )
                 chat = client.chat.completions.create(
                     messages=[{"role": "user", "content": prompt}],
                     model=GROQ_MODEL,
                     temperature=0.2,
-                    max_tokens=120
+                    max_tokens=150
                 )
                 ai_text = (chat.choices[0].message.content or "").strip()
                 if ai_text:
