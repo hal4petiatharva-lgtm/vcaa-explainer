@@ -500,7 +500,8 @@ def _find_available_port(candidates=None) -> int:
 
 def _normalize_answer(raw: str) -> str:
     s = (raw or "").strip().lower()
-    s = re.sub(r"^\$|\\$|\\\\", "", s)  # strip latex wrappers
+    s = re.sub(r"^\$|\\$|\\\\", "", s)  # strip inline latex $
+    s = re.sub(r"^\\\[|\\\]$", "", s)  # strip display latex \[ \]
     s = s.replace(" ", "")
     s = re.sub(r"^(x|y|z)\s*=", "", s)  # drop leading variable assignments
     s = s.replace("\\,", "")  # remove thin spaces
@@ -520,52 +521,51 @@ methods_questions = [
     {
         "id": 1,
         "type": "short",
-        "latex": r"\( \text{Let } f:\mathbb{R}\to\mathbb{R},\ f(x)=x^{3}-3x^{2}. \text{ Find the coordinates of the local minimum.} \)",
-        "correct_value": "(2,-4)",
+        "text": r"\[ \text{Let } f:\mathbb{R}\to\mathbb{R},\ f(x)=x^{3}-3x^{2}. \text{ Find the coordinates of the local minimum.} \]",
+        "correct_answer": r"\[ (2,-4) \]",
         "marks": 2,
         "rubric": "1 mark for differentiating f'(x)=3x^2-6x and solving f'(x)=0. 1 mark for minimum coordinate (2, -4).",
-        "answer_kind": "point"
     },
     {
         "id": 2,
         "type": "mcq",
-        "latex": r"\( \text{The pdf of a continuous random variable } X \text{ is } f(x)=kx \text{ for } 0\le x\le2, \text{ and } 0 \text{ elsewhere. Find } k. \)",
+        "text": r"\[ \text{The pdf of a continuous random variable } X \text{ is } f(x)=kx \text{ for } 0\le x\le2, \text{ and } 0 \text{ elsewhere. Find } k. \]",
         "options": {
-            "A": r"\( k=\dfrac{1}{4} \)",
-            "B": r"\( k=\dfrac{1}{2} \)",
-            "C": r"\( k=1 \)",
-            "D": r"\( k=2 \)"
+            "A": r"\[ k=\dfrac{1}{4} \]",
+            "B": r"\[ k=\dfrac{1}{2} \]",
+            "C": r"\[ k=1 \]",
+            "D": r"\[ k=2 \]"
         },
         "correct_option": "B",
+        "correct_answer": r"\[ k=\dfrac{1}{2} \]",
         "marks": 1,
         "rubric": "1 mark for setting ∫_0^2 kx dx = 1 and solving k=1/2."
     },
     {
         "id": 3,
         "type": "short",
-        "latex": r"\( \text{Solve for } x: \ 2\ln(x)-\ln(x+2)=\ln(3) \)",
-        "correct_value": "6",
+        "text": r"\[ 2\ln(x)-\ln(x+2)=\ln(3) \]",
+        "correct_answer": r"\[ x=6 \]",
         "marks": 3,
         "rubric": "Use log laws to combine, exponentiate to form quadratic, reject negative, x=6.",
-        "answer_kind": "numeric"
     },
     {
         "id": 4,
         "type": "mcq",
-        "latex": r"\( \text{If } f(x)=e^{2x},\ \text{ then } f'(0)=\ ? \)",
-        "options": { "A": r"\( 0 \)", "B": r"\( 1 \)", "C": r"\( 2 \)", "D": r"\( e \)" },
+        "text": r"\[ \text{If } f(x)=e^{2x},\ \text{ then } f'(0)=\ ? \]",
+        "options": { "A": r"\[ 0 \]", "B": r"\[ 1 \]", "C": r"\[ 2 \]", "D": r"\[ e \]" },
         "correct_option": "C",
+        "correct_answer": r"\[ 2 \]",
         "marks": 1,
         "rubric": "Apply chain rule: f'(x)=2e^{2x}, evaluate at x=0 → 2."
     },
     {
         "id": 5,
         "type": "short",
-        "latex": r"\( \text{Find the average rate of change of } g(x)=x^{2}+2x \text{ over } [1,3]. \)",
-        "correct_value": "6",
+        "text": r"\[ \text{Find the average rate of change of } g(x)=x^{2}+2x \text{ over } [1,3]. \]",
+        "correct_answer": r"\[ 6 \]",
         "marks": 2,
         "rubric": "Compute g(3), g(1) and apply (g(3)-g(1))/(3-1).",
-        "answer_kind": "numeric"
     },
 ]
 
@@ -675,7 +675,7 @@ def methods_practice():
         if question.get('type') == 'mcq':
             is_correct = (choice.upper() == question.get('correct_option'))
         else:
-            is_correct = _is_equal(user_answer, question.get('correct_value', ''))
+            is_correct = _is_equal(user_answer, question.get('correct_answer', ''))
 
         computed_feedback = {
             "mark": (question.get('marks', 1) if is_correct else 0),
@@ -689,8 +689,8 @@ def methods_practice():
             try:
                 prompt = (
                     "You are a VCAA Mathematical Methods assessor. Provide brief feedback only.\n"
-                    f"Question (LaTeX): {question.get('latex')}\n"
-                    f"Correct Answer: {question.get('correct_value') or question.get('correct_option')}\n"
+                    f"Question (LaTeX): {question.get('text')}\n"
+                    f"Correct Answer: {question.get('correct_answer') or question.get('correct_option')}\n"
                     f"Student Answer: {choice or user_answer}\n"
                     f"Rubric: {question.get('rubric')}\n"
                 )
@@ -723,6 +723,7 @@ def methods_practice():
         sess['timer_expires_at'] = None
         session.modified = True
         
+    show_try_again = bool(sess.get('feedback') and not sess['feedback'].get('is_correct'))
     return render_template(
         "methods_practice.html",
         question=question,
@@ -731,7 +732,8 @@ def methods_practice():
         user_answer=user_answer,
         speed_warning=speed_warning,
         timed_on=sess.get('timed_on', False),
-        time_remaining=time_remaining
+        time_remaining=time_remaining,
+        show_try_again=show_try_again
     )
 
 
