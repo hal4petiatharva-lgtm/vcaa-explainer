@@ -496,71 +496,147 @@ def _find_available_port(candidates=None) -> int:
 # Removed Gemini/OpenAI helper paths. Groq is now the sole provider.
 
 
-# --- Mathematical Methods Question Engine ---
+# --- Mathematical Methods Question Engine (Sequential, LaTeX, MCQ) ---
+
+def _normalize_answer(raw: str) -> str:
+    s = (raw or "").strip().lower()
+    s = re.sub(r"^\$|\\$|\\\\", "", s)  # strip latex wrappers
+    s = s.replace(" ", "")
+    s = re.sub(r"^(x|y|z)\s*=", "", s)  # drop leading variable assignments
+    s = s.replace("\\,", "")  # remove thin spaces
+    return s
+
+def _is_equal(a: str, b: str) -> bool:
+    na, nb = _normalize_answer(a), _normalize_answer(b)
+    # Try numeric compare with tolerance
+    try:
+        va = float(re.sub(r"[^0-9\.\-]", "", na))
+        vb = float(re.sub(r"[^0-9\.\-]", "", nb))
+        return abs(va - vb) < 1e-6
+    except Exception:
+        return na == nb
 
 methods_questions = [
     {
         "id": 1,
-        "type": "Short Answer",
-        "text": "Let f: R → R, f(x) = x³ - 3x². Find the coordinates of the local minimum.",
-        "correct_answer": "(2, -4)",
+        "type": "short",
+        "latex": r"Let\ f:\mathbb{R}\to\mathbb{R},\ f(x)=x^{3}-3x^{2}.\ \text{Find the coordinates of the local minimum.}",
+        "correct_value": "(2,-4)",
         "marks": 2,
-        "rubric": "1 mark for differentiating to get f'(x) = 3x² - 6x and solving f'(x) = 0. 1 mark for the correct coordinate (2, -4)."
+        "rubric": "1 mark for differentiating f'(x)=3x^2-6x and solving f'(x)=0. 1 mark for minimum coordinate (2, -4).",
+        "answer_kind": "point"
     },
     {
         "id": 2,
-        "type": "MCQ",
-        "text": "The probability density function of a continuous random variable X is given by f(x) = kx for 0 ≤ x ≤ 2, and 0 elsewhere. The value of k is:",
-        "correct_answer": "0.5",
+        "type": "mcq",
+        "latex": r"The\ pdf\ of\ a\ continuous\ random\ variable\ X\ is\ f(x)=kx\ \text{ for }\ 0\le x\le2,\ \text{and }0\ \text{ elsewhere. Find }k.",
+        "options": {
+            "A": r"k=\dfrac{1}{4}",
+            "B": r"k=\dfrac{1}{2}",
+            "C": r"k=1",
+            "D": r"k=2"
+        },
+        "correct_option": "B",
         "marks": 1,
-        "rubric": "1 mark for setting the integral of kx from 0 to 2 equal to 1."
+        "rubric": "1 mark for setting ∫_0^2 kx dx = 1 and solving k=1/2."
     },
     {
         "id": 3,
-        "type": "Short Answer",
-        "text": "Solve for x: 2log_e(x) - log_e(x+2) = log_e(3)",
-        "correct_answer": "x = 6",
+        "type": "short",
+        "latex": r"\text{Solve for }x:\ 2\ln(x)-\ln(x+2)=\ln(3).",
+        "correct_value": "6",
         "marks": 3,
-        "rubric": "1 mark for using log laws to combine LHS. 1 mark for removing logs to get quadratic. 1 mark for rejecting negative solution and stating x=6."
+        "rubric": "Use log laws to combine, exponentiate to form quadratic, reject negative, x=6.",
+        "answer_kind": "numeric"
     },
     {
         "id": 4,
-        "type": "MCQ",
-        "text": "If f(x) = e^(2x), then f'(0) is equal to:",
-        "correct_answer": "2",
+        "type": "mcq",
+        "latex": r"\text{If } f(x)=e^{2x},\ \text{ then } f'(0)=\ ?",
+        "options": { "A": r"0", "B": r"1", "C": r"2", "D": r"e" },
+        "correct_option": "C",
         "marks": 1,
-        "rubric": "1 mark for applying chain rule: f'(x) = 2e^(2x), then evaluating at x=0."
+        "rubric": "Apply chain rule: f'(x)=2e^{2x}, evaluate at x=0 → 2."
     },
     {
         "id": 5,
-        "type": "Short Answer",
-        "text": "Find the average rate of change of the function g(x) = x² + 2x over the interval [1, 3].",
-        "correct_answer": "6",
+        "type": "short",
+        "latex": r"\text{Find the average rate of change of } g(x)=x^{2}+2x \text{ over }[1,3].",
+        "correct_value": "6",
         "marks": 2,
-        "rubric": "1 mark for calculating g(3) and g(1). 1 mark for applying the average rate of change formula (g(3)-g(1))/(3-1)."
-    }
+        "rubric": "Compute g(3), g(1) and apply (g(3)-g(1))/(3-1).",
+        "answer_kind": "numeric"
+    },
 ]
+
+def _next_question_id(sess):
+    done = set(sess.get("correctly_answered", []))
+    current = sess.get("current_q_id")
+    ids = [q["id"] for q in methods_questions]
+    ids.sort()
+    for qid in ids:
+        if qid != current and qid not in done:
+            return qid
+    # If all done, wrap to first
+    return ids[0]
 
 @app.route("/methods-practice", methods=["GET", "POST"])
 def methods_practice():
     # Ensure session key exists
     if 'methods_session' not in session:
-        session['methods_session'] = {}
+        session['methods_session'] = {
+            "questions_asked": [],
+            "correctly_answered": [],
+            "timed_on": False,
+            "time_limit": 0,
+            "timer_expires_at": None
+        }
     
     sess = session['methods_session']
     
-    # Check if we need to load a new question (either explicit action or no current question)
-    if request.args.get('action') == 'next' or 'current_q_id' not in sess:
-        # Pick a random question
-        available_qs = [q for q in methods_questions if q['id'] != sess.get('current_q_id')]
-        if not available_qs: available_qs = methods_questions 
-        
-        q = random.choice(available_qs)
-        sess['current_q_id'] = q['id']
+    action = request.args.get('action')
+    if action == 'toggle_timed':
+        on = request.args.get('on', '0') == '1'
+        sess['timed_on'] = on
+        # Recompute timer for current question
+        q = next((q for q in methods_questions if q['id'] == sess.get('current_q_id')), None)
+        if q and on:
+            limit = 300 if (q.get('type') == 'short') else 180
+            sess['time_limit'] = limit
+            sess['timer_expires_at'] = time.time() + limit
+        else:
+            sess['time_limit'] = 0
+            sess['timer_expires_at'] = None
+        session.modified = True
+        return redirect(url_for('methods_practice'))
+    if action == 'retry':
+        sess['last_answer'] = ""
+        sess['feedback'] = None
+        sess['attempts'] = sess.get('attempts', 0) + 1
+        # Reset timer if timed mode
+        q = next((q for q in methods_questions if q['id'] == sess.get('current_q_id')), None)
+        if q and sess.get('timed_on'):
+            limit = 300 if (q.get('type') == 'short') else 180
+            sess['time_limit'] = limit
+            sess['timer_expires_at'] = time.time() + limit
+        session.modified = True
+        return redirect(url_for('methods_practice'))
+    # Load new or initial question in sequential order
+    if action == 'next' or 'current_q_id' not in sess:
+        next_id = _next_question_id(sess)
+        sess['current_q_id'] = next_id
         sess['start_time'] = time.time()
         sess['attempts'] = 0
         sess['feedback'] = None
         sess['last_answer'] = ""
+        if sess.get('timed_on'):
+            q = next((q for q in methods_questions if q['id'] == next_id), None)
+            limit = 300 if (q and q.get('type') == 'short') else 180
+            sess['time_limit'] = limit
+            sess['timer_expires_at'] = time.time() + limit
+        else:
+            sess['time_limit'] = 0
+            sess['timer_expires_at'] = None
         session.modified = True
         return redirect(url_for('methods_practice'))
 
@@ -575,8 +651,13 @@ def methods_practice():
 
     user_answer = sess.get('last_answer', "")
     speed_warning = False
+    time_remaining = 0
+    if sess.get('timed_on') and sess.get('timer_expires_at'):
+        time_remaining = max(0, int(sess['timer_expires_at'] - time.time()))
 
     if request.method == "POST":
+        time_expired = request.form.get('time_expired') == '1'
+        choice = request.form.get('choice', '').strip()
         user_answer = request.form.get('answer', '').strip()
         working = request.form.get('working', '').strip()
         
@@ -585,65 +666,73 @@ def methods_practice():
         time_taken = time.time() - start_t
         
         # Speed Check logic
-        if time_taken < 3.0 and not working and not sess.get('feedback'):
+        if time_taken < 3.0 and not working and not sess.get('feedback') and not time_expired:
             speed_warning = True
             return render_template("methods_practice.html", question=question, speed_warning=True, user_answer=user_answer, feedback=None, attempts=sess.get('attempts', 0))
 
-        # AI Marking
+        # Compute correctness locally
+        is_correct = False
+        if question.get('type') == 'mcq':
+            is_correct = (choice.upper() == question.get('correct_option'))
+        else:
+            is_correct = _is_equal(user_answer, question.get('correct_value', ''))
+
+        computed_feedback = {
+            "mark": (question.get('marks', 1) if is_correct else 0),
+            "max_marks": question.get('marks', 1),
+            "is_correct": is_correct,
+            "feedback": ("Well done." if is_correct else "Revise the method and try again.")
+        }
+
+        # Optional AI feedback enrichment
         if client:
-            prompt = f"""
-            You are a VCAA Mathematical Methods assessor. Mark this student answer.
-            
-            Question: {question['text']}
-            Correct Answer: {question['correct_answer']}
-            Rubric: {question['rubric']}
-            
-            Student Answer: {user_answer}
-            Student Working Provided: {working}
-            
-            Instructions:
-            1. Compare student answer to correct answer.
-            2. If working is provided, check logic.
-            3. Award marks strictly based on the rubric.
-            4. Provide brief, helpful feedback.
-            
-            Respond strictly in JSON format:
-            {{
-                "mark": <int>,
-                "max_marks": {question['marks']},
-                "is_correct": <bool>,
-                "feedback": "<string>"
-            }}
-            """
-            
             try:
+                prompt = (
+                    "You are a VCAA Mathematical Methods assessor. Provide brief feedback only.\n"
+                    f"Question (LaTeX): {question.get('latex')}\n"
+                    f"Correct Answer: {question.get('correct_value') or question.get('correct_option')}\n"
+                    f"Student Answer: {choice or user_answer}\n"
+                    f"Rubric: {question.get('rubric')}\n"
+                )
                 chat = client.chat.completions.create(
                     messages=[{"role": "user", "content": prompt}],
                     model=GROQ_MODEL,
-                    response_format={"type": "json_object"}
+                    temperature=0.2,
+                    max_tokens=120
                 )
-                result = json.loads(chat.choices[0].message.content)
-                sess['feedback'] = result
-            except Exception as e:
-                sess['feedback'] = {
-                    "mark": 0, 
-                    "max_marks": question['marks'], 
-                    "is_correct": False, 
-                    "feedback": "Error connecting to marking AI. Please try again."
-                }
-        else:
-            sess['feedback'] = {"mark": 0, "max_marks": 0, "is_correct": False, "feedback": "AI Client not configured."}
+                ai_text = (chat.choices[0].message.content or "").strip()
+                if ai_text:
+                    computed_feedback["feedback"] = ai_text
+            except Exception:
+                pass
+
+        sess['feedback'] = computed_feedback
 
         sess['attempts'] = sess.get('attempts', 0) + 1
         sess['last_answer'] = user_answer
+        if is_correct:
+            # Track correctly answered to avoid repeats in this session
+            corr = set(sess.get('correctly_answered', []))
+            corr.add(question['id'])
+            sess['correctly_answered'] = list(corr)
+        asked = list(sess.get('questions_asked', []))
+        if question['id'] not in asked:
+            asked.append(question['id'])
+            sess['questions_asked'] = asked
+        # Stop timer on submission
+        sess['timer_expires_at'] = None
         session.modified = True
         
-    return render_template("methods_practice.html", 
-                           question=question, 
-                           feedback=sess.get('feedback'), 
-                           attempts=sess.get('attempts', 0),
-                           user_answer=user_answer,
-                           speed_warning=speed_warning)
+    return render_template(
+        "methods_practice.html",
+        question=question,
+        feedback=sess.get('feedback'),
+        attempts=sess.get('attempts', 0),
+        user_answer=user_answer,
+        speed_warning=speed_warning,
+        timed_on=sess.get('timed_on', False),
+        time_remaining=time_remaining
+    )
 
 
 if __name__ == "__main__":
