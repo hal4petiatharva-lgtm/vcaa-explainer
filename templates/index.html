@@ -1,23 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>VCAA Command Term Explainer</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  </head>
-  <body>
-    <header class="site-header">
-      <button id="how-to-use-btn" class="help-btn">❓ How to Use</button>
-      <div class="header">
-        <div class="brand-super">VCEInsider's</div>
-        <h1 class="tool-name">DECODE</h1>
-        <p class="tagline">Mastery of VCAA command terms</p>
-      </div>
-    </header>
-
-    <main class="page">
+{% extends "base.html" %}
+{% block title %}VCAA Command Term Explainer{% endblock %}
+{% block top_actions %}
+<button id="how-to-use-btn" class="help-btn">❓ How to Use</button>
+{% endblock %}
+{% block content %}
+<header class="site-header">
+  <div class="header">
+    <div class="brand-super">VCEInsider's</div>
+    <h1 class="tool-name">DECODE</h1>
+    <p class="tagline">Mastery of VCAA command terms</p>
+  </div>
+</header>
+<main class="page">
       <section class="card input">
         <form id="question-form">
           <label for="question-input" class="sr-only">Question</label>
@@ -36,13 +30,12 @@
           <span id="loading-text">Analyzing your question…</span>
         </div>
       </section>
-
       <section class="examples">
         <button class="example-btn" data-example="Evaluate the impact of economic globalization on developing nations.">Evaluate the impact of economic globalization on developing nations.</button>
         <button class="example-btn" data-example="Analyse how character development reveals themes in The Dressmaker.">Analyse how character development reveals themes in The Dressmaker.</button>
         <button class="example-btn" data-example="Discuss the role of neurotransmitters in mental health disorders.">Discuss the role of neurotransmitters in mental health disorders.</button>
       </section>
-
+ 
       <section id="results-card" class="card results" style="display: none;">
         <h2>Analysis</h2>
         <div id="history-indicator" class="history-indicator" style="display:none;">Loaded from history</div>
@@ -66,7 +59,7 @@
             </div>
         </div>
       </section>
-
+ 
       <section id="history-panel" class="card history collapsed" aria-label="Session History">
         <div class="history-header">
           <h2>Session History</h2>
@@ -78,12 +71,9 @@
         <ul id="history-list" class="history-list" aria-live="polite"></ul>
       </section>
     </main>
-
     <footer class="site-footer">
       <p>Built by VCE graduates to help students succeed</p>
     </footer>
-
-    <!-- How to Use Modal -->
     <div id="help-modal" class="modal" style="display: none;">
       <div class="modal-content">
         <span id="close-modal" class="close-btn">&times;</span>
@@ -102,7 +92,8 @@
         <p class="modal-disclaimer">Note: This tool's analysis is uniquely generated from a curated database of official VCAA exams and reports, not from generic AI knowledge.</p>
       </div>
     </div>
-
+{% endblock %}
+{% block scripts %}
     <script>
       // How to Use Modal Logic
       const modal = document.getElementById("help-modal");
@@ -455,5 +446,4 @@
       💬 Feedback
     </button>
     <script defer src="https://feedback.fish/ff.js?pid=cf597e1334a38a"></script>
-  </body>
-</html>
+{% endblock %}
