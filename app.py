@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, session, redirect, url_for
 import os
 from dotenv import load_dotenv
 import socket
@@ -9,6 +9,9 @@ import importlib.metadata as importlib_metadata
 import sys
 import logging
 import re
+import random
+import time
+import json
 
 load_dotenv()
 
@@ -22,6 +25,7 @@ client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
 
 # Create Flask app after configuration/client setup.
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY", "dev_key_123")
 CORS(app)
 
 logging.basicConfig(level=logging.INFO)
@@ -490,6 +494,156 @@ def _find_available_port(candidates=None) -> int:
 
 
 # Removed Gemini/OpenAI helper paths. Groq is now the sole provider.
+
+
+# --- Mathematical Methods Question Engine ---
+
+methods_questions = [
+    {
+        "id": 1,
+        "type": "Short Answer",
+        "text": "Let f: R → R, f(x) = x³ - 3x². Find the coordinates of the local minimum.",
+        "correct_answer": "(2, -4)",
+        "marks": 2,
+        "rubric": "1 mark for differentiating to get f'(x) = 3x² - 6x and solving f'(x) = 0. 1 mark for the correct coordinate (2, -4)."
+    },
+    {
+        "id": 2,
+        "type": "MCQ",
+        "text": "The probability density function of a continuous random variable X is given by f(x) = kx for 0 ≤ x ≤ 2, and 0 elsewhere. The value of k is:",
+        "correct_answer": "0.5",
+        "marks": 1,
+        "rubric": "1 mark for setting the integral of kx from 0 to 2 equal to 1."
+    },
+    {
+        "id": 3,
+        "type": "Short Answer",
+        "text": "Solve for x: 2log_e(x) - log_e(x+2) = log_e(3)",
+        "correct_answer": "x = 6",
+        "marks": 3,
+        "rubric": "1 mark for using log laws to combine LHS. 1 mark for removing logs to get quadratic. 1 mark for rejecting negative solution and stating x=6."
+    },
+    {
+        "id": 4,
+        "type": "MCQ",
+        "text": "If f(x) = e^(2x), then f'(0) is equal to:",
+        "correct_answer": "2",
+        "marks": 1,
+        "rubric": "1 mark for applying chain rule: f'(x) = 2e^(2x), then evaluating at x=0."
+    },
+    {
+        "id": 5,
+        "type": "Short Answer",
+        "text": "Find the average rate of change of the function g(x) = x² + 2x over the interval [1, 3].",
+        "correct_answer": "6",
+        "marks": 2,
+        "rubric": "1 mark for calculating g(3) and g(1). 1 mark for applying the average rate of change formula (g(3)-g(1))/(3-1)."
+    }
+]
+
+@app.route("/methods-practice", methods=["GET", "POST"])
+def methods_practice():
+    # Ensure session key exists
+    if 'methods_session' not in session:
+        session['methods_session'] = {}
+    
+    sess = session['methods_session']
+    
+    # Check if we need to load a new question (either explicit action or no current question)
+    if request.args.get('action') == 'next' or 'current_q_id' not in sess:
+        # Pick a random question
+        available_qs = [q for q in methods_questions if q['id'] != sess.get('current_q_id')]
+        if not available_qs: available_qs = methods_questions 
+        
+        q = random.choice(available_qs)
+        sess['current_q_id'] = q['id']
+        sess['start_time'] = time.time()
+        sess['attempts'] = 0
+        sess['feedback'] = None
+        sess['last_answer'] = ""
+        session.modified = True
+        return redirect(url_for('methods_practice'))
+
+    # Retrieve current question object
+    q_id = sess.get('current_q_id')
+    question = next((q for q in methods_questions if q['id'] == q_id), None)
+    
+    if not question:
+        # Fallback reset
+        sess.pop('current_q_id', None)
+        return redirect(url_for('methods_practice', action='next'))
+
+    user_answer = sess.get('last_answer', "")
+    speed_warning = False
+
+    if request.method == "POST":
+        user_answer = request.form.get('answer', '').strip()
+        working = request.form.get('working', '').strip()
+        
+        # Calculate time taken
+        start_t = sess.get('start_time', time.time())
+        time_taken = time.time() - start_t
+        
+        # Speed Check logic
+        if time_taken < 3.0 and not working and not sess.get('feedback'):
+            speed_warning = True
+            return render_template("methods_practice.html", question=question, speed_warning=True, user_answer=user_answer, feedback=None, attempts=sess.get('attempts', 0))
+
+        # AI Marking
+        if client:
+            prompt = f"""
+            You are a VCAA Mathematical Methods assessor. Mark this student answer.
+            
+            Question: {question['text']}
+            Correct Answer: {question['correct_answer']}
+            Rubric: {question['rubric']}
+            
+            Student Answer: {user_answer}
+            Student Working Provided: {working}
+            
+            Instructions:
+            1. Compare student answer to correct answer.
+            2. If working is provided, check logic.
+            3. Award marks strictly based on the rubric.
+            4. Provide brief, helpful feedback.
+            
+            Respond strictly in JSON format:
+            {{
+                "mark": <int>,
+                "max_marks": {question['marks']},
+                "is_correct": <bool>,
+                "feedback": "<string>"
+            }}
+            """
+            
+            try:
+                chat = client.chat.completions.create(
+                    messages=[{"role": "user", "content": prompt}],
+                    model=GROQ_MODEL,
+                    response_format={"type": "json_object"}
+                )
+                result = json.loads(chat.choices[0].message.content)
+                sess['feedback'] = result
+            except Exception as e:
+                sess['feedback'] = {
+                    "mark": 0, 
+                    "max_marks": question['marks'], 
+                    "is_correct": False, 
+                    "feedback": "Error connecting to marking AI. Please try again."
+                }
+        else:
+            sess['feedback'] = {"mark": 0, "max_marks": 0, "is_correct": False, "feedback": "AI Client not configured."}
+
+        sess['attempts'] = sess.get('attempts', 0) + 1
+        sess['last_answer'] = user_answer
+        session.modified = True
+        
+    return render_template("methods_practice.html", 
+                           question=question, 
+                           feedback=sess.get('feedback'), 
+                           attempts=sess.get('attempts', 0),
+                           user_answer=user_answer,
+                           speed_warning=speed_warning)
 
 
 if __name__ == "__main__":
