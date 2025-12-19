@@ -600,6 +600,11 @@ def methods_setup():
     
     return render_template("methods_setup.html")
 
+@app.route("/methods-exit")
+def methods_exit():
+    session.pop('methods_session', None)
+    return redirect(url_for('index'))
+
 @app.route("/methods-practice", methods=["GET", "POST"])
 def methods_practice():
     # Ensure session is configured
