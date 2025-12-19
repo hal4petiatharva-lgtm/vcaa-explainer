@@ -520,7 +520,7 @@ methods_questions = [
     {
         "id": 1,
         "type": "short",
-        "latex": r"Let\ f:\mathbb{R}\to\mathbb{R},\ f(x)=x^{3}-3x^{2}.\ \text{Find the coordinates of the local minimum.}",
+        "latex": r"\( \text{Let } f:\mathbb{R}\to\mathbb{R},\ f(x)=x^{3}-3x^{2}. \text{ Find the coordinates of the local minimum.} \)",
         "correct_value": "(2,-4)",
         "marks": 2,
         "rubric": "1 mark for differentiating f'(x)=3x^2-6x and solving f'(x)=0. 1 mark for minimum coordinate (2, -4).",
@@ -529,12 +529,12 @@ methods_questions = [
     {
         "id": 2,
         "type": "mcq",
-        "latex": r"The\ pdf\ of\ a\ continuous\ random\ variable\ X\ is\ f(x)=kx\ \text{ for }\ 0\le x\le2,\ \text{and }0\ \text{ elsewhere. Find }k.",
+        "latex": r"\( \text{The pdf of a continuous random variable } X \text{ is } f(x)=kx \text{ for } 0\le x\le2, \text{ and } 0 \text{ elsewhere. Find } k. \)",
         "options": {
-            "A": r"k=\dfrac{1}{4}",
-            "B": r"k=\dfrac{1}{2}",
-            "C": r"k=1",
-            "D": r"k=2"
+            "A": r"\( k=\dfrac{1}{4} \)",
+            "B": r"\( k=\dfrac{1}{2} \)",
+            "C": r"\( k=1 \)",
+            "D": r"\( k=2 \)"
         },
         "correct_option": "B",
         "marks": 1,
@@ -543,7 +543,7 @@ methods_questions = [
     {
         "id": 3,
         "type": "short",
-        "latex": r"\text{Solve for }x:\ 2\ln(x)-\ln(x+2)=\ln(3).",
+        "latex": r"\( \text{Solve for } x: \ 2\ln(x)-\ln(x+2)=\ln(3) \)",
         "correct_value": "6",
         "marks": 3,
         "rubric": "Use log laws to combine, exponentiate to form quadratic, reject negative, x=6.",
@@ -552,8 +552,8 @@ methods_questions = [
     {
         "id": 4,
         "type": "mcq",
-        "latex": r"\text{If } f(x)=e^{2x},\ \text{ then } f'(0)=\ ?",
-        "options": { "A": r"0", "B": r"1", "C": r"2", "D": r"e" },
+        "latex": r"\( \text{If } f(x)=e^{2x},\ \text{ then } f'(0)=\ ? \)",
+        "options": { "A": r"\( 0 \)", "B": r"\( 1 \)", "C": r"\( 2 \)", "D": r"\( e \)" },
         "correct_option": "C",
         "marks": 1,
         "rubric": "Apply chain rule: f'(x)=2e^{2x}, evaluate at x=0 → 2."
@@ -561,7 +561,7 @@ methods_questions = [
     {
         "id": 5,
         "type": "short",
-        "latex": r"\text{Find the average rate of change of } g(x)=x^{2}+2x \text{ over }[1,3].",
+        "latex": r"\( \text{Find the average rate of change of } g(x)=x^{2}+2x \text{ over } [1,3]. \)",
         "correct_value": "6",
         "marks": 2,
         "rubric": "Compute g(3), g(1) and apply (g(3)-g(1))/(3-1).",
