@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}VCEInsider — DECODE{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    {% block head_extra %}{% endblock %}
+    <style>
+      .layout {
+        display: flex;
+        min-height: 100vh;
+      }
+      .sidebar {
+        width: 260px;
+        background: #0b1220;
+        border-right: 1px solid var(--border);
+        color: var(--text);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        transform: translateX(0);
+        transition: transform 0.25s ease;
+        z-index: 1200;
+        padding: 1rem 0.75rem;
+      }
+      .sidebar.collapsed {
+        transform: translateX(-100%);
+      }
+      .sidebar .brand {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+        padding: 0.5rem 0.5rem 1rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 1rem;
+      }
+      .brand-title {
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 1.25rem;
+      }
+      .brand-sub {
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+      .sidebar .section-title {
+        color: var(--muted);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 0.75rem 0.5rem 0.5rem;
+      }
+      .menu {
+        list-style: none;
+        padding: 0.25rem 0;
+        margin: 0;
+      }
+      .menu-item a {
+        display: block;
+        padding: 0.6rem 0.6rem;
+        border-radius: 0.6rem;
+        color: var(--text);
+        text-decoration: none;
+        border: 1px solid transparent;
+      }
+      .menu-item a:hover {
+        border-color: var(--border);
+        background: rgba(255,255,255,0.04);
+      }
+      .menu-item a.active {
+        background: rgba(59,130,246,0.15);
+        border-color: var(--primary);
+      }
+      .content {
+        flex: 1;
+        margin-left: 260px;
+      }
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1rem;
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        background: rgba(15,23,42,0.85);
+        backdrop-filter: blur(8px);
+        z-index: 1100;
+      }
+      .hamburger {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--border);
+        color: var(--text);
+        border-radius: 8px;
+        padding: 0.4rem 0.6rem;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+      .topbar-brand {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+      }
+      .topbar-title {
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 1.1rem;
+        margin: 0;
+      }
+      .topbar-sub {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      @media (max-width: 900px) {
+        .content {
+          margin-left: 0;
+        }
+        .sidebar {
+          transform: translateX(-100%);
+        }
+        .sidebar.show {
+          transform: translateX(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <nav id="sidebar" class="sidebar">
+        <div class="brand">
+          <div class="brand-title">DECODE</div>
+          <div class="brand-sub">VCEInsider</div>
+        </div>
+        <div class="section-title">Subjects</div>
+        <ul class="menu">
+          <li class="menu-item">
+            <a href="{{ url_for('methods_practice') }}"
+               class="{% if request.path.startswith('/methods-practice') %}active{% endif %}">
+              Mathematical Methods
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="{{ url_for('index') }}"
+               class="{% if request.path == '/' %}active{% endif %}">
+              Command Term Analyser
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="content">
+        <div class="topbar">
+          <button id="hamburger" class="hamburger">☰</button>
+          <div class="topbar-brand">
+            <h1 class="topbar-title">DECODE</h1>
+            <span class="topbar-sub">Master VCAA expectations</span>
+          </div>
+          <div class="topbar-actions">
+            {% block top_actions %}{% endblock %}
+          </div>
+        </div>
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+    <script>
+      const sidebar = document.getElementById('sidebar');
+      const hamburger = document.getElementById('hamburger');
+      function toggleSidebar() {
+        const isMobile = window.matchMedia('(max-width: 900px)').matches;
+        if (isMobile) {
+          sidebar.classList.toggle('show');
+        } else {
+          sidebar.classList.toggle('collapsed');
+        }
+      }
+      if (hamburger) {
+        hamburger.addEventListener('click', toggleSidebar);
+      }
+    </script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>
