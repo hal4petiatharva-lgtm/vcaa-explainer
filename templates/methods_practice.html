@@ -3,9 +3,9 @@
 {% block head_extra %}
 <style>
   .methods-container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
-  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 2rem; box-shadow: var(--shadow); margin-bottom: 2rem; }
-  .question-meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
-  .question-text { font-size: 1.25rem; font-weight: 500; margin-bottom: 1.5rem; line-height: 1.6; }
+  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 2rem; box-shadow: var(--shadow); margin-bottom: 2rem; min-height: 400px; display: flex; flex-direction: column; }
+  .question-meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; justify-content: space-between; }
+  .question-text { font-size: 1.25rem; font-weight: 500; margin-bottom: 1.5rem; line-height: 1.6; text-align:center; flex: 1; display: flex; align-items: center; justify-content: center; }
   .input-group { margin-bottom: 1.5rem; }
   .input-group label { display: block; margin-bottom: 0.5rem; color: var(--muted); font-size: 0.9rem; }
   .form-input { width: 100%; padding: 1rem; background: #0b1220; color: var(--text); border: 1px solid var(--border); border-radius: var(--radius); font-size: 1rem; }
@@ -22,12 +22,13 @@
   .mcq-option input { position:absolute; opacity:0; pointer-events:none; }
   .mcq-option span {
     flex:1; display:block; padding:0.9rem 1rem; border:1px solid var(--border);
-    border-radius: var(--radius); background:#121a2b; color: var(--text); transition: all 0.15s ease;
+    border-radius: var(--radius); background:#121a2b; color: var(--text); transition: all 0.15s ease; text-align:left;
   }
   .mcq-option:hover span { border-color: var(--primary); }
   .mcq-option input:checked + span {
     background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border-color: transparent;
   }
+  .quiz-status { font-size: 0.9rem; color: var(--muted); padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 999px; border: 1px solid var(--border); margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
 </style>
 {% endblock %}
 {% block top_actions %}
@@ -35,63 +36,61 @@
 {% endblock %}
 {% block content %}
 <main class="methods-container">
+  
+  <div class="quiz-status">
+    <span><strong>Topic:</strong> {{ session.methods_session.topic }}</span>
+    <span>
+      <strong>Mode:</strong> 
+      {% if timed_on %}
+        Timed ({{ session.methods_session.time_limit // 60 }} min/q)
+      {% else %}
+        Untimed
+      {% endif %}
+    </span>
+  </div>
+
   <div class="question-card">
     <div class="question-meta">
-      Question {{ question.id }} • {{ question.type|upper }} • {{ question.marks }} Marks
+      <span>Question {{ question.id }}</span>
+      <span>{{ "SHORT ANSWER" if question.type|lower == 'short' else "MULTIPLE CHOICE" }}</span>
+      <span>{{ question.marks }} Marks</span>
     </div>
-    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom: 0.75rem;">
-      <div style="color: var(--muted); font-size: 0.9rem;">Timed Practice</div>
-      <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-        <input id="timed-toggle" type="checkbox" {% if timed_on %}checked{% endif %} />
-        <span style="color: var(--muted); font-size: 0.9rem;">ON/OFF</span>
-      </label>
-    </div>
+
     {% if timed_on %}
-    <div id="timer" style="margin-bottom: 1rem; color:#e2e8f0;">
+    <div id="timer" style="margin-bottom: 1rem; color:#e2e8f0; text-align: center;">
       ⏱ Time remaining: <strong><span id="time-left">{{ time_remaining }}</span></strong>
     </div>
     {% endif %}
-    <div class="question-text">
-      {{ question.text | safe }}
-    </div>
-    <div class="input-group" style="margin-top:0.75rem;">
-      <label>Topic Selection (Coming Soon)</label>
-      <select disabled style="width:100%; padding:0.5rem; border-radius:0.5rem; background:#0b1220; color:var(--muted); border:1px solid var(--border);">
-        <option>— Select Topic —</option>
-      </select>
-    </div>
+
+    <div class="question-text">{{ question.text | safe }}</div>
 
     {% if feedback %}
     <div class="feedback-card" style="border-color: {% if feedback.is_correct %}#22c55e{% else %}#eab308{% endif %}; background: {% if feedback.is_correct %}rgba(34,197,94,0.1){% else %}rgba(234,179,8,0.1){% endif %}">
       <div class="feedback-header">
-                <h3 style="margin:0; color: {% if feedback.is_correct %}#4ade80{% else %}#fde047{% endif %}">
-                    {% if feedback.is_correct %}Correct!{% else %}Assessment{% endif %}
-                </h3>
-                <span class="mark-badge" style="background: {% if feedback.is_correct %}#22c55e{% else %}#eab308{% endif %}">
-                    {{ feedback.mark }} / {{ feedback.max_marks }}
-                </span>
-            </div>
-            <p style="margin:0; line-height: 1.6;">{{ feedback.feedback }}</p>
-        </div>
+        <h3 style="margin:0; color: {% if feedback.is_correct %}#4ade80{% else %}#fde047{% endif %}">{% if feedback.is_correct %}Correct!{% else %}Assessment{% endif %}</h3>
+        <span class="mark-badge" style="background: {% if feedback.is_correct %}#22c55e{% else %}#eab308{% endif %}">{{ feedback.mark }} / {{ feedback.max_marks }}</span>
+      </div>
+      <p style="margin:0; line-height: 1.6;">{{ feedback.feedback }}</p>
+    </div>
     {% endif %}
 
     {% if not feedback or not feedback.is_correct %}
-    <form id="methods-form" method="POST" action="/methods-practice" style="margin-top: 2rem;">
-        <input type="hidden" name="time_expired" id="time-expired" value="0" />
-        {% if speed_warning %}
-        <div class="warning-box">
-          <strong>⚡️ Whoa there!</strong> You answered that very quickly (< 3s).<br>
-          To ensure valid practice, please briefly explain your working out below.
-        </div>
-            <div class="input-group">
-                <label>Working / Reasoning</label>
-                <textarea name="working" class="form-input" rows="3" placeholder="e.g. Used chain rule..." required></textarea>
-        </div>
-        {% endif %}
+    <form id="methods-form" method="POST" action="/methods-practice" style="margin-top: auto;">
+      <input type="hidden" name="time_expired" id="time-expired" value="0" />
+      {% if speed_warning %}
+      <div class="warning-box">
+        <strong>⚡️ Whoa there!</strong> You answered that very quickly (< 3s).<br>
+        To ensure valid practice, please briefly explain your working out below.
+      </div>
+      <div class="input-group">
+        <label>Working / Reasoning</label>
+        <textarea name="working" class="form-input" rows="3" placeholder="e.g. Used chain rule..." required></textarea>
+      </div>
+      {% endif %}
 
-        {% if question.type|lower == 'mcq' %}
-        <div class="input-group">
-          <label>Choose your answer</label>
+      {% if question.type|lower == 'mcq' %}
+      <div class="input-group">
+        <label>Choose your answer</label>
         <div class="mcq-options">
           {% for key, val in question.options.items() %}
           <label class="mcq-option">
@@ -100,44 +99,29 @@
           </label>
           {% endfor %}
         </div>
-        </div>
-        {% else %}
-        <div class="input-group">
-          <label>Your Answer</label>
-          <input type="text" name="answer" class="form-input" value="{{ user_answer or '' }}" placeholder="Enter your final answer..." required autocomplete="off">
-        </div>
-        {% endif %}
-        
-        <button type="submit" class="btn-primary">Submit Answer</button>
+      </div>
+      {% else %}
+      <div class="input-group">
+        <label>Your Answer</label>
+        <input type="text" name="answer" class="form-input" value="{{ user_answer or '' }}" placeholder="Enter your final answer..." required autocomplete="off">
+      </div>
+      {% endif %}
+
+      <button type="submit" class="btn-primary">Submit Answer</button>
     </form>
     {% endif %}
 
     {% if feedback and (feedback.is_correct or attempts >= 3) %}
-    <div style="margin-top: 2rem;">
-      <a href="{{ url_for('methods_practice', action='next') }}">
-        <button class="btn-primary">Next Question →</button>
-      </a>
-    </div>
+    <div style="margin-top: 2rem;"><a href="{{ url_for('methods_practice', action='next') }}"><button class="btn-primary">Next Question →</button></a></div>
     {% endif %}
     {% if show_try_again %}
-      <div style="margin-top: 1rem;">
-        <a href="{{ url_for('methods_practice', action='retry') }}"><button class="btn-secondary">Try Again</button></a>
-      </div>
+      <div style="margin-top: 1rem;"><a href="{{ url_for('methods_practice', action='retry') }}"><button class="btn-secondary">Try Again</button></a></div>
     {% endif %}
   </div>
 </main>
 {% endblock %}
 {% block scripts %}
 <script>
-  // Timed toggle
-  const timedToggle = document.getElementById('timed-toggle');
-  if (timedToggle) {
-    timedToggle.addEventListener('change', () => {
-      const on = timedToggle.checked ? '1' : '0';
-      window.location.href = '/methods-practice?action=toggle_timed&on=' + on;
-    });
-  }
-  // Countdown timer MM:SS
   const timeLeftEl = document.getElementById('time-left');
   const formEl = document.getElementById('methods-form');
   const expiredEl = document.getElementById('time-expired');
@@ -152,12 +136,7 @@
     const tick = () => {
       remaining = Math.max(0, remaining - 1);
       timeLeftEl.textContent = formatTime(remaining);
-      if (remaining <= 0) {
-        expiredEl.value = '1';
-        formEl.submit();
-      } else {
-        setTimeout(tick, 1000);
-      }
+      if (remaining <= 0) { expiredEl.value = '1'; formEl.submit(); } else { setTimeout(tick, 1000); }
     };
     setTimeout(tick, 1000);
   }
