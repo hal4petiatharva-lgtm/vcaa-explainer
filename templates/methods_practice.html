@@ -100,8 +100,23 @@
 {% block content %}
 <main class="methods-container">
   
+  {% if quiz_complete %}
+  <div class="question-card" style="text-align: center;">
+    <h2>🎉 Quiz Complete!</h2>
+    <p style="font-size: 1.2rem; color: var(--muted); margin: 1.5rem 0;">You scored</p>
+    <div style="font-size: 3rem; font-weight: bold; color: var(--primary); margin-bottom: 1.5rem;">
+      {{ score }} / {{ total }}
+    </div>
+    <div style="display: flex; gap: 1rem; justify-content: center;">
+      <a href="{{ url_for('methods_setup') }}" class="btn-primary" style="text-decoration: none; display: inline-block;">Start New Quiz</a>
+      <a href="{{ url_for('index') }}" class="btn-secondary" style="text-decoration: none; display: inline-block; width: auto;">Home</a>
+    </div>
+  </div>
+  {% else %}
+
   <div class="quiz-status">
     <span><strong>Topic:</strong> {{ session.methods_topic }}</span>
+    <span><strong>Progress:</strong> Question {{ current_index }} of {{ total_questions }}</span>
     <span>
       <strong>Mode:</strong> 
       {% if timed_on %}
