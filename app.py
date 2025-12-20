@@ -585,11 +585,16 @@ def methods_setup():
     if request.method == "POST":
         topic = request.form.get("topic")
         exam_type = request.form.get("exam_type")
-        timed_mode = request.form.get("timed_mode") == "on"
+        timed_mode = request.form.get("timed") == "on"
         
         # Validation
         if not topic or not exam_type:
              return render_template("methods_setup.html", error="Please select both Topic and Exam Type.")
+
+        # Set flat keys as requested
+        session['methods_topic'] = topic
+        session['methods_exam_type'] = exam_type
+        session['methods_timed'] = timed_mode
 
         session['methods_session'] = {
             "questions_asked": [],
@@ -607,19 +612,22 @@ def methods_setup():
 @app.route("/methods-exit")
 def methods_exit():
     session.pop('methods_session', None)
+    session.pop('methods_topic', None)
+    session.pop('methods_exam_type', None)
+    session.pop('methods_timed', None)
     return redirect(url_for('index'))
 
 @app.route("/methods-practice", methods=["GET", "POST"])
 def methods_practice():
     # Ensure session is configured
-    if 'methods_session' not in session or not session['methods_session'].get('config_set'):
+    if not session.get('methods_exam_type'):
+        return redirect(url_for('methods_setup'))
+    
+    # Ensure state dict exists
+    if 'methods_session' not in session:
         return redirect(url_for('methods_setup'))
     
     sess = session['methods_session']
-    
-    # Ensure exam_type is present (migration safety)
-    if 'exam_type' not in sess:
-        return redirect(url_for('methods_setup'))
 
     action = request.args.get('action')
     
