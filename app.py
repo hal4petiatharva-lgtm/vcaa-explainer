@@ -517,6 +517,7 @@ def _is_equal(a: str, b: str) -> bool:
     except Exception:
         return na == nb
 
+# --- Methods Practice Data ---
 methods_questions = [
     {
         "id": 1,
@@ -525,6 +526,7 @@ methods_questions = [
         "correct_answer": r"\[ (2,-4) \]",
         "marks": 2,
         "rubric": "1 mark for differentiating f'(x)=3x^2-6x and solving f'(x)=0. 1 mark for minimum coordinate (2, -4).",
+        "exam_type": "tech_free"
     },
     {
         "id": 2,
@@ -539,7 +541,8 @@ methods_questions = [
         "correct_option": "B",
         "correct_answer": r"\[ k=\dfrac{1}{2} \]",
         "marks": 1,
-        "rubric": "1 mark for setting ∫_0^2 kx dx = 1 and solving k=1/2."
+        "rubric": "1 mark for setting ∫_0^2 kx dx = 1 and solving k=1/2.",
+        "exam_type": "tech_active"
     },
     {
         "id": 3,
@@ -548,6 +551,7 @@ methods_questions = [
         "correct_answer": r"\[ x=6 \]",
         "marks": 3,
         "rubric": "Use log laws to combine, exponentiate to form quadratic, reject negative, x=6.",
+        "exam_type": "tech_free"
     },
     {
         "id": 4,
@@ -557,7 +561,8 @@ methods_questions = [
         "correct_option": "C",
         "correct_answer": r"\[ 2 \]",
         "marks": 1,
-        "rubric": "Apply chain rule: f'(x)=2e^{2x}, evaluate at x=0 → 2."
+        "rubric": "Apply chain rule: f'(x)=2e^{2x}, evaluate at x=0 → 2.",
+        "exam_type": "tech_free"
     },
     {
         "id": 5,
@@ -566,19 +571,53 @@ methods_questions = [
         "correct_answer": r"\[ 6 \]",
         "marks": 2,
         "rubric": "Compute g(3), g(1) and apply (g(3)-g(1))/(3-1).",
+        "exam_type": "tech_active"
     },
 ]
 
 def _next_question_id(sess):
-    done = set(sess.get("correctly_answered", []))
-    current = sess.get("current_q_id")
-    ids = [q["id"] for q in methods_questions]
-    ids.sort()
-    for qid in ids:
-        if qid != current and qid not in done:
-            return qid
-    # If all done, wrap to first
-    return ids[0]
+    """
+    Selects the next question ID based on:
+    1. Filter by exam_type (if set)
+    2. Exclude already correctly answered questions (in this session)
+    3. Exclude questions already asked (in this session) to prevent repeats until all done
+    """
+    exam_type = sess.get('exam_type')
+    
+    # Filter available questions by exam type
+    available = [
+        q for q in methods_questions 
+        if not exam_type or q.get('exam_type') == exam_type
+    ]
+    
+    # If no questions match the filter (shouldn't happen with proper data), fallback to all
+    if not available:
+        available = methods_questions
+
+    # Filter out already asked
+    asked = sess.get('questions_asked', [])
+    candidates = [q['id'] for q in available if q['id'] not in asked]
+    
+    # If all valid questions asked, maybe clear asked list or just return one?
+    # User requirement: "When its length reaches total_questions, the quiz ends"
+    # So here we just return None if no candidates, let the route handle completion.
+    if not candidates:
+        return None
+        
+    return random.choice(candidates)
+
+def _is_equal(ans1, ans2):
+    """Simple normalizer for checking short answers."""
+    def norm(s):
+        return str(s).replace(" ", "").lower().replace("ln", "log").replace("e^", "exp")
+    return norm(ans1) == norm(ans2)
+
+def _find_available_port(start_port=5000, max_attempts=10):
+    for port in range(start_port, start_port + max_attempts):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            if s.connect_ex(("localhost", port)) != 0:
+                return port
+    return start_port
 
 @app.route("/methods-setup", methods=["GET", "POST"])
 def methods_setup():
@@ -586,6 +625,10 @@ def methods_setup():
         topic = request.form.get("topic")
         exam_type = request.form.get("exam_type")
         timed_mode = request.form.get("timed") == "on"
+        try:
+            total_questions = int(request.form.get("total_questions", 5))
+        except ValueError:
+            total_questions = 5
         
         # Validation
         if not topic or not exam_type:
@@ -595,6 +638,7 @@ def methods_setup():
         session['methods_topic'] = topic
         session['methods_exam_type'] = exam_type
         session['methods_timed'] = timed_mode
+        session['total_questions'] = total_questions
 
         session['methods_session'] = {
             "questions_asked": [],
@@ -603,6 +647,7 @@ def methods_setup():
             "timer_expires_at": None,
             "topic": topic,
             "exam_type": exam_type,
+            "total_questions": total_questions,
             "config_set": True
         }
         return redirect(url_for('methods_practice'))
@@ -615,7 +660,8 @@ def methods_exit():
     session.pop('methods_topic', None)
     session.pop('methods_exam_type', None)
     session.pop('methods_timed', None)
-    return redirect(url_for('index'))
+    session.pop('total_questions', None)
+    return redirect(url_for('methods_setup'))
 
 @app.route("/methods-practice", methods=["GET", "POST"])
 def methods_practice():
@@ -646,7 +692,20 @@ def methods_practice():
 
     # Load new or initial question in sequential order
     if action == 'next' or 'current_q_id' not in sess:
+        # Check if quiz limit reached
+        asked_count = len(sess.get('questions_asked', []))
+        total_q = sess.get('total_questions', 5)
+        
+        if asked_count >= total_q:
+            # Quiz Complete
+            return render_template("methods_practice.html", quiz_complete=True, score=len(sess.get('correctly_answered', [])), total=total_q)
+
         next_id = _next_question_id(sess)
+        
+        if next_id is None:
+             # No more valid questions available (or exhausted bank)
+             return render_template("methods_practice.html", quiz_complete=True, score=len(sess.get('correctly_answered', [])), total=total_q)
+
         sess['current_q_id'] = next_id
         sess['start_time'] = time.time()
         sess['attempts'] = 0
@@ -691,7 +750,7 @@ def methods_practice():
         # Speed Check logic
         if time_taken < 3.0 and not working and not sess.get('feedback') and not time_expired:
             speed_warning = True
-            return render_template("methods_practice.html", question=question, speed_warning=True, user_answer=user_answer, feedback=None, attempts=sess.get('attempts', 0))
+            return render_template("methods_practice.html", question=question, speed_warning=True, user_answer=user_answer, feedback=None, attempts=sess.get('attempts', 0), current_index=len(sess.get('questions_asked', [])) + 1, total_questions=sess.get('total_questions', 5))
 
         # Compute correctness locally
         is_correct = False
@@ -740,15 +799,25 @@ def methods_practice():
             corr = set(sess.get('correctly_answered', []))
             corr.add(question['id'])
             sess['correctly_answered'] = list(corr)
+        
+        # Add to questions_asked if not already there (should be there only once)
         asked = list(sess.get('questions_asked', []))
         if question['id'] not in asked:
             asked.append(question['id'])
             sess['questions_asked'] = asked
+            
         # Stop timer on submission
         sess['timer_expires_at'] = None
         session.modified = True
         
     show_try_again = bool(sess.get('feedback') and not sess['feedback'].get('is_correct'))
+    
+    asked_ids = sess.get('questions_asked', [])
+    current_idx = len(asked_ids)
+    if q_id not in asked_ids:
+        # It's a new question being viewed, so it's the (len + 1)th question
+        current_idx += 1
+        
     return render_template(
         "methods_practice.html",
         question=question,
@@ -758,7 +827,9 @@ def methods_practice():
         speed_warning=speed_warning,
         timed_on=sess.get('timed_on', False),
         time_remaining=time_remaining,
-        show_try_again=show_try_again
+        show_try_again=show_try_again,
+        current_index=current_idx,
+        total_questions=sess.get('total_questions', 5)
     )
 
 
