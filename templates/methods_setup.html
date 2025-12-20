@@ -72,6 +72,12 @@
       <p>Configure your practice session</p>
     </div>
     
+    {% if error %}
+    <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #fca5a5; padding: 1rem; border-radius: var(--radius); margin-bottom: 1.5rem; text-align: center;">
+      {{ error }}
+    </div>
+    {% endif %}
+    
     <form method="POST" action="/methods-setup">
       <div class="form-group">
         <label>Select Topic</label>
