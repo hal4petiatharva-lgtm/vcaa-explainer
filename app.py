@@ -584,16 +584,20 @@ def _next_question_id(sess):
 def methods_setup():
     if request.method == "POST":
         topic = request.form.get("topic")
+        exam_type = request.form.get("exam_type")
         timed_mode = request.form.get("timed_mode") == "on"
-        time_limit = int(request.form.get("time_limit", 5)) * 60  # minutes to seconds
+        
+        # Validation
+        if not topic or not exam_type:
+             return render_template("methods_setup.html", error="Please select both Topic and Exam Type.")
 
         session['methods_session'] = {
             "questions_asked": [],
             "correctly_answered": [],
             "timed_on": timed_mode,
-            "time_limit": time_limit if timed_mode else 0,
             "timer_expires_at": None,
             "topic": topic,
+            "exam_type": exam_type,
             "config_set": True
         }
         return redirect(url_for('methods_practice'))
@@ -613,8 +617,11 @@ def methods_practice():
     
     sess = session['methods_session']
     
+    # Ensure exam_type is present (migration safety)
+    if 'exam_type' not in sess:
+        return redirect(url_for('methods_setup'))
+
     action = request.args.get('action')
-    # Toggle logic removed as it's now locked in setup
     
     if action == 'retry':
         sess['last_answer'] = ""
@@ -622,7 +629,9 @@ def methods_practice():
         sess['attempts'] = sess.get('attempts', 0) + 1
         # Reset timer if timed mode
         if sess.get('timed_on'):
-            limit = sess.get('time_limit', 300)
+            q_id = sess.get('current_q_id')
+            question = next((q for q in methods_questions if q['id'] == q_id), None)
+            limit = (question.get('marks', 1) * 90) if question else 300
             sess['timer_expires_at'] = time.time() + limit
         session.modified = True
         return redirect(url_for('methods_practice'))
@@ -635,11 +644,14 @@ def methods_practice():
         sess['attempts'] = 0
         sess['feedback'] = None
         sess['last_answer'] = ""
+        
         if sess.get('timed_on'):
-            limit = sess.get('time_limit', 300)
+            question = next((q for q in methods_questions if q['id'] == next_id), None)
+            limit = (question.get('marks', 1) * 90) if question else 300
             sess['timer_expires_at'] = time.time() + limit
         else:
             sess['timer_expires_at'] = None
+            
         session.modified = True
         return redirect(url_for('methods_practice'))
 
