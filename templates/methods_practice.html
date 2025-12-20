@@ -193,11 +193,14 @@
     </form>
     {% endif %}
 
-    {% if feedback and (feedback.is_correct or attempts >= 3) %}
-    <div style="margin-top: 2rem;"><a href="{{ url_for('methods_practice', action='next') }}"><button class="btn-primary">Next Question →</button></a></div>
-    {% endif %}
-    {% if show_try_again %}
-      <div style="margin-top: 1rem;"><button type="button" id="tryAgainBtn" class="btn-secondary">Try Again</button></div>
+    {% if feedback %}
+      <div style="margin-top: 2rem;">
+        {% if feedback.is_correct or attempts >= 3 %}
+          <a href="{{ url_for('methods_practice', action='next') }}"><button class="btn-primary">Next Question →</button></a>
+        {% elif show_try_again %}
+          <button type="button" id="tryAgainBtn" class="btn-secondary">Try Again</button>
+        {% endif %}
+      </div>
     {% endif %}
   </div>
 
