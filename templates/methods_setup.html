@@ -33,7 +33,7 @@
       <p>Configure your practice session</p>
     </div>
     
-    <form method="POST" action="{{ url_for('methods_setup') }}">
+    <form method="POST" action="/methods-setup">
       <div class="form-group">
         <label>Select Topic</label>
         <select name="topic" class="form-select" required>
@@ -47,20 +47,28 @@
       </div>
 
       <div class="form-group">
+        <label for="exam_type">Exam Type:*</label>
+        <select id="exam_type" name="exam_type" class="form-select" required>
+          <option value="" disabled selected>Select Exam Type</option>
+          <option value="tech_free">Tech-Free (Exam 1)</option>
+          <option value="tech_active">Tech-Active (Exam 2)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
         <div class="toggle-group">
           <div>
             <div style="font-weight: 500;">Timed Practice</div>
             <div style="font-size: 0.85rem; color: var(--muted);">Enable countdown timer per question</div>
           </div>
           <label class="toggle-switch">
-            <input type="checkbox" name="timed_mode" id="timed-toggle">
+            <input type="checkbox" name="timed" id="timed-toggle">
             <span class="slider"></span>
           </label>
         </div>
         
-        <div id="time-input-container">
-          <label>Time Limit per Question (minutes)</label>
-          <input type="number" name="time_limit" class="form-input" min="1" max="60" value="5" placeholder="e.g. 5">
+        <div id="time-info-container" style="display: none; margin-top: 1rem; color: var(--muted); font-size: 0.9rem; background: rgba(59,130,246,0.1); padding: 0.75rem; border-radius: var(--radius); border: 1px solid rgba(59,130,246,0.3);">
+          <strong>⏱ Auto-Timing Enabled:</strong> Time limit will be automatically set to <strong>1.5 minutes per mark</strong> (VCAA Standard).
         </div>
       </div>
 
@@ -73,13 +81,11 @@
 {% block scripts %}
 <script>
   const toggle = document.getElementById('timed-toggle');
-  const container = document.getElementById('time-input-container');
+  const infoContainer = document.getElementById('time-info-container');
   
-  if (toggle && container) {
+  if (toggle && infoContainer) {
     toggle.addEventListener('change', () => {
-      container.style.display = toggle.checked ? 'block' : 'none';
-      const input = container.querySelector('input');
-      if (toggle.checked) input.focus();
+      infoContainer.style.display = toggle.checked ? 'block' : 'none';
     });
   }
 </script>
