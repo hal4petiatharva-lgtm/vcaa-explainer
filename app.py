@@ -634,6 +634,77 @@ BACKUP_METHODS_QUESTIONS = [
     }
 ]
 
+def clean_vcaa_question_chunk(raw_chunk):
+    """
+    Cleans raw VCAA database chunks to extract a single, formatted math question.
+    """
+    if not raw_chunk:
+        return None
+        
+    text = raw_chunk.strip()
+    
+    # 1. Remove Source Metadata (e.g. [Mathematical-Methods 2016])
+    text = re.sub(r'\[.*?\]', '', text)
+    
+    # 2. Extract Single Question
+    question_part = text
+    
+    # Strategy 1: Look for mark allocation at end of sentence
+    # Pattern: capture everything from start until a period/question mark that is followed by "X mark(s)"
+    # We use non-greedy matching for the content.
+    mark_match = re.search(r'(.*?[.?!])\s*\(?\d+\s*marks?\)?', text, re.IGNORECASE | re.DOTALL)
+    
+    if mark_match:
+        question_part = mark_match.group(1)
+    else:
+        # Strategy 2: Split on sub-question delimiters (a., b., i., ii.)
+        # Split on " a.", " b.", " i.", " ii." appearing at start of line or after space
+        delimiters = re.split(r'(?:^|\s)(?:[a-z]\.|[ivx]+\.)\s', text)
+        if len(delimiters) > 1:
+            # If the text started with "a.", the first element might be empty.
+            if not delimiters[0].strip() and len(delimiters) > 1:
+                question_part = delimiters[1]
+            else:
+                question_part = delimiters[0]
+        else:
+            # Strategy 3: First sentence with ? or take first line/segment before newline
+            if '?' in text:
+                question_part = text.split('?')[0] + '?'
+            else:
+                # Just take the first substantial line/sentence
+                # Split by newline and take first non-empty
+                lines = [l for l in text.split('\n') if l.strip()]
+                if lines:
+                    question_part = lines[0]
+
+    # 3. Clean the Extracted Question
+    cleaned = question_part.strip()
+    
+    # Remove isolated mark phrases if they stuck around (e.g. inside the captured part)
+    cleaned = re.sub(r'\(?\d+\s*marks?\)?', '', cleaned, flags=re.IGNORECASE)
+    
+    # Remove leading/trailing non-content characters
+    # Remove "Question 3", "1.", "a." at the start
+    cleaned = re.sub(r'^\s*(?:Question\s+\d+|SECTION\s+[A-Z]|Part\s+[A-Z]|[0-9]+\.|[a-z]\.)\s*[:.]?\s*', '', cleaned, flags=re.IGNORECASE)
+    
+    cleaned = cleaned.strip()
+    
+    # Ensure starts with Capital
+    if cleaned and len(cleaned) > 0 and cleaned[0].islower():
+        cleaned = cleaned[0].upper() + cleaned[1:]
+        
+    # Ensure ends with punctuation if it doesn't already (and isn't ending in math block)
+    if cleaned and len(cleaned) > 0:
+        last_char = cleaned[-1]
+        if last_char not in ['.', '?', '!', ']', ')']:
+            cleaned += '.'
+            
+    # Final Validation: Must be > 20 chars to be a real question
+    if len(cleaned) < 20:
+        return None
+        
+    return cleaned
+
 def fetch_vcaa_question(topic, exam_type, exclude_ids=None):
     """
     Fetches a question from the VCAA database dynamically.
@@ -653,7 +724,6 @@ def fetch_vcaa_question(topic, exam_type, exclude_ids=None):
         # Handle tuple return (content, meta, score) or object
         raw_text = ""
         if isinstance(result, tuple):
-            # Likely (content, meta, score)
             item = result[0]
             if hasattr(item, 'page_content'):
                 raw_text = item.page_content
@@ -664,31 +734,27 @@ def fetch_vcaa_question(topic, exam_type, exclude_ids=None):
         else:
             raw_text = str(result)
             
-        # Clean the text
-        cleaned_text = raw_text.strip()
+        # Clean the text using the new robust cleaner
+        cleaned_text = clean_vcaa_question_chunk(raw_text)
         
-        # Remove common noise headers like "Question 3"
-        cleaned_text = re.sub(r'^Question\s+\d+[:.]?\s*', '', cleaned_text, flags=re.IGNORECASE)
-        # Remove leading "SECTION A" or similar if present
-        cleaned_text = re.sub(r'^SECTION\s+[A-Z]\s*', '', cleaned_text, flags=re.IGNORECASE)
-        
-        # Check if it looks like a math question
-        # Must contain LaTeX OR specific keywords OR end with ?
+        if not cleaned_text:
+            continue
+            
+        # Check if it looks like a math question (extra validation)
         has_latex = r'\[' in cleaned_text or r'\(' in cleaned_text or '$' in cleaned_text
-        has_keywords = any(kw in cleaned_text for kw in ["Find", "Solve", "Calculate", "Evaluate", "Determine", "Show that", "State"])
+        has_keywords = any(kw in cleaned_text for kw in ["Find", "Solve", "Calculate", "Evaluate", "Determine", "Show that", "State", "Explain"])
         is_question = "?" in cleaned_text
         
-        # Filter out very short strings or pure metadata
-        if (has_latex or has_keywords or is_question) and len(cleaned_text) > 20:
+        if has_latex or has_keywords or is_question:
             # Create a hash ID based on the cleaned text
             q_id = hashlib.md5(cleaned_text.encode('utf-8')).hexdigest()
             
             if exclude_ids and q_id in exclude_ids:
                 continue
             
-            # Attempt to extract marks (heuristic)
+            # Attempt to extract marks from raw text if possible, else default
             marks = 2
-            mark_match = re.search(r'(\d+)\s*marks?', cleaned_text, re.IGNORECASE)
+            mark_match = re.search(r'(\d+)\s*marks?', raw_text, re.IGNORECASE)
             if mark_match:
                 marks = int(mark_match.group(1))
             
