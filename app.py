@@ -776,7 +776,8 @@ def methods_practice():
                     f"Student Answer: {choice or user_answer}\n"
                     f"Rubric: {question.get('rubric')}\n"
                     f"Marks Available: {question.get('marks', 1)}\n"
-                    "Note: If correct, say 'Correct. [Reasoning]'. If incorrect, say 'Incorrect. [Hint/Reasoning]'. Explicitly mention marks awarded (e.g. 1/2)."
+                    "Note: If correct, say 'Correct. [Reasoning]'. If incorrect, say 'Incorrect. [Hint/Reasoning]'. Explicitly mention marks awarded (e.g. 1/2).\n"
+                    "IMPORTANT: Provide feedback in clear English. Format ALL mathematical expressions, equations, calculations, and variables using LaTeX within \\( \\) for inline math. For example, write 'Calculate \\(g(3) = 3^2 + 2 \\cdot 3 = 15\\)', not 'g(3) = 3^2 + 2*3 = 15'."
                 )
                 chat = client.chat.completions.create(
                     messages=[{"role": "user", "content": prompt}],
