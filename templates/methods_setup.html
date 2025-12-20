@@ -11,6 +11,45 @@
   .form-group label { display: block; margin-bottom: 0.5rem; color: var(--muted); font-size: 0.9rem; font-weight: 500; }
   .form-select, .form-input { width: 100%; padding: 1rem; background: #0b1220; color: var(--text); border: 1px solid var(--border); border-radius: var(--radius); font-size: 1rem; transition: border-color 0.2s; }
   .form-select:focus, .form-input:focus { border-color: var(--primary); outline: none; }
+  
+  /* Custom Styled Select */
+  .styled-select-wrapper {
+    position: relative;
+  }
+  .styled-select-wrapper::after {
+    content: "▼";
+    font-size: 0.8rem;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--muted);
+  }
+  .styled-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    background: #0b1220; /* Match input background */
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    color: var(--text);
+    width: 100%;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+  }
+  .styled-select:hover {
+    border-color: var(--primary);
+    background: #0f172a; /* Slightly lighter on hover */
+  }
+  .styled-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    outline: none;
+  }
+
   .toggle-group { display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: var(--radius); margin-bottom: 1.5rem; border: 1px solid var(--border); }
   .toggle-switch { position: relative; display: inline-block; width: 50px; height: 26px; }
   .toggle-switch input { opacity: 0; width: 0; height: 0; }
@@ -36,23 +75,38 @@
     <form method="POST" action="/methods-setup">
       <div class="form-group">
         <label>Select Topic</label>
-        <select name="topic" class="form-select" required>
-          <option value="" disabled selected>— Choose a Topic —</option>
-          <option value="Calculus">Calculus</option>
-          <option value="Algebra">Algebra</option>
-          <option value="Functions">Functions</option>
-          <option value="Probability">Probability</option>
-          <option value="All">All Topics (Mixed)</option>
-        </select>
+        <div class="styled-select-wrapper">
+          <select name="topic" class="form-select styled-select" required>
+            <option value="" disabled selected>— Choose a Topic —</option>
+            <option value="Calculus">Calculus</option>
+            <option value="Algebra">Algebra</option>
+            <option value="Functions">Functions</option>
+            <option value="Probability">Probability</option>
+            <option value="All">All Topics (Mixed)</option>
+          </select>
+        </div>
       </div>
 
       <div class="form-group">
         <label for="exam_type">Exam Type:*</label>
-        <select id="exam_type" name="exam_type" class="form-select" required>
-          <option value="" disabled selected>Select Exam Type</option>
-          <option value="tech_free">Tech-Free (Exam 1)</option>
-          <option value="tech_active">Tech-Active (Exam 2)</option>
-        </select>
+        <div class="styled-select-wrapper">
+          <select id="exam_type" name="exam_type" class="form-select styled-select" required>
+            <option value="" disabled selected>Select Exam Type</option>
+            <option value="tech_free">Tech-Free (Exam 1)</option>
+            <option value="tech_active">Tech-Active (Exam 2)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="total_questions">Number of Questions:*</label>
+        <div class="styled-select-wrapper">
+          <select id="total_questions" name="total_questions" class="form-select styled-select" required>
+            <option value="5" selected>5 Questions</option>
+            <option value="10">10 Questions</option>
+            <option value="15">15 Questions</option>
+          </select>
+        </div>
       </div>
 
       <div class="form-group">
