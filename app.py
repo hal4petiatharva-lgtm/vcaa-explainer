@@ -649,24 +649,56 @@ def fetch_vcaa_question(topic, exam_type, exclude_ids=None):
         return None
     
     candidates = []
-    for chunk in results:
-        text = chunk.page_content if hasattr(chunk, 'page_content') else str(chunk)
+    for result in results:
+        # Handle tuple return (content, meta, score) or object
+        raw_text = ""
+        if isinstance(result, tuple):
+            # Likely (content, meta, score)
+            item = result[0]
+            if hasattr(item, 'page_content'):
+                raw_text = item.page_content
+            else:
+                raw_text = str(item)
+        elif hasattr(result, 'page_content'):
+            raw_text = result.page_content
+        else:
+            raw_text = str(result)
+            
+        # Clean the text
+        cleaned_text = raw_text.strip()
         
-        # Basic filter for question-like content
-        if "?" in text or "mark" in text.lower() or "Find" in text or "Calculate" in text or "Evaluate" in text:
-            # Create a hash ID
-            q_id = hashlib.md5(text.encode('utf-8')).hexdigest()
+        # Remove common noise headers like "Question 3"
+        cleaned_text = re.sub(r'^Question\s+\d+[:.]?\s*', '', cleaned_text, flags=re.IGNORECASE)
+        # Remove leading "SECTION A" or similar if present
+        cleaned_text = re.sub(r'^SECTION\s+[A-Z]\s*', '', cleaned_text, flags=re.IGNORECASE)
+        
+        # Check if it looks like a math question
+        # Must contain LaTeX OR specific keywords OR end with ?
+        has_latex = r'\[' in cleaned_text or r'\(' in cleaned_text or '$' in cleaned_text
+        has_keywords = any(kw in cleaned_text for kw in ["Find", "Solve", "Calculate", "Evaluate", "Determine", "Show that", "State"])
+        is_question = "?" in cleaned_text
+        
+        # Filter out very short strings or pure metadata
+        if (has_latex or has_keywords or is_question) and len(cleaned_text) > 20:
+            # Create a hash ID based on the cleaned text
+            q_id = hashlib.md5(cleaned_text.encode('utf-8')).hexdigest()
             
             if exclude_ids and q_id in exclude_ids:
                 continue
+            
+            # Attempt to extract marks (heuristic)
+            marks = 2
+            mark_match = re.search(r'(\d+)\s*marks?', cleaned_text, re.IGNORECASE)
+            if mark_match:
+                marks = int(mark_match.group(1))
             
             # Construct the question dictionary
             q = {
                 "id": q_id,
                 "type": "short", 
-                "text": text,
+                "text": cleaned_text,
                 "correct_answer": "[Answer from VCAA database]", 
-                "marks": 2, 
+                "marks": marks, 
                 "exam_type": exam_type, 
                 "topic": topic,
                 "rubric": "Mark according to VCAA standards."
