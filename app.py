@@ -769,11 +769,15 @@ def methods_practice():
         # Optional AI feedback enrichment
         if client:
             try:
+                # Determine correct/student values for prompt clarity
+                correct_val = question.get('correct_option') if question.get('type') == 'mcq' else question.get('correct_answer')
+                student_val = choice if question.get('type') == 'mcq' else user_answer
+
                 prompt = (
                     "You are a VCAA Mathematical Methods assessor. Provide brief feedback only.\n"
                     f"Question (LaTeX): {question.get('text')}\n"
-                    f"Correct Answer: {question.get('correct_answer') or question.get('correct_option')}\n"
-                    f"Student Answer: {choice or user_answer}\n"
+                    f"Correct Answer: {correct_val}\n"
+                    f"Student Answer: {student_val}\n"
                     f"Rubric: {question.get('rubric')}\n"
                     f"Marks Available: {question.get('marks', 1)}\n"
                     "Note: If correct, say 'Correct. [Reasoning]'. If incorrect, say 'Incorrect. [Hint/Reasoning]'. Explicitly mention marks awarded (e.g. 1/2).\n"
@@ -811,7 +815,7 @@ def methods_practice():
         sess['timer_expires_at'] = None
         session.modified = True
         
-    show_try_again = bool(sess.get('feedback') and not sess['feedback'].get('is_correct'))
+    show_try_again = bool(sess.get('feedback') and not sess['feedback'].get('is_correct') and sess.get('attempts', 0) < 3)
     
     asked_ids = sess.get('questions_asked', [])
     current_idx = len(asked_ids)
