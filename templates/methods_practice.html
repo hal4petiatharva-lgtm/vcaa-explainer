@@ -152,7 +152,7 @@
         <h3 style="margin:0; color: {% if feedback.is_correct %}#4ade80{% else %}#fde047{% endif %}">{% if feedback.is_correct %}Correct!{% else %}Assessment{% endif %}</h3>
         <span class="mark-badge" style="background: {% if feedback.is_correct %}#22c55e{% else %}#eab308{% endif %}">{{ feedback.mark }} / {{ feedback.max_marks }}</span>
       </div>
-      <p style="margin:0; line-height: 1.6;">{{ feedback.feedback }}</p>
+      <p style="margin:0; line-height: 1.6;">{{ feedback.feedback | safe }}</p>
     </div>
     {% endif %}
 
