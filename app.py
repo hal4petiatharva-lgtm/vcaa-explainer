@@ -437,67 +437,6 @@ def analyze_endpoint():
     except Exception:
         return jsonify({"error": "Analysis failed", "analysis": "Please try again later.", "vcaa_available": False}), 500
 
-@app.route("/status", methods=["GET"])
-def status():
-    return jsonify({"vcaa_database": VCAA_AVAILABLE, "status": ("operational" if VCAA_AVAILABLE else "degraded")})
-@app.route("/debug", methods=["GET"])
-def debug():
-    packages = [f"{d.metadata.get('Name','unknown')}=={d.version}" for d in importlib_metadata.distributions()]
-    try:
-        importlib_metadata.version("groq")
-        groq_installed = True
-    except importlib_metadata.PackageNotFoundError:
-        groq_installed = False
-    try:
-        importlib_metadata.version("google-generativeai")
-        google_generativeai_installed = True
-    except importlib_metadata.PackageNotFoundError:
-        google_generativeai_installed = False
-    return jsonify({
-        "python_version": sys.version,
-        "installed_packages": packages,
-        "groq_installed": groq_installed,
-        "google_generativeai_installed": google_generativeai_installed,
-        "env_GROQ_API_KEY": bool(os.environ.get("GROQ_API_KEY")),
-        "env_AI_PROVIDER": os.environ.get("AI_PROVIDER"),
-    })
-
-@app.route("/test-groq", methods=["GET"])
-def test_groq():
-    try:
-        import groq as groq_mod
-        client_test = groq_mod.Groq(api_key=os.environ.get("GROQ_API_KEY", "test"))
-        return jsonify({"status": "Groq import successful", "client": str(client_test)})
-    except ImportError as e:
-        return jsonify({"error": f"Groq not installed: {str(e)}"}), 500
-    except Exception as e:
-        return jsonify({"error": f"Groq setup failed: {str(e)}"}), 500
-
-
-def _is_port_in_use(port: int) -> bool:
-    try:
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.settimeout(0.2)
-            return s.connect_ex(("127.0.0.1", port)) == 0
-    except Exception:
-        return False
-
-
-def _find_available_port(candidates=None) -> int:
-    candidates = candidates or [5000, 5050, 8000, 8080, 3000, 5001]
-    for p in candidates:
-        if not _is_port_in_use(p):
-            return p
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind(("", 0))
-        return s.getsockname()[1]
-
-
-# Removed Gemini/OpenAI helper paths. Groq is now the sole provider.
-
-
-# --- Mathematical Methods Question Engine (Sequential, LaTeX, MCQ) ---
-
 def _normalize_answer(raw: str) -> str:
     s = (raw or "").strip().lower()
     s = re.sub(r"^\$|\\$|\\\\", "", s)  # strip inline latex $
@@ -519,80 +458,196 @@ def _is_equal(a: str, b: str) -> bool:
 
 # --- Methods Practice Data ---
 methods_questions = [
+    # --- CALCULUS (8) ---
     {
-        "id": 1,
-        "type": "short",
-        "text": r"\[ \text{Let } f:\mathbb{R}\to\mathbb{R},\ f(x)=x^{3}-3x^{2}. \text{ Find the coordinates of the local minimum.} \]",
-        "correct_answer": r"\[ (2,-4) \]",
-        "marks": 2,
-        "rubric": "1 mark for differentiating f'(x)=3x^2-6x and solving f'(x)=0. 1 mark for minimum coordinate (2, -4).",
-        "exam_type": "tech_free",
-        "topic": "Calculus"
+        "id": 1, "type": "short", "text": r"\[ \text{Find the antiderivative of } 3x^2. \]",
+        "correct_answer": r"\[ x^3 + C \]", "marks": 1, "exam_type": "tech_free", "topic": "Calculus",
+        "rubric": "Award 1 mark for x^3 + C."
     },
     {
-        "id": 2,
-        "type": "mcq",
-        "text": r"\[ \text{The pdf of a continuous random variable } X \text{ is } f(x)=kx \text{ for } 0\le x\le2, \text{ and } 0 \text{ elsewhere. Find } k. \]",
-        "options": {
-            "A": r"\[ k=\dfrac{1}{4} \]",
-            "B": r"\[ k=\dfrac{1}{2} \]",
-            "C": r"\[ k=1 \]",
-            "D": r"\[ k=2 \]"
-        },
-        "correct_option": "B",
-        "correct_answer": r"\[ k=\dfrac{1}{2} \]",
-        "marks": 1,
-        "rubric": "1 mark for setting ∫_0^2 kx dx = 1 and solving k=1/2.",
-        "exam_type": "tech_active",
-        "topic": "Probability"
+        "id": 2, "type": "mcq", "text": r"\[ \text{If } f(x) = e^{2x}, \text{ then } f'(0) \text{ is equal to:} \]",
+        "options": {"A": r"\( 0 \)", "B": r"\( 1 \)", "C": r"\( 2 \)", "D": r"\( e \)"},
+        "correct_answer": "C", "marks": 1, "exam_type": "tech_free", "topic": "Calculus",
+        "rubric": "f'(x) = 2e^{2x}, f'(0) = 2."
     },
     {
-        "id": 3,
-        "type": "short",
-        "text": r"\[ 2\ln(x)-\ln(x+2)=\ln(3) \]",
-        "correct_answer": r"\[ x=6 \]",
-        "marks": 3,
-        "rubric": "Use log laws to combine, exponentiate to form quadratic, reject negative, x=6.",
-        "exam_type": "tech_free",
-        "topic": "Algebra"
+        "id": 3, "type": "short", "text": r"\[ \text{Evaluate } \int_0^2 (x^3 - 3x^2) \, dx. \]",
+        "correct_answer": r"\[ -4 \]", "marks": 2, "exam_type": "tech_active", "topic": "Calculus",
+        "rubric": "[x^4/4 - x^3] from 0 to 2 = (4-8) - 0 = -4."
     },
     {
-        "id": 4,
-        "type": "mcq",
-        "text": r"\[ \text{If } f(x)=e^{2x},\ \text{ then } f'(0)=\ ? \]",
-        "options": { "A": r"\[ 0 \]", "B": r"\[ 1 \]", "C": r"\[ 2 \]", "D": r"\[ e \]" },
-        "correct_option": "C",
-        "correct_answer": r"\[ 2 \]",
-        "marks": 1,
-        "rubric": "Apply chain rule: f'(x)=2e^{2x}, evaluate at x=0 → 2.",
-        "exam_type": "tech_free",
-        "topic": "Calculus"
+        "id": 4, "type": "mcq", "text": r"\[ \text{The average value of } y=\sin(x) \text{ over } [0, \pi] \text{ is:} \]",
+        "options": {"A": r"\( 0 \)", "B": r"\( \frac{1}{\pi} \)", "C": r"\( \frac{2}{\pi} \)", "D": r"\( 2 \)"},
+        "correct_answer": "C", "marks": 1, "exam_type": "tech_active", "topic": "Calculus",
+        "rubric": "(1/pi)*[-cos x]0->pi = 2/pi."
     },
     {
-        "id": 5,
-        "type": "short",
-        "text": r"\[ \text{Find the average rate of change of } g(x)=x^{2}+2x \text{ over } [1,3]. \]",
-        "correct_answer": r"\[ 6 \]",
-        "marks": 2,
-        "rubric": "Compute g(3), g(1) and apply (g(3)-g(1))/(3-1).",
-        "exam_type": "tech_active",
-        "topic": "Functions"
+        "id": 5, "type": "short", "text": r"\[ \text{Differentiate } y = \sin(x^2) \text{ with respect to } x. \]",
+        "correct_answer": r"\[ 2x\cos(x^2) \]", "marks": 1, "exam_type": "tech_free", "topic": "Calculus",
+        "rubric": "Chain rule: cos(x^2) * 2x."
     },
+    {
+        "id": 6, "type": "mcq", "text": r"\[ \text{The gradient of the tangent to } y = \ln(x) \text{ at } x=2 \text{ is:} \]",
+        "options": {"A": r"\( 0.5 \)", "B": r"\( 1 \)", "C": r"\( 2 \)", "D": r"\( \ln(2) \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_active", "topic": "Calculus",
+        "rubric": "y' = 1/x. At x=2, y' = 0.5."
+    },
+    {
+        "id": 7, "type": "mcq", "text": r"\[ \text{The function } f(x) = x^3 - 3x \text{ has a local minimum at } x = \]",
+        "options": {"A": r"\( -1 \)", "B": r"\( 0 \)", "C": r"\( 1 \)", "D": r"\( \sqrt{3} \)"},
+        "correct_answer": "C", "marks": 1, "exam_type": "tech_free", "topic": "Calculus",
+        "rubric": "f'(x) = 3x^2 - 3 = 0 -> x = +/- 1. f''(1) > 0 so min."
+    },
+    {
+        "id": 8, "type": "short", "text": r"\[ \text{A particle has velocity } v(t) = 2t - 4. \text{ Find its displacement at } t=3 \text{ if } x(0)=0. \]",
+        "correct_answer": r"\[ -3 \]", "marks": 2, "exam_type": "tech_active", "topic": "Calculus",
+        "rubric": "x(t) = t^2 - 4t. x(3) = 9 - 12 = -3."
+    },
+
+    # --- ALGEBRA (8) ---
+    {
+        "id": 9, "type": "short", "text": r"\[ \text{Solve for } x: \log_e(x) + \log_e(2) = \log_e(6). \]",
+        "correct_answer": r"\[ x=3 \]", "marks": 1, "exam_type": "tech_free", "topic": "Algebra",
+        "rubric": "log(2x) = log(6) -> 2x = 6 -> x = 3."
+    },
+    {
+        "id": 10, "type": "mcq", "text": r"\[ \text{Simplify } \frac{a^3 b^{-2}}{a^{-1} b^3}. \]",
+        "options": {"A": r"\( a^2 b \)", "B": r"\( a^4 b^{-5} \)", "C": r"\( a^2 b^{-1} \)", "D": r"\( a^4 b^5 \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_free", "topic": "Algebra",
+        "rubric": "a^(3 - -1) b^(-2 - 3) = a^4 b^-5."
+    },
+    {
+        "id": 11, "type": "short", "text": r"\[ \text{Solve the system: } 2x + y = 5, x - y = 4. \]",
+        "correct_answer": r"\[ x=3, y=-1 \]", "marks": 2, "exam_type": "tech_active", "topic": "Algebra",
+        "rubric": "Add equations: 3x = 9 -> x=3. 3-y=4 -> y=-1."
+    },
+    {
+        "id": 12, "type": "mcq", "text": r"\[ \text{Which of these is a factor of } P(x) = x^3 - 2x^2 - x + 2? \]",
+        "options": {"A": r"\( x+1 \)", "B": r"\( x+2 \)", "C": r"\( x-3 \)", "D": r"\( x \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_active", "topic": "Algebra",
+        "rubric": "P(-1) = -1 - 2 + 1 + 2 = 0."
+    },
+    {
+        "id": 13, "type": "short", "text": r"\[ \text{Find the discriminant of } 2x^2 + 4x + 5 = 0. \]",
+        "correct_answer": r"\[ -24 \]", "marks": 1, "exam_type": "tech_free", "topic": "Algebra",
+        "rubric": "b^2 - 4ac = 16 - 4(2)(5) = 16 - 40 = -24."
+    },
+    {
+        "id": 14, "type": "mcq", "text": r"\[ \text{The coefficient of } x^2 \text{ in } (2x+1)^4 \text{ is:} \]",
+        "options": {"A": r"\( 4 \)", "B": r"\( 6 \)", "C": r"\( 12 \)", "D": r"\( 24 \)"},
+        "correct_answer": "D", "marks": 1, "exam_type": "tech_active", "topic": "Algebra",
+        "rubric": "4C2 * (2x)^2 * (1)^2 = 6 * 4x^2 = 24x^2."
+    },
+    {
+        "id": 15, "type": "mcq", "text": r"\[ \text{If } f(x) = 2x - 3, \text{ then } f^{-1}(x) \text{ is:} \]",
+        "options": {"A": r"\( \frac{x+3}{2} \)", "B": r"\( \frac{x-3}{2} \)", "C": r"\( 2x+3 \)", "D": r"\( \frac{1}{2x-3} \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_free", "topic": "Algebra",
+        "rubric": "y = 2x - 3 -> x = 2y - 3 -> y = (x+3)/2."
+    },
+    {
+        "id": 16, "type": "short", "text": r"\[ \text{Make } a \text{ the subject of } v = u + at. \]",
+        "correct_answer": r"\[ a = \frac{v-u}{t} \]", "marks": 1, "exam_type": "tech_active", "topic": "Algebra",
+        "rubric": "v-u = at -> a = (v-u)/t."
+    },
+
+    # --- PROBABILITY (7) ---
+    {
+        "id": 17, "type": "short", "text": r"\[ \text{If Var}(X) = 2, \text{ find Var}(3X - 1). \]",
+        "correct_answer": r"\[ 18 \]", "marks": 1, "exam_type": "tech_free", "topic": "Probability",
+        "rubric": "3^2 * Var(X) = 9 * 2 = 18."
+    },
+    {
+        "id": 18, "type": "mcq", "text": r"\[ \text{If } A \text{ and } B \text{ are independent, } P(A)=0.3, P(B)=0.4, \text{ then } P(A \cap B) = ? \]",
+        "options": {"A": r"\( 0.7 \)", "B": r"\( 0.12 \)", "C": r"\( 0.1 \)", "D": r"\( 0 \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_free", "topic": "Probability",
+        "rubric": "P(A)*P(B) = 0.3 * 0.4 = 0.12."
+    },
+    {
+        "id": 19, "type": "short", "text": r"\[ X \sim N(10, 2^2). \text{ Find } Pr(8 < X < 12) \text{ approx.} \]",
+        "correct_answer": r"\[ 0.68 \]", "marks": 1, "exam_type": "tech_active", "topic": "Probability",
+        "rubric": "Within 1 SD of mean is approx 0.68."
+    },
+    {
+        "id": 20, "type": "mcq", "text": r"\[ X \sim \text{Bi}(5, 0.2). \text{ The mean of } X \text{ is:} \]",
+        "options": {"A": r"\( 0.2 \)", "B": r"\( 1 \)", "C": r"\( 2 \)", "D": r"\( 5 \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_active", "topic": "Probability",
+        "rubric": "np = 5 * 0.2 = 1."
+    },
+    {
+        "id": 21, "type": "short", "text": r"\[ \text{Given } P(A|B) = 0.5 \text{ and } P(B) = 0.4, \text{ find } P(A \cap B). \]",
+        "correct_answer": r"\[ 0.2 \]", "marks": 1, "exam_type": "tech_free", "topic": "Probability",
+        "rubric": "P(A|B) = P(A n B)/P(B) -> 0.5 * 0.4 = 0.2."
+    },
+    {
+        "id": 22, "type": "mcq", "text": r"\[ \text{For a sample proportion } \hat{p} \text{ with } n=100, p=0.1, \text{ the SD is:} \]",
+        "options": {"A": r"\( 0.09 \)", "B": r"\( 0.03 \)", "C": r"\( 0.0009 \)", "D": r"\( 0.3 \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_active", "topic": "Probability",
+        "rubric": "sqrt(p(1-p)/n) = sqrt(0.09/100) = 0.3/10 = 0.03."
+    },
+    {
+        "id": 23, "type": "mcq", "text": r"\[ \text{If } f(x) = kx^2 \text{ is a PDF on } [0, 1], \text{ find } k. \]",
+        "options": {"A": r"\( 1 \)", "B": r"\( 2 \)", "C": r"\( 3 \)", "D": r"\( 4 \)"},
+        "correct_answer": "C", "marks": 1, "exam_type": "tech_free", "topic": "Probability",
+        "rubric": "Int kx^2 = [kx^3/3] = k/3 = 1 -> k=3."
+    },
+
+    # --- FUNCTIONS (7) ---
+    {
+        "id": 24, "type": "short", "text": r"\[ \text{State the maximal domain of } f(x) = \frac{1}{\sqrt{x-2}}. \]",
+        "correct_answer": r"\[ (2, \infty) \]", "marks": 1, "exam_type": "tech_free", "topic": "Functions",
+        "rubric": "x-2 > 0 -> x > 2."
+    },
+    {
+        "id": 25, "type": "mcq", "text": r"\[ \text{The graph of } y = f(x-1) + 2 \text{ is } y=f(x) \text{ shifted:} \]",
+        "options": {"A": r"\( \text{Right 1, Up 2} \)", "B": r"\( \text{Left 1, Up 2} \)", "C": r"\( \text{Right 1, Down 2} \)", "D": r"\( \text{Left 1, Down 2} \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_free", "topic": "Functions",
+        "rubric": "x-1 is Right 1, +2 is Up 2."
+    },
+    {
+        "id": 26, "type": "short", "text": r"\[ \text{If } f(x) = x^2 \text{ and } g(x) = 2x+1, \text{ find } f(g(1)). \]",
+        "correct_answer": r"\[ 9 \]", "marks": 1, "exam_type": "tech_active", "topic": "Functions",
+        "rubric": "g(1)=3, f(3)=9."
+    },
+    {
+        "id": 27, "type": "mcq", "text": r"\[ \text{The vertical asymptote of } y = \frac{3}{2x-4} + 1 \text{ is:} \]",
+        "options": {"A": r"\( x=2 \)", "B": r"\( x=4 \)", "C": r"\( x=-2 \)", "D": r"\( y=1 \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_active", "topic": "Functions",
+        "rubric": "2x-4=0 -> x=2."
+    },
+    {
+        "id": 28, "type": "short", "text": r"\[ \text{Is } f(x) = x^3 + x \text{ odd, even, or neither?} \]",
+        "correct_answer": r"\[ \text{Odd} \]", "marks": 1, "exam_type": "tech_free", "topic": "Functions",
+        "rubric": "f(-x) = -x^3 - x = -f(x)."
+    },
+    {
+        "id": 29, "type": "mcq", "text": r"\[ \text{Which function has an inverse function?} \]",
+        "options": {"A": r"\( y=x^2 \)", "B": r"\( y=\sin(x) \)", "C": r"\( y=e^x \)", "D": r"\( y=|x| \)"},
+        "correct_answer": "C", "marks": 1, "exam_type": "tech_active", "topic": "Functions",
+        "rubric": "One-to-one."
+    },
+    {
+        "id": 30, "type": "mcq", "text": r"\[ \text{The period of } y = \cos(\frac{\pi x}{2}) \text{ is:} \]",
+        "options": {"A": r"\( 1 \)", "B": r"\( 2 \)", "C": r"\( 4 \)", "D": r"\( \pi \)"},
+        "correct_answer": "C", "marks": 1, "exam_type": "tech_free", "topic": "Functions",
+        "rubric": "2pi / (pi/2) = 4."
+    }
 ]
 
 def _next_question_id(sess):
     """
     Selects the next question ID based on:
-    1. Filter by exam_type (if set)
-    2. Filter by topic (if set and not 'All')
-    3. Exclude already correctly answered questions (in this session)
-    4. Exclude questions already asked (in this session) to prevent repeats until all done
+    1. Filter by exam_type (MUST match)
+    2. Filter by topic (MUST match if not 'All')
+    3. Exclude already asked questions (in this session)
+    
+    Returns:
+        (question_id, is_fallback)
     """
     exam_type = sess.get('exam_type')
     topic = sess.get('topic')
     
-    # Filter available questions by exam type and topic
-    available = []
+    # 1. Strict Filter: Match BOTH Exam Type AND Topic
+    strict_candidates = []
     for q in methods_questions:
         # Check exam type
         if exam_type and q.get('exam_type') != exam_type:
@@ -600,32 +655,29 @@ def _next_question_id(sess):
         # Check topic
         if topic and topic != 'All' and q.get('topic') != topic:
             continue
-        available.append(q)
+        strict_candidates.append(q)
     
-    # If no questions match the filter, we can't proceed. 
-    # The route will handle the case where candidates is empty.
-    if not available:
-        # Fallback to avoid complete breakage? Or strict? 
-        # User requested filtering. If no questions match, we return None.
-        return None
-
-    # Filter out already asked
+    # Filter out already asked from strict pool
     asked = sess.get('questions_asked', [])
-    candidates = [q['id'] for q in available if q['id'] not in asked]
+    available_strict = [q['id'] for q in strict_candidates if q['id'] not in asked]
     
-    # If all valid questions asked, maybe clear asked list or just return one?
-    # User requirement: "When its length reaches total_questions, the quiz ends"
-    # So here we just return None if no candidates, let the route handle completion.
-    if not candidates:
-        return None
-        
-    return random.choice(candidates)
+    if available_strict:
+        return random.choice(available_strict), False
 
-def _is_equal(ans1, ans2):
-    """Simple normalizer for checking short answers."""
-    def norm(s):
-        return str(s).replace(" ", "").lower().replace("ln", "log").replace("e^", "exp")
-    return norm(ans1) == norm(ans2)
+    # 2. Fallback: If strict pool empty, try matching JUST Exam Type (ignore topic)
+    if topic and topic != 'All':
+        fallback_candidates = []
+        for q in methods_questions:
+             if exam_type and q.get('exam_type') != exam_type:
+                 continue
+             fallback_candidates.append(q)
+        
+        available_fallback = [q['id'] for q in fallback_candidates if q['id'] not in asked]
+        
+        if available_fallback:
+            return random.choice(available_fallback), True
+            
+    return None, False
 
 def _find_available_port(start_port=5000, max_attempts=10):
     for port in range(start_port, start_port + max_attempts):
@@ -663,7 +715,8 @@ def methods_setup():
             "topic": topic,
             "exam_type": exam_type,
             "total_questions": total_questions,
-            "config_set": True
+            "config_set": True,
+            "fallback_mode": False
         }
         return redirect(url_for('methods_practice'))
     
@@ -715,7 +768,8 @@ def methods_practice():
             # Quiz Complete
             return render_template("methods_practice.html", quiz_complete=True, score=len(sess.get('correctly_answered', [])), total=total_q)
 
-        next_id = _next_question_id(sess)
+        next_id_tuple = _next_question_id(sess)
+        next_id, is_fallback = next_id_tuple if next_id_tuple else (None, False)
         
         if next_id is None:
              # Check if this was the very first attempt (no questions asked yet)
@@ -726,6 +780,7 @@ def methods_practice():
              return render_template("methods_practice.html", quiz_complete=True, score=len(sess.get('correctly_answered', [])), total=total_q)
 
         sess['current_q_id'] = next_id
+        sess['fallback_mode'] = is_fallback
         sess['start_time'] = time.time()
         sess['attempts'] = 0
         sess['feedback'] = None
@@ -774,7 +829,7 @@ def methods_practice():
         # Compute correctness locally
         is_correct = False
         if question.get('type') == 'mcq':
-            is_correct = (choice.upper() == question.get('correct_option'))
+            is_correct = (choice.upper() == question.get('correct_answer'))
         else:
             is_correct = _is_equal(user_answer, question.get('correct_answer', ''))
 
@@ -789,7 +844,7 @@ def methods_practice():
         if client:
             try:
                 # Determine correct/student values for prompt clarity
-                correct_val = question.get('correct_option') if question.get('type') == 'mcq' else question.get('correct_answer')
+                correct_val = question.get('correct_answer')
                 student_val = choice if question.get('type') == 'mcq' else user_answer
 
                 prompt = (
@@ -853,7 +908,8 @@ def methods_practice():
         time_remaining=time_remaining,
         show_try_again=show_try_again,
         current_index=current_idx,
-        total_questions=sess.get('total_questions', 5)
+        total_questions=sess.get('total_questions', 5),
+        fallback_warning=sess.get('fallback_mode', False)
     )
 
 
