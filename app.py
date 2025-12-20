@@ -526,7 +526,8 @@ methods_questions = [
         "correct_answer": r"\[ (2,-4) \]",
         "marks": 2,
         "rubric": "1 mark for differentiating f'(x)=3x^2-6x and solving f'(x)=0. 1 mark for minimum coordinate (2, -4).",
-        "exam_type": "tech_free"
+        "exam_type": "tech_free",
+        "topic": "Calculus"
     },
     {
         "id": 2,
@@ -542,7 +543,8 @@ methods_questions = [
         "correct_answer": r"\[ k=\dfrac{1}{2} \]",
         "marks": 1,
         "rubric": "1 mark for setting ∫_0^2 kx dx = 1 and solving k=1/2.",
-        "exam_type": "tech_active"
+        "exam_type": "tech_active",
+        "topic": "Probability"
     },
     {
         "id": 3,
@@ -551,7 +553,8 @@ methods_questions = [
         "correct_answer": r"\[ x=6 \]",
         "marks": 3,
         "rubric": "Use log laws to combine, exponentiate to form quadratic, reject negative, x=6.",
-        "exam_type": "tech_free"
+        "exam_type": "tech_free",
+        "topic": "Algebra"
     },
     {
         "id": 4,
@@ -562,7 +565,8 @@ methods_questions = [
         "correct_answer": r"\[ 2 \]",
         "marks": 1,
         "rubric": "Apply chain rule: f'(x)=2e^{2x}, evaluate at x=0 → 2.",
-        "exam_type": "tech_free"
+        "exam_type": "tech_free",
+        "topic": "Calculus"
     },
     {
         "id": 5,
@@ -571,7 +575,8 @@ methods_questions = [
         "correct_answer": r"\[ 6 \]",
         "marks": 2,
         "rubric": "Compute g(3), g(1) and apply (g(3)-g(1))/(3-1).",
-        "exam_type": "tech_active"
+        "exam_type": "tech_active",
+        "topic": "Functions"
     },
 ]
 
@@ -579,20 +584,30 @@ def _next_question_id(sess):
     """
     Selects the next question ID based on:
     1. Filter by exam_type (if set)
-    2. Exclude already correctly answered questions (in this session)
-    3. Exclude questions already asked (in this session) to prevent repeats until all done
+    2. Filter by topic (if set and not 'All')
+    3. Exclude already correctly answered questions (in this session)
+    4. Exclude questions already asked (in this session) to prevent repeats until all done
     """
     exam_type = sess.get('exam_type')
+    topic = sess.get('topic')
     
-    # Filter available questions by exam type
-    available = [
-        q for q in methods_questions 
-        if not exam_type or q.get('exam_type') == exam_type
-    ]
+    # Filter available questions by exam type and topic
+    available = []
+    for q in methods_questions:
+        # Check exam type
+        if exam_type and q.get('exam_type') != exam_type:
+            continue
+        # Check topic
+        if topic and topic != 'All' and q.get('topic') != topic:
+            continue
+        available.append(q)
     
-    # If no questions match the filter (shouldn't happen with proper data), fallback to all
+    # If no questions match the filter, we can't proceed. 
+    # The route will handle the case where candidates is empty.
     if not available:
-        available = methods_questions
+        # Fallback to avoid complete breakage? Or strict? 
+        # User requested filtering. If no questions match, we return None.
+        return None
 
     # Filter out already asked
     asked = sess.get('questions_asked', [])
@@ -703,6 +718,10 @@ def methods_practice():
         next_id = _next_question_id(sess)
         
         if next_id is None:
+             # Check if this was the very first attempt (no questions asked yet)
+             if asked_count == 0:
+                 return render_template("methods_setup.html", error=f"No questions found for Topic: {sess.get('topic')} ({sess.get('exam_type')}). Please try another combination.")
+
              # No more valid questions available (or exhausted bank)
              return render_template("methods_practice.html", quiz_complete=True, score=len(sess.get('correctly_answered', [])), total=total_q)
 
