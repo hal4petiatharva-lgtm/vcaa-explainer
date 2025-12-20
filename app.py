@@ -12,6 +12,7 @@ import re
 import random
 import time
 import json
+import hashlib
 
 load_dotenv()
 
@@ -457,7 +458,7 @@ def _is_equal(a: str, b: str) -> bool:
         return na == nb
 
 # --- Methods Practice Data ---
-methods_questions = [
+BACKUP_METHODS_QUESTIONS = [
     # --- CALCULUS (8) ---
     {
         "id": 1, "type": "short", "text": r"\[ \text{Find the antiderivative of } 3x^2. \]",
@@ -633,46 +634,88 @@ methods_questions = [
     }
 ]
 
+def fetch_vcaa_question(topic, exam_type, exclude_ids=None):
+    """
+    Fetches a question from the VCAA database dynamically.
+    """
+    if not VCAA_AVAILABLE:
+        return None
+
+    query = f"{topic} {exam_type} Mathematical Methods"
+    try:
+        # Search for chunks
+        results = vce_db.search(query, k=15)
+    except Exception:
+        return None
+    
+    candidates = []
+    for chunk in results:
+        text = chunk.page_content if hasattr(chunk, 'page_content') else str(chunk)
+        
+        # Basic filter for question-like content
+        if "?" in text or "mark" in text.lower() or "Find" in text or "Calculate" in text or "Evaluate" in text:
+            # Create a hash ID
+            q_id = hashlib.md5(text.encode('utf-8')).hexdigest()
+            
+            if exclude_ids and q_id in exclude_ids:
+                continue
+            
+            # Construct the question dictionary
+            q = {
+                "id": q_id,
+                "type": "short", 
+                "text": text,
+                "correct_answer": "[Answer from VCAA database]", 
+                "marks": 2, 
+                "exam_type": exam_type, 
+                "topic": topic,
+                "rubric": "Mark according to VCAA standards."
+            }
+            candidates.append(q)
+            
+    if candidates:
+        return random.choice(candidates)
+    
+    return None
+
 def _next_question_id(sess):
     """
-    Selects the next question ID based on:
-    1. Filter by exam_type (MUST match)
-    2. Filter by topic (MUST match if not 'All')
-    3. Exclude already asked questions (in this session)
-    
-    Returns:
-        (question_id, is_fallback)
+    Selects the next question object.
+    Returns: (question_obj, is_fallback)
     """
     exam_type = sess.get('exam_type')
     topic = sess.get('topic')
+    asked = sess.get('questions_asked', [])
     
-    # 1. Strict Filter: Match BOTH Exam Type AND Topic
+    # 1. Try Dynamic Fetch from VCAA DB
+    fetched_q = fetch_vcaa_question(topic, exam_type, exclude_ids=asked)
+    if fetched_q:
+        return fetched_q, False
+
+    # 2. Fallback: Use Backup List (Strict Filter)
     strict_candidates = []
-    for q in methods_questions:
-        # Check exam type
+    for q in BACKUP_METHODS_QUESTIONS:
         if exam_type and q.get('exam_type') != exam_type:
             continue
-        # Check topic
         if topic and topic != 'All' and q.get('topic') != topic:
             continue
         strict_candidates.append(q)
     
-    # Filter out already asked from strict pool
-    asked = sess.get('questions_asked', [])
-    available_strict = [q['id'] for q in strict_candidates if q['id'] not in asked]
+    # Filter out already asked (handle int/string ID mismatch by checking both)
+    available_strict = [q for q in strict_candidates if q['id'] not in asked and str(q['id']) not in asked]
     
     if available_strict:
-        return random.choice(available_strict), False
+        return random.choice(available_strict), True
 
-    # 2. Fallback: If strict pool empty, try matching JUST Exam Type (ignore topic)
+    # 3. Deep Fallback: Backup List (Ignore Topic)
     if topic and topic != 'All':
         fallback_candidates = []
-        for q in methods_questions:
+        for q in BACKUP_METHODS_QUESTIONS:
              if exam_type and q.get('exam_type') != exam_type:
                  continue
              fallback_candidates.append(q)
         
-        available_fallback = [q['id'] for q in fallback_candidates if q['id'] not in asked]
+        available_fallback = [q for q in fallback_candidates if q['id'] not in asked and str(q['id']) not in asked]
         
         if available_fallback:
             return random.choice(available_fallback), True
@@ -752,7 +795,11 @@ def methods_practice():
         # Reset timer if timed mode
         if sess.get('timed_on'):
             q_id = sess.get('current_q_id')
-            question = next((q for q in methods_questions if q['id'] == q_id), None)
+            # Try to get from session data first, then backup list
+            question = sess.get('current_question_data')
+            if not question or question.get('id') != q_id:
+                question = next((q for q in BACKUP_METHODS_QUESTIONS if q['id'] == q_id), None)
+            
             limit = (question.get('marks', 1) * 90) if question else 300
             sess['timer_expires_at'] = time.time() + limit
         session.modified = True
@@ -768,10 +815,10 @@ def methods_practice():
             # Quiz Complete
             return render_template("methods_practice.html", quiz_complete=True, score=len(sess.get('correctly_answered', [])), total=total_q)
 
-        next_id_tuple = _next_question_id(sess)
-        next_id, is_fallback = next_id_tuple if next_id_tuple else (None, False)
+        next_q_tuple = _next_question_id(sess)
+        next_q, is_fallback = next_q_tuple if next_q_tuple else (None, False)
         
-        if next_id is None:
+        if next_q is None:
              # Check if this was the very first attempt (no questions asked yet)
              if asked_count == 0:
                  return render_template("methods_setup.html", error=f"No questions found for Topic: {sess.get('topic')} ({sess.get('exam_type')}). Please try another combination.")
@@ -779,7 +826,8 @@ def methods_practice():
              # No more valid questions available (or exhausted bank)
              return render_template("methods_practice.html", quiz_complete=True, score=len(sess.get('correctly_answered', [])), total=total_q)
 
-        sess['current_q_id'] = next_id
+        sess['current_q_id'] = next_q['id']
+        sess['current_question_data'] = next_q
         sess['fallback_mode'] = is_fallback
         sess['start_time'] = time.time()
         sess['attempts'] = 0
@@ -787,8 +835,7 @@ def methods_practice():
         sess['last_answer'] = ""
         
         if sess.get('timed_on'):
-            question = next((q for q in methods_questions if q['id'] == next_id), None)
-            limit = (question.get('marks', 1) * 90) if question else 300
+            limit = (next_q.get('marks', 1) * 90) if next_q else 300
             sess['timer_expires_at'] = time.time() + limit
         else:
             sess['timer_expires_at'] = None
@@ -798,7 +845,9 @@ def methods_practice():
 
     # Retrieve current question object
     q_id = sess.get('current_q_id')
-    question = next((q for q in methods_questions if q['id'] == q_id), None)
+    question = sess.get('current_question_data')
+    if not question or question.get('id') != q_id:
+        question = next((q for q in BACKUP_METHODS_QUESTIONS if q['id'] == q_id), None)
     
     if not question:
         # Fallback reset
