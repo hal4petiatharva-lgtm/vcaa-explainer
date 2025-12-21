@@ -869,6 +869,35 @@ def validate_latex(text):
         
     return True
 
+def validate_and_correct_latex(text):
+    """
+    Fixes malformed LaTeX (e.g. missing operands) and double-escaped backslashes.
+    Returns None if the LaTeX structure is fundamentally broken (mismatched delimiters).
+    """
+    if not text:
+        return text
+
+    import re
+
+    # FIX 1: Add a placeholder before a lone '\cdot'
+    # Turns '( \cdot e^{3x})' into '\(k \cdot e^{3x}\)' 
+    text = re.sub(r'\(\s*\\cdot', r'\(k \\cdot', text)
+
+    # FIX 2: Ensure all '\(' and '\)' have single backslashes.
+    # Replace any occurrence of '\\(' with '\(' and '\\)' with '\)' 
+    text = re.sub(r'\\\\\(', r'\(', text)
+    text = re.sub(r'\\\\\)', r'\)', text)
+    text = re.sub(r'\\\\\[', r'\[', text)
+    text = re.sub(r'\\\\\]', r'\]', text)
+
+    # FIX 3: Final sanity check - the text must be valid LaTeX.
+    # Count that '(' and ')' are paired when preceded by a backslash.
+    # Note: We are counting \( and \) specifically.
+    if text.count(r'\(') != text.count(r'\)'):
+        # This LaTeX is broken. Return None to trigger a fallback.
+        return None
+    return text
+
 def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
     """
     Generates a new, polished question using AI + VCAA source material.
@@ -980,6 +1009,19 @@ def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
             q_text = sanitize_latex(q_text)
             a_text = sanitize_latex(a_text)
             
+            # Stage 2b: Correction & Structural Validation
+            q_text = validate_and_correct_latex(q_text)
+            a_text = validate_and_correct_latex(a_text)
+            
+            if q_text is None or a_text is None:
+                logging.warning(f"AI Output failed Structural LaTeX validation (Attempt {attempt+1}). Regenerating...")
+                if attempt == 0:
+                     prompt += "\n\nSYSTEM NOTE: Your previous response had mismatched LaTeX delimiters. Please check your \\( and \\) pairs."
+                     continue
+                else:
+                     logging.error("ERROR: AI generated broken LaTeX structure. Using backup question.")
+                     return get_backup_question(topic, exam_type)
+
             # Stage 3: Final Validation & Fallback
             if not validate_latex(q_text) or not validate_latex(a_text):
                 logging.warning(f"AI Output failed LaTeX validation (Attempt {attempt+1}). Regenerating...")
@@ -1266,6 +1308,11 @@ def methods_practice():
                 )
                 ai_text = (chat.choices[0].message.content or "").strip()
                 
+                # Apply LaTeX validation/correction
+                corrected_text = validate_and_correct_latex(ai_text)
+                if corrected_text:
+                    ai_text = corrected_text
+                
                 # Check for truncation (completeness check)
                 # If it doesn't end with typical punctuation, it might be truncated.
                 if ai_text and not ai_text.strip().endswith(('.', '!', '?', ']', ')', '}')):
@@ -1278,6 +1325,11 @@ def methods_practice():
                         max_tokens=500
                     )
                     ai_text = (chat.choices[0].message.content or "").strip()
+                    
+                    # Apply LaTeX validation/correction again
+                    corrected_text = validate_and_correct_latex(ai_text)
+                    if corrected_text:
+                        ai_text = corrected_text
 
                 if ai_text:
                     computed_feedback["feedback"] = ai_text
