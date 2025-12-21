@@ -784,6 +784,38 @@ def normalize_latex_delimiters(text):
     
     return text
 
+def sanitize_latex(text):
+    """
+    Sanitizes LaTeX input by fixing common AI formatting errors.
+    """
+    if not text:
+        return ""
+    import re
+    # Rule 1: Fix unescaped functions. Ensure 'sin', 'cos', 'log', 'frac' etc. have a backslash.
+    text = re.sub(r'(?<!\\)\b(sin|cos|tan|log|ln|frac)(?![a-zA-Z])', r'\\\1', text)
+    # Rule 2: Enforce delimiters. Replace standalone f(x)= with \(f(x)=\).
+    text = re.sub(r'(?<!\\)(\b\w+\([^)]+\)\s*=)', r'\(\1', text)
+    return text
+
+def get_backup_question(topic, exam_type):
+    """
+    Returns a reliable backup question from the hardcoded list.
+    """
+    # Filter candidates
+    candidates = [q for q in BACKUP_METHODS_QUESTIONS if q.get('topic') == topic and q.get('exam_type') == exam_type]
+    if not candidates and topic != 'All':
+         # Relax exam type
+         candidates = [q for q in BACKUP_METHODS_QUESTIONS if q.get('topic') == topic]
+    if not candidates:
+         # Fallback to any
+         candidates = BACKUP_METHODS_QUESTIONS
+    
+    import random
+    if not candidates:
+        return None
+    # Return a copy to avoid mutation issues if any
+    return random.choice(candidates).copy()
+
 def validate_latex(text):
     """
     Validates that the text contains proper LaTeX delimiters for math.
@@ -878,18 +910,18 @@ def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
     TOPIC: {topic}
     EXAM TYPE: {exam_type}
     DIFFICULTY: {difficulty}
+    
+    FORMATTING RULES - YOU MUST OBEY: 
+    1.  ALL mathematics, without exception, must be written in LaTeX. 
+    2.  For inline math, use the correct LaTeX delimiters: \( YOUR_MATH_HERE \). 
+    3.  For display math, use: \[ YOUR_MATH_HERE \]. 
+    4.  **CRITICAL:** Never use plain parentheses like f(x)= for equations. Always write \(f(x)=\). 
+    5.  Your entire response must be valid JSON.
+    
     REQUIREMENTS:
-    1.  The question must be clear, solvable, and include ALL necessary context and definitions. The student must not need to see any other questions.
-    2.  Do NOT copy the snippet verbatim. Create a new variant, adjust numbers, or compose a new question on the same concept.
-    3.  Write the question in clear, complete sentences. It is acceptable for the question text to span multiple lines for readability.
-    4.  Format ALL mathematical expressions using LaTeX. 
-        - You MUST wrap ALL mathematical expressions, functions, variables, and equations in LaTeX delimiters.
-        - Use \[ ... \] for display (block) equations.
-        - Use \( ... \) for inline equations.
-        - Do NOT use $ or $$ dollar sign delimiters.
-        - Never use plain parentheses for math (e.g., write \(f(x)\), not f(x)).
-    5.  Provide the correct final answer in a clean, parsable format using LaTeX.
-    6.  Output your response in this exact JSON format:
+    1.  The question must be clear, solvable, and include ALL necessary context and definitions.
+    2.  Do NOT copy the snippet verbatim. Create a new variant.
+    3.  Output your response in this exact JSON format:
     {{
         "question_text": "The full question text here, with LaTeX.",
         "correct_answer": "The LaTeX-formatted answer (e.g., \(x=3\)).",
@@ -919,29 +951,32 @@ def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
                 logging.error("AI response missing required fields")
                 continue # Retry
                 
-            # Validate LaTeX
             q_text = data["question_text"]
             a_text = data["correct_answer"]
             
+            # Stage 2: Post-Processing Sanitization
+            q_text = sanitize_latex(q_text)
+            a_text = sanitize_latex(a_text)
+            
+            # Stage 3: Final Validation & Fallback
             if not validate_latex(q_text) or not validate_latex(a_text):
                 logging.warning(f"AI Output failed LaTeX validation (Attempt {attempt+1}). Regenerating...")
                 if attempt == 0:
-                     # Add a nudge to the prompt for the next attempt
-                     prompt += "\n\nSYSTEM NOTE: Your previous response failed validation. Please ensure ALL math is wrapped in \(...\) or \[...\]."
+                     prompt += "\n\nSYSTEM NOTE: Your previous response failed validation. Please ensure ALL math is wrapped in \\(...\\) or \\[...\\]."
                      continue
                 else:
-                    # Fallback to normalizing what we have if we fail twice, or just return None?
-                    # User said "regenerate or fallback".
-                    # We will try to normalize and proceed, hoping normalize_latex_delimiters fixes basic issues, 
-                    # but strictly speaking we might want to fail.
-                    # Let's trust normalize_latex_delimiters to do its best.
-                    pass 
+                    # Severe Error - Use Backup
+                    logging.error("ERROR: AI generated non-LaTeX output. Using backup question.")
+                    return get_backup_question(topic, exam_type)
                 
             generated_id = hashlib.md5(q_text.encode('utf-8')).hexdigest()
             
             # Post-process to fix any stray dollar signs
             final_text = normalize_latex_delimiters(q_text)
             final_answer = normalize_latex_delimiters(a_text)
+            
+            # Verification Log
+            logging.info(f"Final Question Text Repr: {repr(final_text)}")
             
             # 5. Return Question Dictionary
             return {
