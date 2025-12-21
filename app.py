@@ -458,7 +458,9 @@ def _is_equal(a: str, b: str) -> bool:
         return na == nb
 
 # --- Methods Practice Data ---
-BACKUP_METHODS_QUESTIONS = [
+# Layer 2: Large, Categorized Backup Bank
+# REQUIREMENT: Must be expanded to 80-100+ manually verified questions.
+CURATED_QUESTION_BANK = [
     # --- CALCULUS (8) ---
     {
         "id": 1, "type": "short", "text": r"\[ \text{Find the antiderivative of } 3x^2. \]",
@@ -659,7 +661,343 @@ BACKUP_METHODS_QUESTIONS = [
         "id": 35, "type": "short", "text": r"\[ \text{Find the coordinates of the turning point of } y = 2(x-1)^2 + 3. \]",
         "correct_answer": r"\[ (1, 3) \]", "marks": 1, "exam_type": "tech_free", "topic": "Functions",
         "rubric": "Vertex form a(x-h)^2 + k. Vertex is (h, k) = (1, 3)."
-    }
+    },
+
+    # --- EXPANDED CALCULUS (36-50) ---
+    {
+        "id": 36, "type": "short", "text": r"\[ \text{Differentiate } y = \sqrt{3x+1} \text{ with respect to } x. \]",
+        "correct_answer": r"\[ \frac{3}{2\sqrt{3x+1}} \]", "marks": 1, "exam_type": "tech_free", "topic": "Calculus",
+        "rubric": "Chain rule: 1/2(3x+1)^(-1/2) * 3."
+    },
+    {
+        "id": 37, "type": "short", "text": r"\[ \text{Given } y = x^2 \sin(x), \text{ find } \frac{dy}{dx}. \]",
+        "correct_answer": r"\[ 2x\sin(x) + x^2\cos(x) \]", "marks": 2, "exam_type": "tech_free", "topic": "Calculus",
+        "rubric": "Product rule: u'v + uv'."
+    },
+    {
+        "id": 38, "type": "short", "text": r"\[ \text{If } f(x) = \frac{e^x}{x}, \text{ find } f'(x). \]",
+        "correct_answer": r"\[ \frac{e^x(x-1)}{x^2} \]", "marks": 2, "exam_type": "tech_active", "topic": "Calculus",
+        "rubric": "Quotient rule: (x e^x - e^x * 1)/x^2."
+    },
+    {
+        "id": 39, "type": "mcq", "text": r"\[ \text{The equation of the tangent to } y=x^2 \text{ at } x=1 \text{ is:} \]",
+        "options": {"A": r"\( y=2x \)", "B": r"\( y=2x-1 \)", "C": r"\( y=x+1 \)", "D": r"\( y=2x+1 \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_active", "topic": "Calculus",
+        "rubric": "m=2(1)=2. Point (1,1). y-1 = 2(x-1) -> y=2x-1."
+    },
+    {
+        "id": 40, "type": "short", "text": r"\[ \text{Find the gradient of the normal to } y=e^{2x} \text{ at } x=0. \]",
+        "correct_answer": r"\[ -\frac{1}{2} \]", "marks": 1, "exam_type": "tech_free", "topic": "Calculus",
+        "rubric": "dy/dx = 2e^{2x}. At x=0, m_T = 2. m_N = -1/2."
+    },
+    {
+        "id": 41, "type": "mcq", "text": r"\[ \text{The stationary points of } f(x) = x^3 - 12x \text{ occur at:} \]",
+        "options": {"A": r"\( x=2 \)", "B": r"\( x=-2 \)", "C": r"\( x=\pm 2 \)", "D": r"\( x=0 \)"},
+        "correct_answer": "C", "marks": 1, "exam_type": "tech_free", "topic": "Calculus",
+        "rubric": "3x^2 - 12 = 0 -> x^2=4 -> x=2, -2."
+    },
+    {
+        "id": 42, "type": "short", "text": r"\[ \text{Find the area bounded by } y=x^2 \text{ and the x-axis from } x=0 \text{ to } x=3. \]",
+        "correct_answer": r"\[ 9 \]", "marks": 1, "exam_type": "tech_active", "topic": "Calculus",
+        "rubric": "Int x^2 dx = [x^3/3] from 0 to 3 = 27/3 = 9."
+    },
+    {
+        "id": 43, "type": "short", "text": r"\[ \text{A particle has } a(t) = 6t. \text{ If } v(0)=2, \text{ find } v(t). \]",
+        "correct_answer": r"\[ v(t) = 3t^2 + 2 \]", "marks": 1, "exam_type": "tech_free", "topic": "Calculus",
+        "rubric": "Int 6t dt = 3t^2 + C. C=2."
+    },
+    {
+        "id": 44, "type": "mcq", "text": r"\[ \text{The position of a particle is } x(t) = t^2 - 4t. \text{ The distance travelled in the first 3 seconds is:} \]",
+        "options": {"A": r"\( 3 \)", "B": r"\( 4 \)", "C": r"\( 5 \)", "D": r"\( -3 \)"},
+        "correct_answer": "C", "marks": 1, "exam_type": "tech_active", "topic": "Calculus",
+        "rubric": "Turns at t=2. x(0)=0, x(2)=-4, x(3)=-3. Dist = |0 to -4| + |-4 to -3| = 4 + 1 = 5."
+    },
+    {
+        "id": 45, "type": "short", "text": r"\[ \text{Find the maximum value of } f(x) = -x^2 + 4x + 1. \]",
+        "correct_answer": r"\[ 5 \]", "marks": 1, "exam_type": "tech_active", "topic": "Calculus",
+        "rubric": "Vertex at x = -4/-2 = 2. f(2) = -4 + 8 + 1 = 5."
+    },
+    {
+        "id": 46, "type": "mcq", "text": r"\[ \text{The average rate of change of } f(x)=x^2 \text{ over } [1, 3] \text{ is:} \]",
+        "options": {"A": r"\( 2 \)", "B": r"\( 3 \)", "C": r"\( 4 \)", "D": r"\( 8 \)"},
+        "correct_answer": "C", "marks": 1, "exam_type": "tech_free", "topic": "Calculus",
+        "rubric": "(f(3)-f(1))/(3-1) = (9-1)/2 = 4."
+    },
+    {
+        "id": 47, "type": "short", "text": r"\[ \text{Find the instantaneous rate of change of } V = \frac{4}{3}\pi r^3 \text{ with respect to } r \text{ when } r=2. \]",
+        "correct_answer": r"\[ 16\pi \]", "marks": 1, "exam_type": "tech_active", "topic": "Calculus",
+        "rubric": "dV/dr = 4pi r^2. At r=2, 16pi."
+    },
+    {
+        "id": 48, "type": "mcq", "text": r"\[ \text{If } f'(x) > 0 \text{ and } f''(x) < 0, \text{ the graph is:} \]",
+        "options": {"A": r"\( \text{Increasing and concave up} \)", "B": r"\( \text{Increasing and concave down} \)", "C": r"\( \text{Decreasing and concave up} \)", "D": r"\( \text{Decreasing and concave down} \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_free", "topic": "Calculus",
+        "rubric": "f' > 0 -> inc. f'' < 0 -> concave down."
+    },
+    {
+        "id": 49, "type": "short", "text": r"\[ \text{Evaluate } \int (2x+1)^3 \, dx. \]",
+        "correct_answer": r"\[ \frac{1}{8}(2x+1)^4 + C \]", "marks": 1, "exam_type": "tech_free", "topic": "Calculus",
+        "rubric": "Linear sub: 1/2 * (2x+1)^4 / 4."
+    },
+    {
+        "id": 50, "type": "mcq", "text": r"\[ \text{If } F(x) = \int_1^x \frac{1}{t} \, dt, \text{ then } F'(x) \text{ is:} \]",
+        "options": {"A": r"\( \ln(x) \)", "B": r"\( \frac{1}{x} \)", "C": r"\( -\frac{1}{x^2} \)", "D": r"\( e^x \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_active", "topic": "Calculus",
+        "rubric": "FTC: d/dx Int_a^x f(t) dt = f(x)."
+    },
+
+    # --- EXPANDED ALGEBRA (51-65) ---
+    {
+        "id": 51, "type": "short", "text": r"\[ \text{Simplify } 2\log_e(3) - \log_e(9). \]",
+        "correct_answer": r"\[ 0 \]", "marks": 1, "exam_type": "tech_free", "topic": "Algebra",
+        "rubric": "log(3^2) - log(9) = log(9) - log(9) = 0."
+    },
+    {
+        "id": 52, "type": "mcq", "text": r"\[ \text{Solve } 2^{x+1} = 8^{x-1}. \]",
+        "options": {"A": r"\( 1 \)", "B": r"\( 2 \)", "C": r"\( 3 \)", "D": r"\( 4 \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_free", "topic": "Algebra",
+        "rubric": "2^{x+1} = (2^3)^{x-1} -> x+1 = 3x-3 -> 2x=4 -> x=2."
+    },
+    {
+        "id": 53, "type": "short", "text": r"\[ \text{Express } x^2 + 6x + 5 \text{ in the form } (x+h)^2 + k. \]",
+        "correct_answer": r"\[ (x+3)^2 - 4 \]", "marks": 1, "exam_type": "tech_free", "topic": "Algebra",
+        "rubric": "(x+3)^2 - 9 + 5 = (x+3)^2 - 4."
+    },
+    {
+        "id": 54, "type": "mcq", "text": r"\[ \text{The remainder when } P(x) = x^3 + 2x^2 - 5x + 1 \text{ is divided by } (x-1) \text{ is:} \]",
+        "options": {"A": r"\( -1 \)", "B": r"\( 0 \)", "C": r"\( 1 \)", "D": r"\( -2 \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_active", "topic": "Algebra",
+        "rubric": "P(1) = 1 + 2 - 5 + 1 = -1."
+    },
+    {
+        "id": 55, "type": "short", "text": r"\[ \text{Perform the division: } (x^3 - 1) \div (x-1). \]",
+        "correct_answer": r"\[ x^2 + x + 1 \]", "marks": 1, "exam_type": "tech_active", "topic": "Algebra",
+        "rubric": "Standard factorization difference of cubes."
+    },
+    {
+        "id": 56, "type": "short", "text": r"\[ \text{Solve for } x: y = x+2 \text{ and } y = x^2. \]",
+        "correct_answer": r"\[ x=2, x=-1 \]", "marks": 2, "exam_type": "tech_active", "topic": "Algebra",
+        "rubric": "x^2 = x+2 -> x^2 - x - 2 = 0 -> (x-2)(x+1)=0."
+    },
+    {
+        "id": 57, "type": "mcq", "text": r"\[ \text{The determinant of } A = \begin{bmatrix} 2 & 3 \\ 1 & 4 \end{bmatrix} \text{ is:} \]",
+        "options": {"A": r"\( 5 \)", "B": r"\( 11 \)", "C": r"\( 2 \)", "D": r"\( 8 \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_free", "topic": "Algebra",
+        "rubric": "ad - bc = 8 - 3 = 5."
+    },
+    {
+        "id": 58, "type": "short", "text": r"\[ \text{Find the inverse of } A = \begin{bmatrix} 3 & 1 \\ 5 & 2 \end{bmatrix}. \]",
+        "correct_answer": r"\[ \begin{bmatrix} 2 & -1 \\ -5 & 3 \end{bmatrix} \]", "marks": 1, "exam_type": "tech_active", "topic": "Algebra",
+        "rubric": "det = 6-5=1. Swap diag, negate off-diag."
+    },
+    {
+        "id": 59, "type": "mcq", "text": r"\[ \text{The transformation defined by } \begin{bmatrix} 1 & 0 \\ 0 & 2 \end{bmatrix} \text{ represents:} \]",
+        "options": {"A": r"\( \text{Dilation factor 2 from x-axis} \)", "B": r"\( \text{Dilation factor 2 from y-axis} \)", "C": r"\( \text{Reflection in x-axis} \)", "D": r"\( \text{Translation up 2} \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_free", "topic": "Algebra",
+        "rubric": "y' = 2y, x' = x. Dilation from x-axis."
+    },
+    {
+        "id": 60, "type": "short", "text": r"\[ \text{Find the third term in the expansion of } (x+2)^4. \]",
+        "correct_answer": r"\[ 24x^2 \]", "marks": 1, "exam_type": "tech_free", "topic": "Algebra",
+        "rubric": "4C2 * x^2 * 2^2 = 6 * x^2 * 4 = 24x^2."
+    },
+    {
+        "id": 61, "type": "mcq", "text": r"\[ \text{Solve for } x: ax - 3 = 5. \]",
+        "options": {"A": r"\( x=8/a \)", "B": r"\( x=2/a \)", "C": r"\( x=8a \)", "D": r"\( x=5+3a \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_active", "topic": "Algebra",
+        "rubric": "ax = 8 -> x = 8/a."
+    },
+    {
+        "id": 62, "type": "short", "text": r"\[ \text{If } f(x) = 2^x, \text{ simplify } f(x+2) - f(x). \]",
+        "correct_answer": r"\[ 3 \cdot 2^x \]", "marks": 1, "exam_type": "tech_free", "topic": "Algebra",
+        "rubric": "2^{x+2} - 2^x = 4*2^x - 1*2^x = 3*2^x."
+    },
+    {
+        "id": 63, "type": "mcq", "text": r"\[ \text{The solution to } x^2 - 9 < 0 \text{ is:} \]",
+        "options": {"A": r"\( x < 3 \)", "B": r"\( x > -3 \)", "C": r"\( -3 < x < 3 \)", "D": r"\( x < -3 \cup x > 3 \)"},
+        "correct_answer": "C", "marks": 1, "exam_type": "tech_active", "topic": "Algebra",
+        "rubric": "Between the roots -3 and 3."
+    },
+    {
+        "id": 64, "type": "short", "text": r"\[ \text{Simplify } \sqrt{75} - \sqrt{12}. \]",
+        "correct_answer": r"\[ 3\sqrt{3} \]", "marks": 1, "exam_type": "tech_free", "topic": "Algebra",
+        "rubric": "5sqrt(3) - 2sqrt(3) = 3sqrt(3)."
+    },
+    {
+        "id": 65, "type": "mcq", "text": r"\[ \text{The system } kx + y = 3, 2x + y = 4 \text{ has no solution if } k = \]",
+        "options": {"A": r"\( 1 \)", "B": r"\( 2 \)", "C": r"\( 3 \)", "D": r"\( -2 \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_active", "topic": "Algebra",
+        "rubric": "Parallel lines: gradients equal. -k = -2 -> k=2."
+    },
+
+    # --- EXPANDED PROBABILITY (66-80) ---
+    {
+        "id": 66, "type": "short", "text": r"\[ \text{A discrete RV } X \text{ has } P(X=0)=0.2, P(X=1)=0.8. \text{ Find } E(X). \]",
+        "correct_answer": r"\[ 0.8 \]", "marks": 1, "exam_type": "tech_free", "topic": "Probability",
+        "rubric": "0*0.2 + 1*0.8 = 0.8."
+    },
+    {
+        "id": 67, "type": "mcq", "text": r"\[ \text{If } X \sim \text{Bi}(10, 0.5), \text{ then } \text{Var}(X) \text{ is:} \]",
+        "options": {"A": r"\( 2.5 \)", "B": r"\( 5 \)", "C": r"\( 25 \)", "D": r"\( 0.25 \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_active", "topic": "Probability",
+        "rubric": "np(1-p) = 10 * 0.5 * 0.5 = 2.5."
+    },
+    {
+        "id": 68, "type": "short", "text": r"\[ \text{If } X \sim \text{Bi}(3, 0.5), \text{ find } P(X=3). \]",
+        "correct_answer": r"\[ 0.125 \]", "marks": 1, "exam_type": "tech_free", "topic": "Probability",
+        "rubric": "(0.5)^3 = 1/8 = 0.125."
+    },
+    {
+        "id": 69, "type": "mcq", "text": r"\[ \text{If } Z \sim N(0,1), \text{ which is true?} \]",
+        "options": {"A": r"\( P(Z<0) = 0.5 \)", "B": r"\( P(Z>1) = 0.5 \)", "C": r"\( P(Z=0) = 0.5 \)", "D": r"\( P(Z<0) = 0 \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_active", "topic": "Probability",
+        "rubric": "Symmetry about 0."
+    },
+    {
+        "id": 70, "type": "short", "text": r"\[ \text{Standardize } x=25 \text{ if } \mu=20, \sigma=2. \]",
+        "correct_answer": r"\[ z=2.5 \]", "marks": 1, "exam_type": "tech_free", "topic": "Probability",
+        "rubric": "(25-20)/2 = 2.5."
+    },
+    {
+        "id": 71, "type": "mcq", "text": r"\[ \text{For a 95\% confidence interval, the z-score used is approx:} \]",
+        "options": {"A": r"\( 1.64 \)", "B": r"\( 1.96 \)", "C": r"\( 2.58 \)", "D": r"\( 1 \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_active", "topic": "Probability",
+        "rubric": "Standard value for 95%."
+    },
+    {
+        "id": 72, "type": "short", "text": r"\[ \text{Find the SD of } \hat{p} \text{ if } p=0.5, n=4. \]",
+        "correct_answer": r"\[ 0.25 \]", "marks": 1, "exam_type": "tech_free", "topic": "Probability",
+        "rubric": "sqrt(0.25/4) = 0.5/2 = 0.25."
+    },
+    {
+        "id": 73, "type": "mcq", "text": r"\[ \text{The width of a confidence interval decreases if:} \]",
+        "options": {"A": r"\( n \text{ decreases} \)", "B": r"\( n \text{ increases} \)", "C": r"\( \text{confidence level increases} \)", "D": r"\( \hat{p} \text{ moves to 0.5} \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_active", "topic": "Probability",
+        "rubric": "Width prop to 1/sqrt(n)."
+    },
+    {
+        "id": 74, "type": "short", "text": r"\[ \text{If } P(A)=0.4, P(B|A)=0.5, \text{ find } P(A \cap B). \]",
+        "correct_answer": r"\[ 0.2 \]", "marks": 1, "exam_type": "tech_active", "topic": "Probability",
+        "rubric": "P(A n B) = P(B|A)P(A) = 0.5 * 0.4 = 0.2."
+    },
+    {
+        "id": 75, "type": "mcq", "text": r"\[ \text{Events } A, B \text{ are mutually exclusive if:} \]",
+        "options": {"A": r"\( P(A \cap B) = P(A)P(B) \)", "B": r"\( P(A \cap B) = 0 \)", "C": r"\( P(A \cup B) = 1 \)", "D": r"\( P(A)=P(B) \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_free", "topic": "Probability",
+        "rubric": "Definition."
+    },
+    {
+        "id": 76, "type": "short", "text": r"\[ \text{Find } k \text{ if } f(x)=k \text{ is a PDF on } [0, 5]. \]",
+        "correct_answer": r"\[ 0.2 \]", "marks": 1, "exam_type": "tech_free", "topic": "Probability",
+        "rubric": "Area = 5k = 1 -> k=0.2."
+    },
+    {
+        "id": 77, "type": "mcq", "text": r"\[ \text{The mean of the PDF } f(x)=2x \text{ on } [0, 1] \text{ is:} \]",
+        "options": {"A": r"\( 1/2 \)", "B": r"\( 2/3 \)", "C": r"\( 1/3 \)", "D": r"\( 3/4 \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_active", "topic": "Probability",
+        "rubric": "Int x * 2x dx = [2x^3/3]0-1 = 2/3."
+    },
+    {
+        "id": 78, "type": "short", "text": r"\[ \text{Find the median } m \text{ of } f(x)=2x \text{ on } [0, 1]. \]",
+        "correct_answer": r"\[ \frac{1}{\sqrt{2}} \]", "marks": 1, "exam_type": "tech_active", "topic": "Probability",
+        "rubric": "Int_0^m 2x dx = 0.5 -> m^2 = 0.5 -> m = 1/sqrt(2)."
+    },
+    {
+        "id": 79, "type": "short", "text": r"\[ \text{A coin is tossed 3 times. Find the probability of exactly 2 heads. } \]",
+        "correct_answer": r"\[ 0.375 \]", "marks": 1, "exam_type": "tech_free", "topic": "Probability",
+        "rubric": "3C2 (0.5)^3 = 3 * 0.125 = 0.375."
+    },
+    {
+        "id": 80, "type": "mcq", "text": r"\[ \text{Which is NOT a property of a PDF } f(x)? \]",
+        "options": {"A": r"\( f(x) \ge 0 \)", "B": r"\( \int f(x) dx = 1 \)", "C": r"\( f(x) \le 1 \)", "D": r"\( \text{Defined on domain} \)"},
+        "correct_answer": "C", "marks": 1, "exam_type": "tech_free", "topic": "Probability",
+        "rubric": "PDF can be > 1 (e.g. uniform on [0, 0.5] has height 2)."
+    },
+
+    # --- EXPANDED FUNCTIONS (81-95) ---
+    {
+        "id": 81, "type": "short", "text": r"\[ \text{State the domain of } y = \log_e(x-3). \]",
+        "correct_answer": r"\[ (3, \infty) \]", "marks": 1, "exam_type": "tech_free", "topic": "Functions",
+        "rubric": "x-3 > 0."
+    },
+    {
+        "id": 82, "type": "mcq", "text": r"\[ \text{The inverse of } y=x^3+1 \text{ is:} \]",
+        "options": {"A": r"\( y=\sqrt[3]{x-1} \)", "B": r"\( y=\sqrt[3]{x+1} \)", "C": r"\( y=(x-1)^3 \)", "D": r"\( y=x^{1/3}-1 \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_active", "topic": "Functions",
+        "rubric": "x = y^3+1 -> y^3=x-1 -> y=(x-1)^(1/3)."
+    },
+    {
+        "id": 83, "type": "short", "text": r"\[ \text{If } f(x)=\sqrt{x} \text{ and } g(x)=x-1, \text{ find the domain of } f(g(x)). \]",
+        "correct_answer": r"\[ [1, \infty) \]", "marks": 1, "exam_type": "tech_free", "topic": "Functions",
+        "rubric": "x-1 >= 0 -> x >= 1."
+    },
+    {
+        "id": 84, "type": "mcq", "text": r"\[ \text{The transformation } (x,y) \to (x+1, 2y) \text{ maps } y=x^2 \text{ to:} \]",
+        "options": {"A": r"\( y=2(x-1)^2 \)", "B": r"\( y=2(x+1)^2 \)", "C": r"\( y=\frac{1}{2}(x-1)^2 \)", "D": r"\( y=\frac{1}{2}(x+1)^2 \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_free", "topic": "Functions",
+        "rubric": "x' = x+1, y' = 2y. x=x'-1, y=y'/2. y'/2 = (x'-1)^2 -> y=2(x-1)^2."
+    },
+    {
+        "id": 85, "type": "short", "text": r"\[ \text{State the amplitude of } y = -3\cos(2x) + 1. \]",
+        "correct_answer": r"\[ 3 \]", "marks": 1, "exam_type": "tech_active", "topic": "Functions",
+        "rubric": "|-3| = 3."
+    },
+    {
+        "id": 86, "type": "mcq", "text": r"\[ \text{The range of } y = 2\sin(x) - 1 \text{ is:} \]",
+        "options": {"A": r"\( [-1, 1] \)", "B": r"\( [-3, 1] \)", "C": r"\( [-2, 2] \)", "D": r"\( [-1, 3] \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_free", "topic": "Functions",
+        "rubric": "[-2-1, 2-1] = [-3, 1]."
+    },
+    {
+        "id": 87, "type": "short", "text": r"\[ \text{State the equation of the horizontal asymptote of } y = 3e^{-x} + 2. \]",
+        "correct_answer": r"\[ y=2 \]", "marks": 1, "exam_type": "tech_free", "topic": "Functions",
+        "rubric": "As x -> inf, e^-x -> 0, y -> 2."
+    },
+    {
+        "id": 88, "type": "mcq", "text": r"\[ \text{The asymptotes of } y = \frac{1}{x-1} + 2 \text{ are:} \]",
+        "options": {"A": r"\( x=1, y=2 \)", "B": r"\( x=-1, y=2 \)", "C": r"\( x=1, y=-2 \)", "D": r"\( x=0, y=2 \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_active", "topic": "Functions",
+        "rubric": "Denom zero at x=1. Vertical shift 2."
+    },
+    {
+        "id": 89, "type": "short", "text": r"\[ \text{State the maximal domain of } y = \frac{1}{(x-2)^2}. \]",
+        "correct_answer": r"\[ R \setminus \{2\} \]", "marks": 1, "exam_type": "tech_free", "topic": "Functions",
+        "rubric": "All reals except where denom is zero."
+    },
+    {
+        "id": 90, "type": "mcq", "text": r"\[ \text{For } f(x) = \begin{cases} x, x<0 \\ x^2, x \ge 0 \end{cases}, \text{ the function is:} \]",
+        "options": {"A": r"\( \text{Continuous and differentiable everywhere} \)", "B": r"\( \text{Continuous but not differentiable at } x=0 \)", "C": r"\( \text{Discontinuous at } x=0 \)", "D": r"\( \text{Neither} \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_active", "topic": "Functions",
+        "rubric": "Cont: 0=0. Diff: LHD=1, RHD=0. Not diff."
+    },
+    {
+        "id": 91, "type": "short", "text": r"\[ \text{For what values of } k \text{ is } f(x)=kx+3 \text{ strictly increasing?} \]",
+        "correct_answer": r"\[ k > 0 \]", "marks": 1, "exam_type": "tech_free", "topic": "Functions",
+        "rubric": "Gradient must be positive."
+    },
+    {
+        "id": 92, "type": "mcq", "text": r"\[ \text{The function } f(x) = \cos(x) \text{ is:} \]",
+        "options": {"A": r"\( \text{Odd} \)", "B": r"\( \text{Even} \)", "C": r"\( \text{Neither} \)", "D": r"\( \text{One-to-one} \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_free", "topic": "Functions",
+        "rubric": "cos(-x) = cos(x)."
+    },
+    {
+        "id": 93, "type": "short", "text": r"\[ \text{Find the x-intercepts of } y = x^2 - 5x + 6. \]",
+        "correct_answer": r"\[ x=2, x=3 \]", "marks": 1, "exam_type": "tech_active", "topic": "Functions",
+        "rubric": "(x-2)(x-3)=0."
+    },
+    {
+        "id": 94, "type": "mcq", "text": r"\[ \text{The period of } y = \tan(2x) \text{ is:} \]",
+        "options": {"A": r"\( \pi \)", "B": r"\( 2\pi \)", "C": r"\( \pi/2 \)", "D": r"\( \pi/4 \)"},
+        "correct_answer": "C", "marks": 1, "exam_type": "tech_active", "topic": "Functions",
+        "rubric": "pi/n = pi/2."
+    },
+    {
+        "id": 95, "type": "short", "text": r"\[ \text{Sketch } y = |x-1|. \text{ The minimum value is:} \]",
+        "correct_answer": r"\[ 0 \]", "marks": 1, "exam_type": "tech_free", "topic": "Functions",
+        "rubric": "Vertex at (1,0)."
+    },
+
 ]
 
 def clean_vcaa_question_chunk(raw_chunk):
@@ -829,13 +1167,13 @@ def get_backup_question(topic, exam_type):
     Returns a reliable backup question from the hardcoded list.
     """
     # Filter candidates
-    candidates = [q for q in BACKUP_METHODS_QUESTIONS if q.get('topic') == topic and q.get('exam_type') == exam_type]
+    candidates = [q for q in CURATED_QUESTION_BANK if q.get('topic') == topic and q.get('exam_type') == exam_type]
     if not candidates and topic != 'All':
          # Relax exam type
-         candidates = [q for q in BACKUP_METHODS_QUESTIONS if q.get('topic') == topic]
+         candidates = [q for q in CURATED_QUESTION_BANK if q.get('topic') == topic]
     if not candidates:
          # Fallback to any
-         candidates = BACKUP_METHODS_QUESTIONS
+         candidates = CURATED_QUESTION_BANK
     
     import random
     if not candidates:
@@ -898,8 +1236,9 @@ def validate_and_correct_latex(text):
         return None
     return text
 
-def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
+def generate_with_retry(topic, exam_type, max_attempts=2, difficulty="medium"):
     """
+    Layer 1: AI Generation with Retry.
     Generates a new, polished question using AI + VCAA source material.
     Replaces the old extraction logic with an infinite generation engine.
     """
@@ -984,8 +1323,8 @@ def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
     """
 
     try:
-        # Retry loop for validation (max 1 retry)
-        for attempt in range(2):
+        # Retry loop for validation
+        for attempt in range(max_attempts):
             completion = client.chat.completions.create(
                 messages=[{"role": "user", "content": prompt}],
                 model=GROQ_MODEL,
@@ -1015,23 +1354,20 @@ def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
             
             if q_text is None or a_text is None:
                 logging.warning(f"AI Output failed Structural LaTeX validation (Attempt {attempt+1}). Regenerating...")
-                if attempt == 0:
+                if attempt < max_attempts - 1:
                      prompt += "\n\nSYSTEM NOTE: Your previous response had mismatched LaTeX delimiters. Please check your \\( and \\) pairs."
                      continue
                 else:
-                     logging.error("ERROR: AI generated broken LaTeX structure. Using backup question.")
-                     return get_backup_question(topic, exam_type)
+                     return None # Let the caller handle fallback
 
             # Stage 3: Final Validation & Fallback
             if not validate_latex(q_text) or not validate_latex(a_text):
                 logging.warning(f"AI Output failed LaTeX validation (Attempt {attempt+1}). Regenerating...")
-                if attempt == 0:
-                     prompt += "\n\nSYSTEM NOTE: Your previous response failed validation. Please ensure ALL math is wrapped in \\(...\\) or \\[...\\]."
+                if attempt < max_attempts - 1:
+                     prompt += "\n\n**IMPORTANT:** Ensure the LaTeX is syntactically perfect. Every `\\(` must be followed by a valid variable, number, or function, not an operator like `+` or `\\cdot` alone."
                      continue
                 else:
-                    # Severe Error - Use Backup
-                    logging.error("ERROR: AI generated non-LaTeX output. Using backup question.")
-                    return get_backup_question(topic, exam_type)
+                    return None # Let the caller handle fallback
                 
             generated_id = hashlib.md5(q_text.encode('utf-8')).hexdigest()
             
@@ -1060,50 +1396,42 @@ def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
         logging.error(f"AI Generation Error: {e}")
         return None
 
-def _next_question_id(sess):
+def get_next_question(topic, exam_type, used_ids):
     """
-    Selects the next question object.
+    Layer 3: Intelligent Fallback Logic.
+    Decides the next question source based on availability.
     Returns: (question_obj, is_fallback)
     """
-    exam_type = sess.get('exam_type')
-    topic = sess.get('topic')
-    asked = sess.get('questions_asked', [])
-    
-    # 1. Try AI Generation from VCAA Source
-    # We generate a fresh question based on VCAA content.
-    fetched_q = generate_question_from_vcaa(topic, exam_type)
-    
-    if fetched_q and fetched_q['id'] not in asked:
-        return fetched_q, False
+    # Step 1: Try AI with retry
+    ai_question = generate_with_retry(topic, exam_type)
+    if ai_question and ai_question['id'] not in used_ids:
+        return ai_question, False
 
-    # 2. Fallback: Use Backup List (Strict Filter)
-    strict_candidates = []
-    for q in BACKUP_METHODS_QUESTIONS:
-        if exam_type and q.get('exam_type') != exam_type:
-            continue
-        if topic and topic != 'All' and q.get('topic') != topic:
-            continue
-        strict_candidates.append(q)
-    
-    # Filter out already asked (handle int/string ID mismatch by checking both)
-    available_strict = [q for q in strict_candidates if q['id'] not in asked and str(q['id']) not in asked]
-    
-    if available_strict:
-        return random.choice(available_strict), True
+    # Step 2: Filter CURATED_QUESTION_BANK for topic & exam_type
+    eligible = [q for q in CURATED_QUESTION_BANK 
+                if q.get('topic') == topic and q.get('exam_type') == exam_type 
+                and q['id'] not in used_ids and str(q['id']) not in used_ids]
+    if eligible:
+        return random.choice(eligible), True
 
-    # 3. Deep Fallback: Backup List (Ignore Topic)
-    if topic and topic != 'All':
-        fallback_candidates = []
-        for q in BACKUP_METHODS_QUESTIONS:
-             if exam_type and q.get('exam_type') != exam_type:
-                 continue
-             fallback_candidates.append(q)
-        
-        available_fallback = [q for q in fallback_candidates if q['id'] not in asked and str(q['id']) not in asked]
-        
-        if available_fallback:
-            return random.choice(available_fallback), True
-            
+    # Step 3: Expand to same exam_type, different topic
+    expanded = [q for q in CURATED_QUESTION_BANK 
+                if q.get('exam_type') == exam_type 
+                and q['id'] not in used_ids and str(q['id']) not in used_ids]
+    if expanded:
+        # Pass a flag to show a UI note: "Expanding to related topics."
+        return random.choice(expanded), True
+
+    # Step 4: Ultimate fallback (should rarely hit)
+    # Just grab any valid question, even if topic/type mismatch, prioritizing unused
+    final_pool = [q for q in CURATED_QUESTION_BANK if q['id'] not in used_ids and str(q['id']) not in used_ids]
+    if final_pool:
+         return random.choice(final_pool), True
+         
+    # If absolutely everything is used, recycle a random one
+    if CURATED_QUESTION_BANK:
+         return random.choice(CURATED_QUESTION_BANK), True
+         
     return None, False
 
 def _find_available_port(start_port=5000, max_attempts=10):
@@ -1182,7 +1510,7 @@ def methods_practice():
             # Try to get from session data first, then backup list
             question = sess.get('current_question_data')
             if not question or question.get('id') != q_id:
-                question = next((q for q in BACKUP_METHODS_QUESTIONS if q['id'] == q_id), None)
+                question = next((q for q in CURATED_QUESTION_BANK if q['id'] == q_id), None)
             
             limit = (question.get('marks', 1) * 90) if question else 300
             sess['timer_expires_at'] = time.time() + limit
@@ -1199,8 +1527,7 @@ def methods_practice():
             # Quiz Complete
             return render_template("methods_practice.html", quiz_complete=True, score=len(sess.get('correctly_answered', [])), total=total_q)
 
-        next_q_tuple = _next_question_id(sess)
-        next_q, is_fallback = next_q_tuple if next_q_tuple else (None, False)
+        next_q, is_fallback = get_next_question(sess.get('topic'), sess.get('exam_type'), sess.get('questions_asked', []))
         
         if next_q is None:
              # Check if this was the very first attempt (no questions asked yet)
@@ -1231,7 +1558,7 @@ def methods_practice():
     q_id = sess.get('current_q_id')
     question = sess.get('current_question_data')
     if not question or question.get('id') != q_id:
-        question = next((q for q in BACKUP_METHODS_QUESTIONS if q['id'] == q_id), None)
+        question = next((q for q in CURATED_QUESTION_BANK if q['id'] == q_id), None)
     
     if not question:
         # Fallback reset
