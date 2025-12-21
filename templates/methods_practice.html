@@ -124,7 +124,7 @@
 
   <div class="quiz-status">
     <span><strong>Topic:</strong> {{ session.methods_topic }}</span>
-    <span><strong>Progress:</strong> Question {{ current_index }} of {{ total_questions }}</span>
+    <span><strong>Progress:</strong> Question {{ current_q_number }} of {{ total_questions }}</span>
     <span>
       <strong>Mode:</strong> 
       {% if timed_on %}
@@ -147,7 +147,7 @@
 
   <div class="question-card">
     <div class="question-meta">
-      <span>Question {{ question.id }}</span>
+      <span>Question {{ current_q_number }} of {{ total_questions }}</span>
       <span>{{ "SHORT ANSWER" if question.type|lower == 'short' else "MULTIPLE CHOICE" }}</span>
       <span>{{ question.marks }} Marks</span>
     </div>
@@ -256,7 +256,13 @@
   }
 
   // MathJax
-  if (window.MathJax && window.MathJax.typeset) { window.MathJax.typeset(); }
+  if (window.MathJax) { 
+      if (window.MathJax.typesetPromise) {
+          window.MathJax.typesetPromise();
+      } else if (window.MathJax.typeset) {
+          window.MathJax.typeset();
+      }
+  }
 
   // Modal Logic
   const exitBtn = document.getElementById('btn-exit-trigger');
