@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}My Questions{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 2rem; max-width: 900px; margin: 0 auto;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h1>Question Review Hub</h1>
+        <a href="{{ url_for('my_progress') }}" style="color: var(--text); text-decoration: none; border: 1px solid var(--border); padding: 8px 16px; border-radius: 8px; transition: background 0.2s;">&larr; Back to Progress</a>
+    </div>
+
+    {% for attempt in attempts %}
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow);">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+            <span style="font-weight: bold; color: var(--muted); font-size: 0.9rem;">{{ attempt.topic }} • {{ attempt.exam_type }}</span>
+            <span style="color: var(--muted); font-size: 0.9rem;">{{ attempt.created_at }}</span>
+        </div>
+        
+        <div style="margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.6;">
+            <!-- Render question text. Assuming it might have LaTeX -->
+            {{ attempt.question_text }}
+        </div>
+        
+        <div style="background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid var(--border);">
+            <p style="margin: 0.5rem 0;"><strong>Your Answer:</strong> {{ attempt.user_answer }}</p>
+            <p style="margin: 0.5rem 0;"><strong>Outcome:</strong> 
+                {% if attempt.correct %}
+                <span style="color: #22c55e; font-weight: bold;">Correct</span>
+                {% else %}
+                <span style="color: #ef4444; font-weight: bold;">Incorrect</span>
+                {% endif %}
+            </p>
+            {% if attempt.feedback %}
+            <p style="margin: 0.5rem 0; border-top: 1px solid var(--border); padding-top: 0.5rem; margin-top: 0.5rem;">
+                <strong>Feedback:</strong> <span style="color: var(--text);">{{ attempt.feedback }}</span>
+            </p>
+            {% endif %}
+        </div>
+        
+        <div style="text-align: right;">
+            <a href="{{ url_for('review_question', question_id=attempt.question_id) }}" style="display: inline-block; background: var(--primary); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 500;">Retry Question</a>
+        </div>
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 3rem; color: var(--muted);">
+        <p>No questions attempted in this session yet.</p>
+        <a href="{{ url_for('methods_setup') }}" style="color: var(--primary);">Start a Quiz</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
