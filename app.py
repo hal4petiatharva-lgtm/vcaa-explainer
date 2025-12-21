@@ -90,6 +90,23 @@ def cleanup_old_sessions(days=90):
     except Exception as e:
         logging.error(f"Cleanup failed: {e}")
 
+
+
+load_dotenv()
+
+# Load configuration before using it to initialize clients.
+# This ensures environment values are available when constructing SDK clients.
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+GROQ_MODEL = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
+
+# Initialize Groq client only if the key is present.
+client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
+
+# Create Flask app after configuration/client setup.
+app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY", "dev_key_123")
+CORS(app)
+
 @app.before_request
 def manage_anonymous_session():
     """
@@ -149,21 +166,6 @@ def set_tracker_cookie(response):
             samesite='Lax'
         )
     return response
-
-load_dotenv()
-
-# Load configuration before using it to initialize clients.
-# This ensures environment values are available when constructing SDK clients.
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
-GROQ_MODEL = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
-
-# Initialize Groq client only if the key is present.
-client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
-
-# Create Flask app after configuration/client setup.
-app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY", "dev_key_123")
-CORS(app)
 
 logging.basicConfig(level=logging.INFO)
 if client is None:
@@ -1324,7 +1326,7 @@ def normalize_latex_delimiters(text):
     
     return text
 
-MATH_FORMATTING_RULES = """
+MATH_FORMATTING_RULES = r"""
     MATHEMATICAL NOTATION RULES - YOU MUST OBEY FOR ALL TOPICS: 
     1.  **Scope:** ALL mathematical objects—variables, functions, equations, inequalities, expressions—MUST be placed within LaTeX delimiters: \( \) for inline, \[ \] for display. 
     2.  **Correct Examples:** You must write: 
@@ -1550,7 +1552,7 @@ def generate_with_retry(topic, exam_type, max_attempts=2, difficulty="medium"):
         "marks": 2,
         "question_type": "short" // or "mcq"
     }}
-    IMPORTANT: When writing LaTeX in the JSON string, you MUST double-escape backslashes (e.g., use "\\frac" for \frac, "\\[" for \[).
+    IMPORTANT: When writing LaTeX in the JSON string, you MUST double-escape backslashes (e.g., use "\\\\frac" for \\frac, "\\\\[" for \\[).
     VCAA SNIPPET FOR INSPIRATION: {selected_chunk_text}
     """
 
