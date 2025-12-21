@@ -833,6 +833,7 @@ def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
         "marks": 2,
         "question_type": "short" // or "mcq"
     }}
+    IMPORTANT: When writing LaTeX in the JSON string, you MUST double-escape backslashes (e.g., use "\\frac" for \frac, "\\[" for \[).
     VCAA SNIPPET FOR INSPIRATION: {selected_chunk_text}
     """
 
@@ -1068,7 +1069,7 @@ def methods_practice():
         # Speed Check logic
         if time_taken < 3.0 and not working and not sess.get('feedback') and not time_expired:
             speed_warning = True
-            return render_template("methods_practice.html", question=question, speed_warning=True, user_answer=user_answer, feedback=None, attempts=sess.get('attempts', 0), current_index=len(sess.get('questions_asked', [])) + 1, total_questions=sess.get('total_questions', 5))
+            return render_template("methods_practice.html", question=question, speed_warning=True, user_answer=user_answer, feedback=None, attempts=sess.get('attempts', 0), current_q_number=len(sess.get('questions_asked', [])) + 1, total_questions=sess.get('total_questions', 5))
 
         # Compute correctness locally
         is_correct = False
@@ -1136,10 +1137,10 @@ def methods_practice():
     show_try_again = bool(sess.get('feedback') and not sess['feedback'].get('is_correct') and sess.get('attempts', 0) < 3)
     
     asked_ids = sess.get('questions_asked', [])
-    current_idx = len(asked_ids)
+    current_q_number = len(asked_ids)
     if q_id not in asked_ids:
         # It's a new question being viewed, so it's the (len + 1)th question
-        current_idx += 1
+        current_q_number += 1
         
     return render_template(
         "methods_practice.html",
@@ -1151,7 +1152,7 @@ def methods_practice():
         timed_on=sess.get('timed_on', False),
         time_remaining=time_remaining,
         show_try_again=show_try_again,
-        current_index=current_idx,
+        current_q_number=current_q_number,
         total_questions=sess.get('total_questions', 5),
         fallback_warning=sess.get('fallback_mode', False)
     )
