@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Review Question{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 2rem; max-width: 800px; margin: 0 auto;">
+    <div style="margin-bottom: 1rem;">
+        <a href="{{ url_for('my_questions') }}" style="color: var(--primary); text-decoration: none;">&larr; Back to History</a>
+    </div>
+
+    <div style="background: var(--surface); padding: 2rem; border-radius: var(--radius-xl); border: 1px solid var(--border); box-shadow: var(--shadow);">
+        <h2 style="margin-top: 0; color: var(--text);">Review Question</h2>
+        
+        <div style="font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.6;">
+            {{ question.text }}
+        </div>
+        
+        {% if feedback %}
+        <div style="background: {% if feedback.is_correct %}rgba(34, 197, 94, 0.1){% else %}rgba(239, 68, 68, 0.1){% endif %}; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid {% if feedback.is_correct %}#22c55e{% else %}#ef4444{% endif %};">
+            <h3 style="margin-top: 0; color: {% if feedback.is_correct %}#22c55e{% else %}#ef4444{% endif %};">
+                {% if feedback.is_correct %}Correct!{% else %}Incorrect{% endif %}
+            </h3>
+            <p>{{ feedback.feedback }}</p>
+            {% if not feedback.is_correct %}
+            <p><strong>Correct Answer:</strong> {{ question.correct_answer }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <form method="POST">
+            {% if question.type == 'mcq' %}
+                <div style="display: grid; gap: 1rem;">
+                    {% set options = ['A', 'B', 'C', 'D', 'E'] %}
+                    {% for opt in options %}
+                    <label style="display: block; padding: 1rem; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; background: rgba(15, 23, 42, 0.3); transition: background 0.2s;">
+                        <input type="radio" name="choice" value="{{ opt }}" required {% if user_answer == opt %}checked{% endif %}>
+                        <span style="font-weight: bold; margin-left: 0.5rem;">{{ opt }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--muted);">Your Answer:</label>
+                    <input type="text" name="answer" value="{{ user_answer }}" style="width: 100%; padding: 1rem; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 1rem;" required>
+                </div>
+            {% endif %}
+            
+            <div style="margin-top: 2rem; text-align: right;">
+                <button type="submit" style="background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1rem; cursor: pointer; font-weight: 600;">Submit Answer</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
