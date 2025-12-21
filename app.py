@@ -784,6 +784,22 @@ def normalize_latex_delimiters(text):
     
     return text
 
+MATH_FORMATTING_RULES = """
+    MATHEMATICAL NOTATION RULES - YOU MUST OBEY FOR ALL TOPICS: 
+    1.  **Scope:** ALL mathematical objects—variables, functions, equations, inequalities, expressions—MUST be placed within LaTeX delimiters: \( \) for inline, \[ \] for display. 
+    2.  **Correct Examples:** You must write: 
+        *   "Consider the function \(f(x) = x^2 - 3\)."  [NOT `f(x) = x^2 - 3`] 
+        *   "Solve \(x^2 + 2x - 8 = 0\)."                [NOT `x^2 + 2x - 8 = 0`] 
+        *   "Find the derivative \(\frac{d}{dx}(e^{2x})\)." [NOT `d/dx(e^(2x))`] 
+    3.  **Forbidden Informal Notation:** NEVER output plain text containing: 
+        *   `x^2` or `x**2` outside of LaTeX. 
+        *   `f(x)=` without delimiters. 
+        *   `a/b` for fractions (use `\frac{a}{b}`). 
+        *   `*` for multiplication (use `\cdot` if needed). 
+    4.  **Goal:** The output should read like a formal VCE textbook or exam paper. 
+    5.  Your entire response must be valid JSON.
+"""
+
 def sanitize_latex(text):
     """
     Sanitizes LaTeX input by fixing common AI formatting errors.
@@ -791,10 +807,21 @@ def sanitize_latex(text):
     if not text:
         return ""
     import re
+    
+    # Rule 0: Fix Python-style powers (x**2 -> x^2)
+    text = text.replace("**", "^")
+
     # Rule 1: Fix unescaped functions. Ensure 'sin', 'cos', 'log', 'frac' etc. have a backslash.
-    text = re.sub(r'(?<!\\)\b(sin|cos|tan|log|ln|frac)(?![a-zA-Z])', r'\\\1', text)
-    # Rule 2: Enforce delimiters. Replace standalone f(x)= with \(f(x)=\).
-    text = re.sub(r'(?<!\\)(\b\w+\([^)]+\)\s*=)', r'\(\1', text)
+    text = re.sub(r'(?<!\\)\b(sin|cos|tan|log|ln|frac|sqrt|pi|theta)(?![a-zA-Z])', r'\\\1', text)
+    
+    # Rule 2: Auto-convert standalone x^2 to \(x^2\) (simple heuristic)
+    # Matches single letter, caret, digits, not preceded by backslash or letter
+    text = re.sub(r'(?<!\\|\w)([a-zA-Z]\^\d+)', r'\(\1\)', text)
+
+    # Rule 3: Enforce delimiters. Replace standalone f(x)=... with \(f(x)=...\).
+    # Heuristic: Capture "f(x)=stuff" until punctuation or newline
+    text = re.sub(r'(?<!\\)(\b[a-zA-Z]\([a-zA-Z0-9]+\)\s*=[^.,\n$]+)', r'\(\1\)', text)
+    
     return text
 
 def get_backup_question(topic, exam_type):
@@ -911,12 +938,7 @@ def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
     EXAM TYPE: {exam_type}
     DIFFICULTY: {difficulty}
     
-    FORMATTING RULES - YOU MUST OBEY: 
-    1.  ALL mathematics, without exception, must be written in LaTeX. 
-    2.  For inline math, use the correct LaTeX delimiters: \( YOUR_MATH_HERE \). 
-    3.  For display math, use: \[ YOUR_MATH_HERE \]. 
-    4.  **CRITICAL:** Never use plain parentheses like f(x)= for equations. Always write \(f(x)=\). 
-    5.  Your entire response must be valid JSON.
+    {MATH_FORMATTING_RULES}
     
     REQUIREMENTS:
     1.  The question must be clear, solvable, and include ALL necessary context and definitions.
@@ -1233,7 +1255,7 @@ def methods_practice():
                     f"Rubric: {question.get('rubric')}\n"
                     f"Marks Available: {question.get('marks', 1)}\n"
                     "Note: If correct, say 'Correct. [Reasoning]'. If incorrect, say 'Incorrect. [Hint/Reasoning]'. Explicitly mention marks awarded (e.g. 1/2).\n"
-                    "IMPORTANT: Provide feedback in clear English. Format ALL mathematical expressions, equations, calculations, and variables using LaTeX within \\( \\) for inline math. For example, write 'Calculate \\(g(3) = 3^2 + 2 \\cdot 3 = 15\\)', not 'g(3) = 3^2 + 2*3 = 15'."
+                    f"{MATH_FORMATTING_RULES.replace('5.  Your entire response must be valid JSON.', '')}"
                 )
                 
                 chat = client.chat.completions.create(
