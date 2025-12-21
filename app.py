@@ -636,92 +636,123 @@ BACKUP_METHODS_QUESTIONS = [
 
 def clean_vcaa_question_chunk(raw_chunk):
     """
-    Cleans raw VCAA database chunks to extract a single, formatted math question.
+    Extracts a complete question with context from a raw VCAA chunk.
+    Refined to include preceding context and stop at delimiters.
     """
     if not raw_chunk:
         return None
         
     text = raw_chunk.strip()
     
-    # 1. Remove Source Metadata (e.g. [Mathematical-Methods 2016])
+    # 1. Remove Metadata tags
     text = re.sub(r'\[.*?\]', '', text)
     
-    # 2. Extract Single Question
-    question_part = text
+    # 2. Identify Start Point (Prioritize complete questions)
+    # Look for "Question X", "Part a", or just the start
+    start_index = 0
     
-    # Strategy 1: Look for mark allocation at end of sentence
-    # Pattern: capture everything from start until a period/question mark that is followed by "X mark(s)"
-    # We use non-greedy matching for the content.
-    mark_match = re.search(r'(.*?[.?!])\s*\(?\d+\s*marks?\)?', text, re.IGNORECASE | re.DOTALL)
+    # Regex for explicit headers: "Question 1", "Part A", "SECTION B"
+    header_match = re.search(r'(?:Question\s+\d+|Part\s+[A-Za-z]|SECTION\s+[A-Z])', text, re.IGNORECASE)
     
-    if mark_match:
-        question_part = mark_match.group(1)
-    else:
-        # Strategy 2: Split on sub-question delimiters (a., b., i., ii.)
-        # Split on " a.", " b.", " i.", " ii." appearing at start of line or after space
-        delimiters = re.split(r'(?:^|\s)(?:[a-z]\.|[ivx]+\.)\s', text)
-        if len(delimiters) > 1:
-            # If the text started with "a.", the first element might be empty.
-            if not delimiters[0].strip() and len(delimiters) > 1:
-                question_part = delimiters[1]
-            else:
-                question_part = delimiters[0]
-        else:
-            # Strategy 3: First sentence with ? or take first line/segment before newline
-            if '?' in text:
-                question_part = text.split('?')[0] + '?'
-            else:
-                # Just take the first substantial line/sentence
-                # Split by newline and take first non-empty
-                lines = [l for l in text.split('\n') if l.strip()]
-                if lines:
-                    question_part = lines[0]
-
-    # 3. Clean the Extracted Question
-    cleaned = question_part.strip()
+    # Regex for sub-parts: "a.", "ii."
+    subpart_match = re.search(r'(?:^|\n)\s*(?:[a-z]\.|[ivx]+\.)\s+', text)
     
-    # Remove isolated mark phrases if they stuck around (e.g. inside the captured part)
-    cleaned = re.sub(r'\(?\d+\s*marks?\)?', '', cleaned, flags=re.IGNORECASE)
-    
-    # Remove leading/trailing non-content characters
-    # Remove "Question 3", "1.", "a." at the start
-    cleaned = re.sub(r'^\s*(?:Question\s+\d+|SECTION\s+[A-Z]|Part\s+[A-Z]|[0-9]+\.|[a-z]\.)\s*[:.]?\s*', '', cleaned, flags=re.IGNORECASE)
-    
-    cleaned = cleaned.strip()
-    
-    # Ensure starts with Capital
-    if cleaned and len(cleaned) > 0 and cleaned[0].islower():
-        cleaned = cleaned[0].upper() + cleaned[1:]
+    if header_match:
+        # Start from the header
+        start_index = header_match.start()
+    elif subpart_match:
+        # Found a sub-part. Scan BACKWARDS for context (up to 200 chars or 3 lines)
+        # Look for keywords: "Let", "Consider", "Given", "The function"
+        idx = subpart_match.start()
+        lookback_limit = max(0, idx - 300)
+        context_window = text[lookback_limit:idx]
         
-    # Ensure ends with punctuation if it doesn't already (and isn't ending in math block)
-    if cleaned and len(cleaned) > 0:
-        last_char = cleaned[-1]
-        if last_char not in ['.', '?', '!', ']', ')']:
-            cleaned += '.'
-            
-    # Final Validation: Must be > 20 chars to be a real question
-    if len(cleaned) < 20:
+        # Search for context keywords in the window
+        context_start = -1
+        keywords = ["Let ", "Consider ", "Given ", "The function ", "Suppose "]
+        
+        for kw in keywords:
+            # Find last occurrence of keyword before the subpart
+            kw_idx = context_window.rfind(kw)
+            if kw_idx != -1:
+                # If found, set context_start relative to text
+                found_abs = lookback_limit + kw_idx
+                if found_abs > context_start:
+                    context_start = found_abs
+        
+        if context_start != -1:
+            start_index = context_start
+        else:
+            # Fallback: if near start, take from 0. Else just take the subpart.
+            if idx < 100:
+                start_index = 0
+            else:
+                start_index = idx
+
+    # 3. Extract Candidate Block
+    candidate = text[start_index:]
+    
+    # 4. Find End Point (Stop at next delimiter)
+    # Delimiters: Next "Question", "SECTION", sub-part "b.", "iii.", or "marks"
+    
+    # We want to capture the CURRENT question/part.
+    # If we started at "Question 1", we stop at "Question 2".
+    # If we started at "a.", we stop at "b.".
+    
+    # Common delimiters indicating NEW question/part
+    delimiters = [
+        r'\n\s*Question\s+\d+',
+        r'\n\s*SECTION\s+[A-Z]',
+        r'\n\s*[a-z]\.\s',
+        r'\n\s*[ivx]+\.\s',
+        r'\(\d+\s*marks?\)' # Stop AFTER marks
+    ]
+    
+    cutoff_index = len(candidate)
+    
+    for delim in delimiters:
+        # Find first match of this delimiter
+        # We skip the very start of candidate if it matches the delimiter (e.g. we started with "a.")
+        match = re.search(delim, candidate[5:], re.IGNORECASE) # offset 5 to skip self
+        if match:
+            # If delimiter is "marks", we include it. Others we exclude.
+            if "marks" in delim:
+                end_pos = match.end() + 5 # +5 offset
+                if end_pos < cutoff_index:
+                    cutoff_index = end_pos
+            else:
+                start_pos = match.start() + 5
+                if start_pos < cutoff_index:
+                    cutoff_index = start_pos
+
+    final_text = candidate[:cutoff_index].strip()
+    
+    # Post-cleaning: Remove "Question X" header if it's just a label at the start?
+    # User requested bold text. We'll leave the header as part of the text but clean up spacing.
+    final_text = re.sub(r'\s+', ' ', final_text)
+    
+    if len(final_text) < 15:
         return None
         
-    return cleaned
+    return final_text
 
 def fetch_vcaa_question(topic, exam_type, exclude_ids=None):
     """
     Fetches a question from the VCAA database dynamically.
+    Returns a dictionary with formatted text for the frontend.
     """
     if not VCAA_AVAILABLE:
         return None
 
     query = f"{topic} {exam_type} Mathematical Methods"
     try:
-        # Search for chunks
         results = vce_db.search(query, k=15)
     except Exception:
         return None
     
     candidates = []
     for result in results:
-        # Handle tuple return (content, meta, score) or object
+        # Handle result extraction
         raw_text = ""
         if isinstance(result, tuple):
             item = result[0]
@@ -734,42 +765,42 @@ def fetch_vcaa_question(topic, exam_type, exclude_ids=None):
         else:
             raw_text = str(result)
             
-        # Clean the text using the new robust cleaner
         cleaned_text = clean_vcaa_question_chunk(raw_text)
         
         if not cleaned_text:
             continue
             
-        # Check if it looks like a math question (extra validation)
-        has_latex = r'\[' in cleaned_text or r'\(' in cleaned_text or '$' in cleaned_text
-        has_keywords = any(kw in cleaned_text for kw in ["Find", "Solve", "Calculate", "Evaluate", "Determine", "Show that", "State", "Explain"])
-        is_question = "?" in cleaned_text
+        # Extra validation: Math context
+        has_math = any(x in cleaned_text for x in ['[', '(', '$', 'Find', 'Solve', 'Calculate', 'Evaluate'])
+        if not has_math:
+            continue
+
+        q_id = hashlib.md5(cleaned_text.encode('utf-8')).hexdigest()
         
-        if has_latex or has_keywords or is_question:
-            # Create a hash ID based on the cleaned text
-            q_id = hashlib.md5(cleaned_text.encode('utf-8')).hexdigest()
-            
-            if exclude_ids and q_id in exclude_ids:
-                continue
-            
-            # Attempt to extract marks from raw text if possible, else default
-            marks = 2
-            mark_match = re.search(r'(\d+)\s*marks?', raw_text, re.IGNORECASE)
-            if mark_match:
-                marks = int(mark_match.group(1))
-            
-            # Construct the question dictionary
-            q = {
-                "id": q_id,
-                "type": "short", 
-                "text": cleaned_text,
-                "correct_answer": "[Answer from VCAA database]", 
-                "marks": marks, 
-                "exam_type": exam_type, 
-                "topic": topic,
-                "rubric": "Mark according to VCAA standards."
-            }
-            candidates.append(q)
+        if exclude_ids and q_id in exclude_ids:
+            continue
+        
+        # Extract marks
+        marks = 2
+        mark_match = re.search(r'(\d+)\s*marks?', raw_text, re.IGNORECASE)
+        if mark_match:
+            marks = int(mark_match.group(1))
+        
+        # Format text with Markdown bold as requested
+        # We also pass the raw clean text for AI analysis if needed, but display text is bolded.
+        display_text = f"**{cleaned_text}**"
+        
+        q = {
+            "id": q_id,
+            "type": "short", 
+            "text": display_text, # Will be rendered with |safe
+            "correct_answer": "[Answer from VCAA database]", 
+            "marks": marks, 
+            "exam_type": exam_type, 
+            "topic": topic,
+            "rubric": "Mark according to VCAA standards."
+        }
+        candidates.append(q)
             
     if candidates:
         return random.choice(candidates)
