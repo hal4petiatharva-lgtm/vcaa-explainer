@@ -784,6 +784,32 @@ def normalize_latex_delimiters(text):
     
     return text
 
+def validate_latex(text):
+    """
+    Validates that the text contains proper LaTeX delimiters for math.
+    Returns True if valid, False if it likely contains unformatted math.
+    """
+    if not text:
+        return True # Empty is valid in a trivial sense, or handled elsewhere
+        
+    # If text contains math-y symbols but no LaTeX delimiters, it's suspect.
+    # Common math symbols: =, +, *, /, ^, _, \, <, >
+    # We look for at least one pair of delimiters if these symbols are present.
+    
+    has_delimiters = r'\(' in text or r'\[' in text
+    
+    # If we have delimiters, we assume it's okay (we can't parse perfectly).
+    if has_delimiters:
+        return True
+        
+    # If no delimiters, check for suspicious math patterns
+    # e.g. "x=3", "f(x)", "3x^2"
+    suspicious_pattern = r'[a-zA-Z]\(x\)|[0-9]+[\+\-\=\^][0-9a-z]+|\b[xy]=\d+'
+    if re.search(suspicious_pattern, text):
+        return False
+        
+    return True
+
 def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
     """
     Generates a new, polished question using AI + VCAA source material.
@@ -835,9 +861,20 @@ def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
             selected_chunk_text = res.page_content if hasattr(res, 'page_content') else str(res)
 
     # 3. AI Generation Prompt
+    # Constraint for VCE Study Design
+    vce_constraint = (
+        "CRITICAL CONSTRAINT: You are writing for the VCE Mathematical Methods (2023-2027) study design. "
+        "You MUST ONLY use concepts, techniques, and terminology from this syllabus. "
+        "You MUST NEVER reference or use: integration by parts, partial fractions, complex numbers, "
+        "or any topic not explicitly listed in the official VCAA study design.\n"
+        "Key areas: differentiation, integration (polynomials, exp, trig), probability (discrete/continuous RVs, normal, binomial), "
+        "functions (transformations, polynomials, exp, log, circ), algebra."
+    )
+
     prompt = f"""
     ROLE: You are a VCE Mathematical Methods exam writer.
     TASK: Using the provided VCAA exam snippet ONLY as inspiration, generate ONE new, complete, and self-contained practice question.
+    {vce_constraint}
     TOPIC: {topic}
     EXAM TYPE: {exam_type}
     DIFFICULTY: {difficulty}
@@ -846,9 +883,11 @@ def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
     2.  Do NOT copy the snippet verbatim. Create a new variant, adjust numbers, or compose a new question on the same concept.
     3.  Write the question in clear, complete sentences. It is acceptable for the question text to span multiple lines for readability.
     4.  Format ALL mathematical expressions using LaTeX. 
+        - You MUST wrap ALL mathematical expressions, functions, variables, and equations in LaTeX delimiters.
         - Use \[ ... \] for display (block) equations.
         - Use \( ... \) for inline equations.
         - Do NOT use $ or $$ dollar sign delimiters.
+        - Never use plain parentheses for math (e.g., write \(f(x)\), not f(x)).
     5.  Provide the correct final answer in a clean, parsable format using LaTeX.
     6.  Output your response in this exact JSON format:
     {{
@@ -862,39 +901,61 @@ def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
     """
 
     try:
-        completion = client.chat.completions.create(
-            messages=[{"role": "user", "content": prompt}],
-            model=GROQ_MODEL,
-            response_format={"type": "json_object"},
-            temperature=0.7,
-            max_tokens=600
-        )
-        
-        response_content = completion.choices[0].message.content
-        data = json.loads(response_content)
-        
-        # 4. Process AI Response & Validate
-        if "question_text" not in data or "correct_answer" not in data:
-            logging.error("AI response missing required fields")
-            return None
+        # Retry loop for validation (max 1 retry)
+        for attempt in range(2):
+            completion = client.chat.completions.create(
+                messages=[{"role": "user", "content": prompt}],
+                model=GROQ_MODEL,
+                response_format={"type": "json_object"},
+                temperature=0.7,
+                max_tokens=600
+            )
             
-        generated_id = hashlib.md5(data["question_text"].encode('utf-8')).hexdigest()
+            response_content = completion.choices[0].message.content
+            data = json.loads(response_content)
+            
+            # 4. Process AI Response & Validate
+            if "question_text" not in data or "correct_answer" not in data:
+                logging.error("AI response missing required fields")
+                continue # Retry
+                
+            # Validate LaTeX
+            q_text = data["question_text"]
+            a_text = data["correct_answer"]
+            
+            if not validate_latex(q_text) or not validate_latex(a_text):
+                logging.warning(f"AI Output failed LaTeX validation (Attempt {attempt+1}). Regenerating...")
+                if attempt == 0:
+                     # Add a nudge to the prompt for the next attempt
+                     prompt += "\n\nSYSTEM NOTE: Your previous response failed validation. Please ensure ALL math is wrapped in \(...\) or \[...\]."
+                     continue
+                else:
+                    # Fallback to normalizing what we have if we fail twice, or just return None?
+                    # User said "regenerate or fallback".
+                    # We will try to normalize and proceed, hoping normalize_latex_delimiters fixes basic issues, 
+                    # but strictly speaking we might want to fail.
+                    # Let's trust normalize_latex_delimiters to do its best.
+                    pass 
+                
+            generated_id = hashlib.md5(q_text.encode('utf-8')).hexdigest()
+            
+            # Post-process to fix any stray dollar signs
+            final_text = normalize_latex_delimiters(q_text)
+            final_answer = normalize_latex_delimiters(a_text)
+            
+            # 5. Return Question Dictionary
+            return {
+                "id": generated_id,
+                "text": final_text,
+                "type": data.get("question_type", "short"),
+                "correct_answer": final_answer,
+                "marks": data.get("marks", 2),
+                "topic": topic,
+                "exam_type": exam_type,
+                "rubric": "Mark according to VCAA standards."
+            }
         
-        # Post-process to fix any stray dollar signs
-        final_text = normalize_latex_delimiters(data["question_text"])
-        final_answer = normalize_latex_delimiters(data["correct_answer"])
-        
-        # 5. Return Question Dictionary
-        return {
-            "id": generated_id,
-            "text": final_text,
-            "type": data.get("question_type", "short"),
-            "correct_answer": final_answer,
-            "marks": data.get("marks", 2),
-            "topic": topic,
-            "exam_type": exam_type,
-            "rubric": "Mark according to VCAA standards."
-        }
+        return None # Failed after retries
 
     except Exception as e:
         logging.error(f"AI Generation Error: {e}")
@@ -1120,8 +1181,17 @@ def methods_practice():
                 correct_val = question.get('correct_answer')
                 student_val = choice if question.get('type') == 'mcq' else user_answer
 
+                # Constraint for VCE Study Design
+                vce_constraint = (
+                    "CRITICAL CONSTRAINT: You are writing for the VCE Mathematical Methods (2023-2027) study design. "
+                    "You MUST ONLY use concepts, techniques, and terminology from this syllabus. "
+                    "You MUST NEVER reference or use: integration by parts, partial fractions, complex numbers, "
+                    "or any topic not explicitly listed in the official VCAA study design."
+                )
+
                 prompt = (
                     "You are a VCAA Mathematical Methods assessor. Provide brief feedback only.\n"
+                    f"{vce_constraint}\n"
                     f"Question (LaTeX): {question.get('text')}\n"
                     f"Correct Answer: {correct_val}\n"
                     f"Student Answer: {student_val}\n"
@@ -1130,13 +1200,28 @@ def methods_practice():
                     "Note: If correct, say 'Correct. [Reasoning]'. If incorrect, say 'Incorrect. [Hint/Reasoning]'. Explicitly mention marks awarded (e.g. 1/2).\n"
                     "IMPORTANT: Provide feedback in clear English. Format ALL mathematical expressions, equations, calculations, and variables using LaTeX within \\( \\) for inline math. For example, write 'Calculate \\(g(3) = 3^2 + 2 \\cdot 3 = 15\\)', not 'g(3) = 3^2 + 2*3 = 15'."
                 )
+                
                 chat = client.chat.completions.create(
                     messages=[{"role": "user", "content": prompt}],
                     model=GROQ_MODEL,
                     temperature=0.2,
-                    max_tokens=150
+                    max_tokens=500
                 )
                 ai_text = (chat.choices[0].message.content or "").strip()
+                
+                # Check for truncation (completeness check)
+                # If it doesn't end with typical punctuation, it might be truncated.
+                if ai_text and not ai_text.strip().endswith(('.', '!', '?', ']', ')', '}')):
+                     # Retry with nudge
+                    prompt += "\n\nSYSTEM NOTE: Your previous response was truncated. Please provide a complete, concise sentence."
+                    chat = client.chat.completions.create(
+                        messages=[{"role": "user", "content": prompt}],
+                        model=GROQ_MODEL,
+                        temperature=0.2,
+                        max_tokens=500
+                    )
+                    ai_text = (chat.choices[0].message.content or "").strip()
+
                 if ai_text:
                     computed_feedback["feedback"] = ai_text
             except Exception:
