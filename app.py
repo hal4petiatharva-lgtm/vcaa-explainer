@@ -1236,6 +1236,30 @@ def validate_and_correct_latex(text):
         return None
     return text
 
+def fix_latex_corruption(raw_text):
+    """
+    Fixes specific LaTeX corruption issues like form feed characters and nested delimiters.
+    """
+    if not raw_text:
+        return None
+        
+    # 1. Fix the Form Feed (\x0crac -> \frac)
+    if '\x0crac' in raw_text:
+        raw_text = raw_text.replace('\x0crac', r'\frac')
+        
+    # 2. Enforce Consistent Delimiters (Remove Nested Parentheses)
+    # Fix patterns like '(\( ... ))' or '(\( ... )' to '\( ... \)'
+    import re
+    raw_text = re.sub(r'\(\s*\\\(', r'\\(', raw_text)   # Remove '(' before '\('
+    raw_text = re.sub(r'\\\)\s*\)', r'\\)', raw_text)   # Remove ')' after '\)'
+    
+    # 3. Final Validation
+    # Ensure the string now has matching \( and \) counts.
+    if raw_text.count(r'\(') != raw_text.count(r'\)'):
+        return None
+        
+    return raw_text
+
 def generate_with_retry(topic, exam_type, max_attempts=2, difficulty="medium"):
     """
     Layer 1: AI Generation with Retry.
@@ -1340,8 +1364,16 @@ def generate_with_retry(topic, exam_type, max_attempts=2, difficulty="medium"):
             if "question_text" not in data or "correct_answer" not in data:
                 logging.error("AI response missing required fields")
                 continue # Retry
-                
-            q_text = data["question_text"]
+
+            # Fix LaTeX Corruption
+            cleaned_q = fix_latex_corruption(data["question_text"])
+            if cleaned_q is None:
+                 logging.warning(f"AI Output failed Corruption Check (Attempt {attempt+1}).")
+                 if attempt < max_attempts - 1:
+                     continue
+                 return None # Trigger fallback
+
+            q_text = cleaned_q
             a_text = data["correct_answer"]
             
             # Stage 2: Post-Processing Sanitization
