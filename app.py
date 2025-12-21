@@ -13,6 +13,38 @@ import random
 import time
 import json
 import hashlib
+import sqlite3
+import uuid
+
+def init_db():
+    conn = sqlite3.connect('vce_progress.db')
+    c = conn.cursor()
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS question_attempts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            session_id TEXT,
+            question_id TEXT,
+            topic TEXT,
+            exam_type TEXT,
+            correct BOOLEAN,
+            attempt_number INTEGER,
+            time_spent_seconds REAL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            user_answer TEXT,
+            feedback TEXT,
+            question_text TEXT
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+# Initialize DB on startup
+init_db()
+
+def get_db():
+    conn = sqlite3.connect('vce_progress.db')
+    conn.row_factory = sqlite3.Row
+    return conn
 
 load_dotenv()
 
@@ -1566,6 +1598,10 @@ def methods_setup():
         if not topic or not exam_type:
              return render_template("methods_setup.html", error="Please select both Topic and Exam Type.")
 
+        # Ensure session_id exists for tracking
+        if 'session_id' not in session:
+            session['session_id'] = str(uuid.uuid4())
+
         # Set flat keys as requested
         session['methods_topic'] = topic
         session['methods_exam_type'] = exam_type
@@ -1775,6 +1811,31 @@ def methods_practice():
 
         sess['feedback'] = computed_feedback
 
+        # Log attempt to DB
+        try:
+            conn = get_db()
+            cursor = conn.cursor()
+            cursor.execute('''
+                INSERT INTO question_attempts 
+                (session_id, question_id, topic, exam_type, correct, attempt_number, time_spent_seconds, user_answer, feedback, question_text)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                session.get('session_id'),
+                question['id'],
+                question.get('topic', 'Unknown'),
+                question.get('exam_type', 'Unknown'),
+                is_correct,
+                sess.get('attempts', 0) + 1,
+                time_taken,
+                user_answer,
+                computed_feedback.get('feedback', ''),
+                question.get('text', '')
+            ))
+            conn.commit()
+            conn.close()
+        except Exception as e:
+            logging.error(f"Failed to log attempt: {e}")
+
         sess['attempts'] = sess.get('attempts', 0) + 1
         sess['last_answer'] = user_answer
         if is_correct:
@@ -1815,6 +1876,180 @@ def methods_practice():
         total_questions=sess.get('total_questions', 5),
         fallback_warning=sess.get('fallback_mode', False)
     )
+
+@app.route("/my-progress")
+def my_progress():
+    if 'session_id' not in session:
+        return redirect(url_for('methods_setup'))
+    
+    conn = get_db()
+    
+    # Chart Data: Accuracy over time
+    chart_query = '''
+        SELECT DATE(created_at) as day, AVG(correct)*100 as accuracy 
+        FROM question_attempts 
+        WHERE session_id=? 
+        GROUP BY day 
+        ORDER BY day ASC
+    '''
+    chart_data = conn.execute(chart_query, (session['session_id'],)).fetchall()
+    
+    # Topic Breakdown
+    topic_query = '''
+        SELECT topic, AVG(correct)*100 as avg_score 
+        FROM question_attempts 
+        WHERE session_id=? 
+        GROUP BY topic
+    '''
+    topic_data = conn.execute(topic_query, (session['session_id'],)).fetchall()
+    conn.close()
+    
+    # Format for Chart.js
+    dates = [row['day'] for row in chart_data]
+    accuracies = [round(row['accuracy'], 1) for row in chart_data]
+    
+    topics = []
+    for row in topic_data:
+        topics.append({
+            'name': row['topic'],
+            'avg_score': round(row['avg_score'], 1),
+            'is_weak': row['avg_score'] < 60
+        })
+        
+    return render_template("my_progress.html", dates=dates, accuracies=accuracies, topics=topics)
+
+@app.route("/my-questions")
+def my_questions():
+    if 'session_id' not in session:
+        return redirect(url_for('methods_setup'))
+        
+    conn = get_db()
+    query = '''
+        SELECT * FROM question_attempts 
+        WHERE session_id=? 
+        ORDER BY created_at DESC
+    '''
+    attempts = conn.execute(query, (session['session_id'],)).fetchall()
+    conn.close()
+    
+    return render_template("my_questions.html", attempts=attempts)
+
+@app.route("/start-topic-quiz")
+def start_topic_quiz():
+    topic = request.args.get('topic')
+    if not topic:
+        return redirect(url_for('my_progress'))
+        
+    # Ensure session_id exists
+    if 'session_id' not in session:
+        session['session_id'] = str(uuid.uuid4())
+        
+    # Initialize a new practice session for this topic
+    session['methods_topic'] = topic
+    session['methods_exam_type'] = 'tech_active' # Default
+    session['methods_timed'] = False
+    session['total_questions'] = 5
+    
+    session['methods_session'] = {
+        "questions_asked": [],
+        "correctly_answered": [],
+        "timed_on": False,
+        "timer_expires_at": None,
+        "topic": topic,
+        "exam_type": 'tech_active',
+        "total_questions": 5,
+        "config_set": True,
+        "fallback_mode": False
+    }
+    return redirect(url_for('methods_practice'))
+
+@app.route("/review-question/<question_id>", methods=["GET", "POST"])
+def review_question(question_id):
+    # Find question
+    question = next((q for q in CURATED_QUESTION_BANK if str(q['id']) == str(question_id)), None)
+    if not question:
+        question = UNIVERSAL_DEFAULT_QUESTION.copy()
+        question['id'] = question_id 
+    
+    feedback = None
+    user_answer = ""
+    
+    if request.method == "POST":
+        user_answer = request.form.get('answer', '')
+        choice = request.form.get('choice', '')
+        
+        # Check correctness
+        is_correct = False
+        if question.get('type') == 'mcq':
+            is_correct = (choice.upper() == question.get('correct_answer'))
+        else:
+            is_correct = _is_equal(user_answer, question.get('correct_answer', ''))
+            
+        # Simplified Feedback for Review
+        computed_feedback = {
+            "mark": (question.get('marks', 1) if is_correct else 0),
+            "max_marks": question.get('marks', 1),
+            "is_correct": is_correct,
+            "feedback": ("Correct. Well done." if is_correct else "Incorrect. Review the method.")
+        }
+        
+        # Try to use AI if available
+        if client:
+             try:
+                correct_val = question.get('correct_answer')
+                student_val = choice if question.get('type') == 'mcq' else user_answer
+                prompt = (
+                    "You are a VCAA Mathematical Methods assessor. Provide brief feedback only.\n"
+                    f"Question: {question.get('text')}\n"
+                    f"Correct Answer: {correct_val}\n"
+                    f"Student Answer: {student_val}\n"
+                    f"Rubric: {question.get('rubric')}\n"
+                    "Provide 1 sentence of constructive feedback."
+                )
+                chat = client.chat.completions.create(
+                    messages=[{"role": "user", "content": prompt}],
+                    model=GROQ_MODEL,
+                    temperature=0.2,
+                    max_tokens=200
+                )
+                ai_text = (chat.choices[0].message.content or "").strip()
+                if ai_text:
+                    computed_feedback["feedback"] = ai_text
+             except:
+                pass
+
+        # Log attempt
+        try:
+            conn = get_db()
+            cursor = conn.cursor()
+            # Get max attempt number
+            prev = cursor.execute("SELECT MAX(attempt_number) FROM question_attempts WHERE session_id=? AND question_id=?", (session.get('session_id'), question_id)).fetchone()
+            next_attempt = (prev[0] if prev[0] else 0) + 1
+            
+            cursor.execute('''
+                INSERT INTO question_attempts 
+                (session_id, question_id, topic, exam_type, correct, attempt_number, time_spent_seconds, user_answer, feedback, question_text)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                session.get('session_id'),
+                question_id,
+                question.get('topic', 'Unknown'),
+                question.get('exam_type', 'Unknown'),
+                is_correct,
+                next_attempt,
+                0,
+                user_answer,
+                computed_feedback.get('feedback', ''),
+                question.get('text', '')
+            ))
+            conn.commit()
+            conn.close()
+        except Exception as e:
+            logging.error(e)
+            
+        feedback = computed_feedback
+        
+    return render_template("review_question.html", question=question, feedback=feedback, user_answer=user_answer)
 
 
 if __name__ == "__main__":
