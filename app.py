@@ -998,6 +998,36 @@ CURATED_QUESTION_BANK = [
         "rubric": "Vertex at (1,0)."
     },
 
+    # --- FINAL ADDITIONS (96-100) ---
+    {
+        "id": 96, "type": "short", "text": r"\[ \text{Solve for } x: 3^{2x} - 10 \cdot 3^x + 9 = 0. \]",
+        "correct_answer": r"\[ x=0, x=2 \]", "marks": 2, "exam_type": "tech_free", "topic": "Algebra",
+        "rubric": "Let u=3^x. u^2-10u+9=0 -> (u-9)(u-1)=0. 3^x=9 or 1."
+    },
+    {
+        "id": 97, "type": "mcq", "text": r"\[ \text{Using Newton's method for } x^3 + x - 1 = 0 \text{ with } x_0 = 1, \text{ the next estimate } x_1 \text{ is:} \]",
+        "options": {"A": r"\( 0.75 \)", "B": r"\( 0.68 \)", "C": r"\( 0.5 \)", "D": r"\( 1.2 \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_active", "topic": "Algebra",
+        "rubric": "f(1)=1, f'(1)=4. x1 = 1 - 1/4 = 0.75."
+    },
+    {
+        "id": 98, "type": "short", "text": r"\[ \text{For PDF } f(x) = 3x^2 \text{ on } [0,1], \text{ find } Pr(X > 0.5). \]",
+        "correct_answer": r"\[ 0.875 \]", "marks": 1, "exam_type": "tech_free", "topic": "Probability",
+        "rubric": "Integral from 0.5 to 1 of 3x^2 is [x^3] = 1 - 0.125 = 0.875."
+    },
+    {
+        "id": 99, "type": "mcq", "text": r"\[ \text{If } X \sim \text{Bi}(10, 0.3), \text{ then } Pr(X \ge 1) \text{ is equal to:} \]",
+        "options": {"A": r"\( 1 - 0.7^{10} \)", "B": r"\( 1 - 0.3^{10} \)", "C": r"\( 0.3 \)", "D": r"\( 0.7^{10} \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_active", "topic": "Probability",
+        "rubric": "1 - P(X=0) = 1 - (0.7)^10."
+    },
+    {
+        "id": 100, "type": "mcq", "text": r"\[ \text{The range of } f(x) = e^{-(x-1)^2} + 2 \text{ is:} \]",
+        "options": {"A": r"\( (2, 3] \)", "B": r"\( [2, 3] \)", "C": r"\( (2, 3) \)", "D": r"\( [2, \infty) \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_active", "topic": "Functions",
+        "rubric": "Max value at x=1 is e^0+2=3. As x->inf, approaches 2. Range (2, 3]."
+    },
+
 ]
 
 def clean_vcaa_question_chunk(raw_chunk):
