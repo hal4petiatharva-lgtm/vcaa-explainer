@@ -844,12 +844,13 @@ def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
     REQUIREMENTS:
     1.  The question must be clear, solvable, and include ALL necessary context and definitions. The student must not need to see any other questions.
     2.  Do NOT copy the snippet verbatim. Create a new variant, adjust numbers, or compose a new question on the same concept.
-    3.  Format ALL mathematical expressions using LaTeX. 
+    3.  Write the question in clear, complete sentences. It is acceptable for the question text to span multiple lines for readability.
+    4.  Format ALL mathematical expressions using LaTeX. 
         - Use \[ ... \] for display (block) equations.
         - Use \( ... \) for inline equations.
         - Do NOT use $ or $$ dollar sign delimiters.
-    4.  Provide the correct final answer in a clean, parsable format using LaTeX.
-    5.  Output your response in this exact JSON format:
+    5.  Provide the correct final answer in a clean, parsable format using LaTeX.
+    6.  Output your response in this exact JSON format:
     {{
         "question_text": "The full question text here, with LaTeX.",
         "correct_answer": "The LaTeX-formatted answer (e.g., \(x=3\)).",
