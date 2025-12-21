@@ -631,6 +631,34 @@ BACKUP_METHODS_QUESTIONS = [
         "options": {"A": r"\( 1 \)", "B": r"\( 2 \)", "C": r"\( 4 \)", "D": r"\( \pi \)"},
         "correct_answer": "C", "marks": 1, "exam_type": "tech_free", "topic": "Functions",
         "rubric": "2pi / (pi/2) = 4."
+    },
+    # --- NEW ROBUST QUESTIONS ---
+    {
+        "id": 31, "type": "short", "text": r"\[ \text{Find the derivative of } f(x) = x^2 e^{2x}. \]",
+        "correct_answer": r"\[ 2xe^{2x}(1+x) \]", "marks": 2, "exam_type": "tech_free", "topic": "Calculus",
+        "rubric": "Product rule: u=x^2, v=e^{2x}. f' = 2x e^{2x} + x^2 (2e^{2x}) = 2xe^{2x}(1+x)."
+    },
+    {
+        "id": 32, "type": "mcq", "text": r"\[ \text{The average value of } f(x) = \sin(x) \text{ over } [0, \pi] \text{ is:} \]",
+        "options": {"A": r"\( 0 \)", "B": r"\( \frac{2}{\pi} \)", "C": r"\( \frac{1}{\pi} \)", "D": r"\( 2 \)"},
+        "correct_answer": "B", "marks": 1, "exam_type": "tech_active", "topic": "Calculus",
+        "rubric": "Avg = (1/pi) * Int(sin x) from 0 to pi = (1/pi) * [-cos x] = (1/pi) * (1 - (-1)) = 2/pi."
+    },
+    {
+        "id": 33, "type": "short", "text": r"\[ \text{Solve } 2\cos(x) = -\sqrt{3} \text{ for } x \in [0, 2\pi]. \]",
+        "correct_answer": r"\[ x = \frac{5\pi}{6}, \frac{7\pi}{6} \]", "marks": 2, "exam_type": "tech_free", "topic": "Functions",
+        "rubric": "cos(x) = -sqrt(3)/2. Ref angle pi/6. Quad 2 & 3. x = 5pi/6, 7pi/6."
+    },
+    {
+        "id": 34, "type": "mcq", "text": r"\[ \text{If } X \sim N(20, 4) \text{ and } Z \sim N(0,1), \text{ then } P(X < 23) \text{ is equal to:} \]",
+        "options": {"A": r"\( P(Z < 1.5) \)", "B": r"\( P(Z < 0.75) \)", "C": r"\( P(Z < 3) \)", "D": r"\( P(Z < -1.5) \)"},
+        "correct_answer": "A", "marks": 1, "exam_type": "tech_active", "topic": "Probability",
+        "rubric": "Z = (23-20)/2 = 3/2 = 1.5."
+    },
+    {
+        "id": 35, "type": "short", "text": r"\[ \text{Find the coordinates of the turning point of } y = 2(x-1)^2 + 3. \]",
+        "correct_answer": r"\[ (1, 3) \]", "marks": 1, "exam_type": "tech_free", "topic": "Functions",
+        "rubric": "Vertex form a(x-h)^2 + k. Vertex is (h, k) = (1, 3)."
     }
 ]
 
@@ -736,76 +764,112 @@ def clean_vcaa_question_chunk(raw_chunk):
         
     return final_text
 
-def fetch_vcaa_question(topic, exam_type, exclude_ids=None):
+def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
     """
-    Fetches a question from the VCAA database dynamically.
-    Returns a dictionary with formatted text for the frontend.
+    Generates a new, polished question using AI + VCAA source material.
+    Replaces the old extraction logic with an infinite generation engine.
     """
-    if not VCAA_AVAILABLE:
+    if not VCAA_AVAILABLE or not client:
         return None
 
-    query = f"{topic} {exam_type} Mathematical Methods"
+    # 1. Fetches Source Material
     try:
-        results = vce_db.search(query, k=15)
-    except Exception:
+        # Search for relevant content
+        query = f"{topic} {exam_type} Mathematical Methods"
+        results = vce_db.search(query, k=5)
+    except Exception as e:
+        logging.error(f"VCAA DB Search Error: {e}")
         return None
-    
-    candidates = []
-    for result in results:
-        # Handle result extraction
+
+    if not results:
+        return None
+
+    # 2. Select Best Chunk
+    selected_chunk_text = ""
+    # Prefer chunks that look like they have math content
+    for res in results:
         raw_text = ""
-        if isinstance(result, tuple):
-            item = result[0]
+        if isinstance(res, tuple):
+            item = res[0]
             if hasattr(item, 'page_content'):
                 raw_text = item.page_content
             else:
                 raw_text = str(item)
-        elif hasattr(result, 'page_content'):
-            raw_text = result.page_content
+        elif hasattr(res, 'page_content'):
+            raw_text = res.page_content
         else:
-            raw_text = str(result)
+            raw_text = str(res)
             
-        cleaned_text = clean_vcaa_question_chunk(raw_text)
-        
-        if not cleaned_text:
-            continue
+        # Basic check for math context
+        if len(raw_text) > 40 and any(c in raw_text for c in ['=', 'Find', 'Solve', 'Calculate', 'Given', 'Let']):
+            selected_chunk_text = raw_text
+            break
             
-        # Extra validation: Math context
-        has_math = any(x in cleaned_text for x in ['[', '(', '$', 'Find', 'Solve', 'Calculate', 'Evaluate'])
-        if not has_math:
-            continue
+    if not selected_chunk_text:
+        # Fallback to first result if no "perfect" math chunk found
+        res = results[0]
+        if isinstance(res, tuple):
+            item = res[0]
+            selected_chunk_text = item.page_content if hasattr(item, 'page_content') else str(item)
+        else:
+            selected_chunk_text = res.page_content if hasattr(res, 'page_content') else str(res)
 
-        q_id = hashlib.md5(cleaned_text.encode('utf-8')).hexdigest()
+    # 3. AI Generation Prompt
+    prompt = f"""
+    ROLE: You are a VCE Mathematical Methods exam writer.
+    TASK: Using the provided VCAA exam snippet ONLY as inspiration, generate ONE new, complete, and self-contained practice question.
+    TOPIC: {topic}
+    EXAM TYPE: {exam_type}
+    DIFFICULTY: {difficulty}
+    REQUIREMENTS:
+    1.  The question must be clear, solvable, and include ALL necessary context and definitions. The student must not need to see any other questions.
+    2.  Do NOT copy the snippet verbatim. Create a new variant, adjust numbers, or compose a new question on the same concept.
+    3.  Format ALL mathematical expressions using LaTeX within \[ \] for display equations or \( \) for inline.
+    4.  Provide the correct final answer in a clean, parsable format using LaTeX.
+    5.  Output your response in this exact JSON format:
+    {{
+        "question_text": "The full question text here, with LaTeX.",
+        "correct_answer": "The LaTeX-formatted answer (e.g., \(x=3\)).",
+        "marks": 2,
+        "question_type": "short" // or "mcq"
+    }}
+    VCAA SNIPPET FOR INSPIRATION: {selected_chunk_text}
+    """
+
+    try:
+        completion = client.chat.completions.create(
+            messages=[{"role": "user", "content": prompt}],
+            model=GROQ_MODEL,
+            response_format={"type": "json_object"},
+            temperature=0.7,
+            max_tokens=600
+        )
         
-        if exclude_ids and q_id in exclude_ids:
-            continue
+        response_content = completion.choices[0].message.content
+        data = json.loads(response_content)
         
-        # Extract marks
-        marks = 2
-        mark_match = re.search(r'(\d+)\s*marks?', raw_text, re.IGNORECASE)
-        if mark_match:
-            marks = int(mark_match.group(1))
+        # 4. Process AI Response & Validate
+        if "question_text" not in data or "correct_answer" not in data:
+            logging.error("AI response missing required fields")
+            return None
+            
+        generated_id = hashlib.md5(data["question_text"].encode('utf-8')).hexdigest()
         
-        # Format text with Markdown bold as requested
-        # We also pass the raw clean text for AI analysis if needed, but display text is bolded.
-        display_text = f"**{cleaned_text}**"
-        
-        q = {
-            "id": q_id,
-            "type": "short", 
-            "text": display_text, # Will be rendered with |safe
-            "correct_answer": "[Answer from VCAA database]", 
-            "marks": marks, 
-            "exam_type": exam_type, 
+        # 5. Return Question Dictionary
+        return {
+            "id": generated_id,
+            "text": data["question_text"],
+            "type": data.get("question_type", "short"),
+            "correct_answer": data["correct_answer"],
+            "marks": data.get("marks", 2),
             "topic": topic,
+            "exam_type": exam_type,
             "rubric": "Mark according to VCAA standards."
         }
-        candidates.append(q)
-            
-    if candidates:
-        return random.choice(candidates)
-    
-    return None
+
+    except Exception as e:
+        logging.error(f"AI Generation Error: {e}")
+        return None
 
 def _next_question_id(sess):
     """
@@ -816,9 +880,11 @@ def _next_question_id(sess):
     topic = sess.get('topic')
     asked = sess.get('questions_asked', [])
     
-    # 1. Try Dynamic Fetch from VCAA DB
-    fetched_q = fetch_vcaa_question(topic, exam_type, exclude_ids=asked)
-    if fetched_q:
+    # 1. Try AI Generation from VCAA Source
+    # We generate a fresh question based on VCAA content.
+    fetched_q = generate_question_from_vcaa(topic, exam_type)
+    
+    if fetched_q and fetched_q['id'] not in asked:
         return fetched_q, False
 
     # 2. Fallback: Use Backup List (Strict Filter)
