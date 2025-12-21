@@ -1030,6 +1030,42 @@ CURATED_QUESTION_BANK = [
 
 ]
 
+UNIVERSAL_DEFAULT_QUESTION = {
+    "id": "universal_backup",
+    "type": "short",
+    "text": r"\[ \text{Find the derivative of } f(x) = x^2. \]",
+    "correct_answer": r"\[ 2x \]",
+    "marks": 1,
+    "topic": "Calculus",
+    "exam_type": "tech_free",
+    "rubric": "Power rule: nx^{n-1}."
+}
+
+def is_question_sane(text):
+    """
+    Aggressive validation to catch broken AI outputs like '( cdot' or empty math.
+    """
+    if not text:
+        return False
+        
+    # List of patterns that indicate a nonsensical/incomplete question
+    invalid_patterns = [
+        r'\(\s*\\cdot',      # Catches '( cdot' and '( \cdot'
+        r'Consider the function \(\.', # Catches 'Consider the function (.'
+        r'\\\(.*?\\\)\s*\)',  # Catches nested '\( ... \)' (e.g. \(\(x\)\)) which breaks rendering
+    ]
+    
+    for pattern in invalid_patterns:
+        if re.search(pattern, text):
+            return False
+            
+    # Additionally, ensure there is at least one complete LaTeX expression
+    # Must contain \( ... \) with some content inside
+    if not re.search(r'\\\(.*?[a-zA-Z0-9].*?\\\)', text) and not re.search(r'\\\[.*?[a-zA-Z0-9].*?\\\]', text):
+        return False
+        
+    return True
+
 def clean_vcaa_question_chunk(raw_chunk):
     """
     Extracts a complete question with context from a raw VCAA chunk.
@@ -1195,20 +1231,26 @@ def sanitize_latex(text):
 def get_backup_question(topic, exam_type):
     """
     Returns a reliable backup question from the hardcoded list.
+    Guarantees a return value by falling back to a universal default.
     """
-    # Filter candidates
+    # 1. Filter candidates
     candidates = [q for q in CURATED_QUESTION_BANK if q.get('topic') == topic and q.get('exam_type') == exam_type]
+    
+    # 2. Relax constraints if needed
     if not candidates and topic != 'All':
          # Relax exam type
          candidates = [q for q in CURATED_QUESTION_BANK if q.get('topic') == topic]
+    
     if not candidates:
          # Fallback to any
          candidates = CURATED_QUESTION_BANK
     
-    import random
+    # 3. Final Check & Universal Default
     if not candidates:
-        return None
-    # Return a copy to avoid mutation issues if any
+        logging.error("ERROR: Backup bank empty. Using universal default.")
+        return UNIVERSAL_DEFAULT_QUESTION.copy()
+
+    # Return a copy to avoid mutation issues
     return random.choice(candidates).copy()
 
 def validate_latex(text):
@@ -1394,6 +1436,12 @@ def generate_with_retry(topic, exam_type, max_attempts=2, difficulty="medium"):
             if "question_text" not in data or "correct_answer" not in data:
                 logging.error("AI response missing required fields")
                 continue # Retry
+
+            # Step 1: Strict Sane Check (User Requirement)
+            # If the AI output is fundamentally broken, do not retry—fail fast to the backup.
+            if not is_question_sane(data["question_text"]):
+                logging.warning(f"AI Output failed Sane Check (Attempt {attempt+1}). IMMEDIATELY using backup.")
+                return get_backup_question(topic, exam_type)
 
             # Fix LaTeX Corruption
             cleaned_q = fix_latex_corruption(data["question_text"])
