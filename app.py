@@ -15,10 +15,24 @@ import json
 import hashlib
 import sqlite3
 import uuid
+from flask import g, make_response
 
 def init_db():
     conn = sqlite3.connect('vce_progress.db')
     c = conn.cursor()
+    
+    # 1. Anonymous Sessions Table
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS anonymous_sessions (
+            id TEXT PRIMARY KEY,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            last_activity DATETIME DEFAULT CURRENT_TIMESTAMP,
+            data_migrated BOOLEAN DEFAULT FALSE
+        )
+    ''')
+    
+    # 2. Question Attempts Table
+    # Ensure session_id is a TEXT column to match anonymous_sessions.id
     c.execute('''
         CREATE TABLE IF NOT EXISTS question_attempts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -45,6 +59,96 @@ def get_db():
     conn = sqlite3.connect('vce_progress.db')
     conn.row_factory = sqlite3.Row
     return conn
+
+def cleanup_old_sessions(days=90):
+    """
+    Deletes anonymous sessions and their data inactive for > `days`.
+    Call this periodically (e.g. via a cron job or admin endpoint).
+    """
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        
+        # Calculate cutoff date
+        cursor.execute("SELECT datetime('now', ?)", (f'-{days} days',))
+        cutoff = cursor.fetchone()[0]
+        
+        # Delete attempts linked to old sessions
+        cursor.execute('''
+            DELETE FROM question_attempts 
+            WHERE session_id IN (
+                SELECT id FROM anonymous_sessions WHERE last_activity < ?
+            )
+        ''', (cutoff,))
+        
+        # Delete the sessions themselves
+        cursor.execute("DELETE FROM anonymous_sessions WHERE last_activity < ?", (cutoff,))
+        
+        conn.commit()
+        conn.close()
+        logging.info(f"Cleaned up sessions inactive since {cutoff}")
+    except Exception as e:
+        logging.error(f"Cleanup failed: {e}")
+
+@app.before_request
+def manage_anonymous_session():
+    """
+    Middleware to handle persistent anonymous sessions via cookies.
+    """
+    # Skip for static files to save DB hits
+    if request.path.startswith('/static'):
+        return
+
+    cookie_id = request.cookies.get('vce_tracker_id')
+    valid_session = False
+    
+    if cookie_id:
+        # Verify if this ID exists in our DB
+        conn = get_db()
+        row = conn.execute("SELECT id FROM anonymous_sessions WHERE id=?", (cookie_id,)).fetchone()
+        if row:
+            valid_session = True
+            # Update last activity
+            conn.execute("UPDATE anonymous_sessions SET last_activity=CURRENT_TIMESTAMP WHERE id=?", (cookie_id,))
+            conn.commit()
+            session['session_id'] = cookie_id
+        conn.close()
+    
+    if not valid_session:
+        # Create new persistent session
+        new_id = str(uuid.uuid4())
+        try:
+            conn = get_db()
+            conn.execute("INSERT INTO anonymous_sessions (id) VALUES (?)", (new_id,))
+            conn.commit()
+            conn.close()
+            
+            session['session_id'] = new_id
+            # Flag to set cookie in after_request
+            g.set_tracker_cookie = new_id
+            g.is_new_user = True
+        except Exception as e:
+            logging.error(f"Failed to create anonymous session: {e}")
+            # Fallback to a temporary session if DB fails
+            if 'session_id' not in session:
+                session['session_id'] = new_id
+
+@app.after_request
+def set_tracker_cookie(response):
+    """
+    Sets the long-lived cookie if a new session was created.
+    """
+    if hasattr(g, 'set_tracker_cookie'):
+        # 90 days expiry
+        max_age = 90 * 24 * 60 * 60 
+        response.set_cookie(
+            'vce_tracker_id', 
+            g.set_tracker_cookie,
+            max_age=max_age,
+            httponly=True,
+            samesite='Lax'
+        )
+    return response
 
 load_dotenv()
 
@@ -1598,10 +1702,8 @@ def methods_setup():
         if not topic or not exam_type:
              return render_template("methods_setup.html", error="Please select both Topic and Exam Type.")
 
-        # Ensure session_id exists for tracking
-        if 'session_id' not in session:
-            session['session_id'] = str(uuid.uuid4())
-
+        # Session ID is already handled by middleware
+ 
         # Set flat keys as requested
         session['methods_topic'] = topic
         session['methods_exam_type'] = exam_type
@@ -1879,9 +1981,7 @@ def methods_practice():
 
 @app.route("/my-progress")
 def my_progress():
-    # If session_id is missing, create one so the user can view the empty dashboard
-    if 'session_id' not in session:
-        session['session_id'] = str(uuid.uuid4())
+    # Session is handled by middleware
     
     conn = get_db()
     
@@ -1895,7 +1995,7 @@ def my_progress():
             GROUP BY day 
             ORDER BY day ASC
         '''
-        chart_data = conn.execute(chart_query, (session['session_id'],)).fetchall()
+        chart_data = conn.execute(chart_query, (session.get('session_id'),)).fetchall()
         
         # Topic Breakdown
         topic_query = '''
@@ -1904,7 +2004,7 @@ def my_progress():
             WHERE session_id=? 
             GROUP BY topic
         '''
-        topic_data = conn.execute(topic_query, (session['session_id'],)).fetchall()
+        topic_data = conn.execute(topic_query, (session.get('session_id'),)).fetchall()
     except sqlite3.OperationalError:
         # Table might not exist yet
         chart_data = []
@@ -1928,8 +2028,7 @@ def my_progress():
 
 @app.route("/my-questions")
 def my_questions():
-    if 'session_id' not in session:
-        session['session_id'] = str(uuid.uuid4())
+    # Session handled by middleware
         
     conn = get_db()
     try:
@@ -1938,7 +2037,7 @@ def my_questions():
             WHERE session_id=? 
             ORDER BY created_at DESC
         '''
-        attempts = conn.execute(query, (session['session_id'],)).fetchall()
+        attempts = conn.execute(query, (session.get('session_id'),)).fetchall()
     except sqlite3.OperationalError:
         attempts = []
         
@@ -1952,9 +2051,7 @@ def start_topic_quiz():
     if not topic:
         return redirect(url_for('my_progress'))
         
-    # Ensure session_id exists
-    if 'session_id' not in session:
-        session['session_id'] = str(uuid.uuid4())
+    # Session is handled by middleware
         
     # Initialize a new practice session for this topic
     session['methods_topic'] = topic
