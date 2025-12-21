@@ -346,6 +346,19 @@ button#explain-btn:disabled { opacity: 0.7; cursor: not-allowed; }
     border-left: 5px solid var(--primary);
     margin-bottom: 2rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    
+    /* Overflow & Wrapping Fixes */
+    word-wrap: break-word;       /* Legacy property */
+    overflow-wrap: break-word;   /* Modern property */
+    white-space: normal;         /* Allow text to wrap */
+    max-width: 100%;             /* Constrain to container */
+    overflow-x: hidden;          /* Hide horizontal scrollbar */
+    hyphens: auto;               /* Optional: hyphenate long words */
+}
+
+.question-text mjx-container {
+    max-width: 100% !important;
+    overflow-x: auto; /* Allow horizontal scroll only for the equation if absolutely necessary */
 }
 
 .question-text strong {
