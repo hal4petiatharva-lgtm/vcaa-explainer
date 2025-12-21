@@ -764,6 +764,26 @@ def clean_vcaa_question_chunk(raw_chunk):
         
     return final_text
 
+def normalize_latex_delimiters(text):
+    """
+    Replaces $...$ with \(...\) or \[...\] to ensure MathJax compatibility.
+    - Uses \[...\] for blocks that look like display math (contain newlines or double $$).
+    - Uses \(...\) for inline math.
+    """
+    if not text:
+        return ""
+    
+    # 1. Replace double dollars $$...$$ with \[...\]
+    text = re.sub(r'\$\$(.*?)\$\$', r'\\[ \1 \\]', text, flags=re.DOTALL)
+    
+    # 2. Replace single dollars $...$ with \(...\)
+    # We use a non-greedy match for content inside dollars.
+    # Note: This is a heuristic. It might fail on edge cases like "\$100", 
+    # but for AI-generated math questions it's usually sufficient.
+    text = re.sub(r'\$(.*?)\$', r'\\( \1 \\)', text, flags=re.DOTALL)
+    
+    return text
+
 def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
     """
     Generates a new, polished question using AI + VCAA source material.
@@ -824,7 +844,10 @@ def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
     REQUIREMENTS:
     1.  The question must be clear, solvable, and include ALL necessary context and definitions. The student must not need to see any other questions.
     2.  Do NOT copy the snippet verbatim. Create a new variant, adjust numbers, or compose a new question on the same concept.
-    3.  Format ALL mathematical expressions using LaTeX within \[ \] for display equations or \( \) for inline.
+    3.  Format ALL mathematical expressions using LaTeX. 
+        - Use \[ ... \] for display (block) equations.
+        - Use \( ... \) for inline equations.
+        - Do NOT use $ or $$ dollar sign delimiters.
     4.  Provide the correct final answer in a clean, parsable format using LaTeX.
     5.  Output your response in this exact JSON format:
     {{
@@ -856,12 +879,16 @@ def generate_question_from_vcaa(topic, exam_type, difficulty="medium"):
             
         generated_id = hashlib.md5(data["question_text"].encode('utf-8')).hexdigest()
         
+        # Post-process to fix any stray dollar signs
+        final_text = normalize_latex_delimiters(data["question_text"])
+        final_answer = normalize_latex_delimiters(data["correct_answer"])
+        
         # 5. Return Question Dictionary
         return {
             "id": generated_id,
-            "text": data["question_text"],
+            "text": final_text,
             "type": data.get("question_type", "short"),
-            "correct_answer": data["correct_answer"],
+            "correct_answer": final_answer,
             "marks": data.get("marks", 2),
             "topic": topic,
             "exam_type": exam_type,
