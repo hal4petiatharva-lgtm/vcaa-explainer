@@ -173,6 +173,15 @@
             </a>
           </li>
         </ul>
+        <div class="section-title">Dashboard</div>
+        <ul class="menu">
+          <li class="menu-item">
+            <a href="{{ url_for('my_progress') }}"
+               class="{% if request.path.startswith('/my-progress') or request.path.startswith('/my-questions') %}active{% endif %}">
+              My Progress
+            </a>
+          </li>
+        </ul>
       </nav>
       <div id="content" class="content expanded">
         <div class="topbar">
