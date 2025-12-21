@@ -1879,29 +1879,37 @@ def methods_practice():
 
 @app.route("/my-progress")
 def my_progress():
+    # If session_id is missing, create one so the user can view the empty dashboard
     if 'session_id' not in session:
-        return redirect(url_for('methods_setup'))
+        session['session_id'] = str(uuid.uuid4())
     
     conn = get_db()
     
-    # Chart Data: Accuracy over time
-    chart_query = '''
-        SELECT DATE(created_at) as day, AVG(correct)*100 as accuracy 
-        FROM question_attempts 
-        WHERE session_id=? 
-        GROUP BY day 
-        ORDER BY day ASC
-    '''
-    chart_data = conn.execute(chart_query, (session['session_id'],)).fetchall()
-    
-    # Topic Breakdown
-    topic_query = '''
-        SELECT topic, AVG(correct)*100 as avg_score 
-        FROM question_attempts 
-        WHERE session_id=? 
-        GROUP BY topic
-    '''
-    topic_data = conn.execute(topic_query, (session['session_id'],)).fetchall()
+    # Check if table exists (in case init_db wasn't run or DB was deleted)
+    try:
+        # Chart Data: Accuracy over time
+        chart_query = '''
+            SELECT DATE(created_at) as day, AVG(correct)*100 as accuracy 
+            FROM question_attempts 
+            WHERE session_id=? 
+            GROUP BY day 
+            ORDER BY day ASC
+        '''
+        chart_data = conn.execute(chart_query, (session['session_id'],)).fetchall()
+        
+        # Topic Breakdown
+        topic_query = '''
+            SELECT topic, AVG(correct)*100 as avg_score 
+            FROM question_attempts 
+            WHERE session_id=? 
+            GROUP BY topic
+        '''
+        topic_data = conn.execute(topic_query, (session['session_id'],)).fetchall()
+    except sqlite3.OperationalError:
+        # Table might not exist yet
+        chart_data = []
+        topic_data = []
+        
     conn.close()
     
     # Format for Chart.js
@@ -1921,15 +1929,19 @@ def my_progress():
 @app.route("/my-questions")
 def my_questions():
     if 'session_id' not in session:
-        return redirect(url_for('methods_setup'))
+        session['session_id'] = str(uuid.uuid4())
         
     conn = get_db()
-    query = '''
-        SELECT * FROM question_attempts 
-        WHERE session_id=? 
-        ORDER BY created_at DESC
-    '''
-    attempts = conn.execute(query, (session['session_id'],)).fetchall()
+    try:
+        query = '''
+            SELECT * FROM question_attempts 
+            WHERE session_id=? 
+            ORDER BY created_at DESC
+        '''
+        attempts = conn.execute(query, (session['session_id'],)).fetchall()
+    except sqlite3.OperationalError:
+        attempts = []
+        
     conn.close()
     
     return render_template("my_questions.html", attempts=attempts)
