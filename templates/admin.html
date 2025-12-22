@@ -11,12 +11,33 @@
         <span style="color: var(--muted); font-size: 0.9rem;">Live Data</span>
     </div>
 
-    {% if error %}
+    {% if schema_error %}
+    <div style="background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #f87171; padding: 2rem; border-radius: 0.5rem; margin-bottom: 2rem; text-align: center;">
+        <h2 style="margin-top: 0; color: #fca5a5;">⚠️ Database Schema Mismatch</h2>
+        <p style="margin-bottom: 1.5rem; color: #fee2e2;">
+            The application database is missing the required <code>session_id</code> column. This usually happens after a deployment if the migration script didn't run on the correct database file.
+        </p>
+        <div style="background: #1f2937; padding: 1rem; border-radius: 4px; font-family: monospace; text-align: left; margin-bottom: 1.5rem; overflow-x: auto;">
+            {{ error_message }}
+        </div>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="{{ migrate_url }}" class="cta-button" style="background: #ef4444; border: none;">
+                🛠️ Fix Database (Run Migration)
+            </a>
+            <a href="{{ diagnose_url }}" target="_blank" class="cta-button" style="background: #4b5563; border: none;">
+                🔍 Run Diagnostics
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if error and not schema_error %}
     <div style="background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #f87171; padding: 1rem; border-radius: 0.5rem; margin-bottom: 2rem;">
         {{ error }}
     </div>
     {% endif %}
 
+    {% if not schema_error %}
     <!-- Headline Metrics -->
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
         <div class="metric-card" style="background: var(--surface); padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--border);">
@@ -119,5 +140,6 @@
             </table>
         </div>
     </div>
+    {% endif %}
 </div>
 {% endblock %}
