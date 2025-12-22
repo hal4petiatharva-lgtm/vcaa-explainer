@@ -2128,6 +2128,66 @@ def admin_force_migrate():
     finally:
         conn.close()
 
+@app.route('/admin/debug-query')
+def admin_debug_query():
+    # 1. Access Control
+    admin_key = os.environ.get('ADMIN_KEY')
+    request_key = request.args.get('key')
+    
+    if not admin_key or not request_key or request_key != admin_key:
+        return "Unauthorized", 401
+
+    conn = get_db()
+    try:
+        cursor = conn.cursor()
+        
+        # Replicate admin dashboard queries to find the failure point
+        
+        # Query 1: Headline Metrics (often the failure point)
+        query1 = "SELECT COUNT(DISTINCT session_id) FROM anonymous_sessions"
+        cursor.execute(query1)
+        res1 = cursor.fetchone()
+        
+        query2 = "SELECT COUNT(*) FROM question_attempts WHERE created_at >= datetime('now', '-1 day')"
+        cursor.execute(query2)
+        res2 = cursor.fetchone()
+
+        query3 = "SELECT COUNT(DISTINCT session_id) FROM anonymous_sessions WHERE last_activity >= datetime('now', '-7 days')"
+        cursor.execute(query3)
+        res3 = cursor.fetchone()
+        
+        # Query 4: Topic Performance (Complex Aggregation)
+        query4 = '''
+            SELECT topic, COUNT(*) as total_attempts, ROUND(AVG(correct) * 100, 1) as avg_accuracy 
+            FROM question_attempts 
+            GROUP BY topic 
+            ORDER BY total_attempts DESC
+        '''
+        cursor.execute(query4)
+        res4 = cursor.fetchall()
+        
+        return jsonify({
+            "status": "Success",
+            "message": "All admin queries executed successfully.",
+            "results": {
+                "headline_sessions": res1[0] if res1 else None,
+                "headline_questions_24h": res2[0] if res2 else None,
+                "headline_active_users": res3[0] if res3 else None,
+                "topic_performance_rows": len(res4)
+            }
+        })
+        
+    except Exception as e:
+        import traceback
+        return jsonify({
+            "status": "Error",
+            "error_type": type(e).__name__,
+            "error_message": str(e),
+            "traceback": traceback.format_exc()
+        }), 500
+    finally:
+        conn.close()
+
 @app.route('/admin')
 def admin_dashboard():
     # 1. Access Control
