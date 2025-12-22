@@ -2054,7 +2054,8 @@ def admin_dashboard():
     request_key = request.args.get('key')
     
     # If key is missing/incorrect, return 401
-    if not admin_key or request_key != admin_key:
+    # Correct validation: check if keys are missing OR don't match 
+    if not admin_key or not request_key or request_key != admin_key: 
         return "Unauthorized", 401
 
     headline = {
