@@ -2100,58 +2100,33 @@ def admin_force_migrate():
     request_key = request.args.get('key')
     
     if not admin_key or not request_key or request_key != admin_key:
-        return jsonify({"error": "Unauthorized"}), 401
+        return "Unauthorized", 401
 
-    log = []
-    initial_schema = []
-    success = False
-    
     conn = get_db()
     try:
         cursor = conn.cursor()
         
-        # Diagnostic: Check current schema
-        cursor.execute("PRAGMA table_info(question_attempts)")
-        initial_schema = [dict(row) for row in cursor.fetchall()]
-        log.append(f"Initial columns: {[col['name'] for col in initial_schema]}")
-        
-        # Check if session_id exists
-        columns = [col['name'] for col in initial_schema]
-        
-        if 'session_id' not in columns:
-            log.append("Attempting to add 'session_id' column...")
-            try:
-                cursor.execute("ALTER TABLE question_attempts ADD COLUMN session_id TEXT")
-                log.append("SUCCESS: Added 'session_id' column.")
-            except Exception as e:
-                log.append(f"ALTER TABLE failed (might already exist): {e}")
-        else:
-             log.append("'session_id' column already exists.")
+        # 1. Add column (handle if exists)
+        try:
+            cursor.execute("ALTER TABLE question_attempts ADD COLUMN session_id TEXT")
+        except Exception as e:
+            # Likely "duplicate column name" if it already exists
+            logging.info(f"Migration note: {e}")
 
-        # Backfill data
-        log.append("Backfilling existing records...")
-        cursor.execute("UPDATE question_attempts SET session_id = 'legacy' WHERE session_id IS NULL")
-        log.append("SUCCESS: Backfilled NULL session_ids.")
+        # 2. Set default value
+        cursor.execute("UPDATE question_attempts SET session_id = 'legacy_session' WHERE session_id IS NULL")
         
-        # Create Index
-        log.append("Creating index...")
-        cursor.execute("CREATE INDEX IF NOT EXISTS idx_session_id ON question_attempts(session_id)")
-        log.append("SUCCESS: Index created/verified.")
+        # 3. Create Index
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_question_attempts_session_id ON question_attempts(session_id)")
         
         conn.commit()
-        success = True
+        return "✅ Migration successful"
         
     except Exception as e:
-        log.append(f"CRITICAL ERROR: {str(e)}")
-        logging.error(f"Force Migration Failed: {e}")
+        logging.error(f"Migration Failed: {e}")
+        return f"❌ Error: {str(e)}"
     finally:
         conn.close()
-        
-    return jsonify({
-        "success": success,
-        "log": log,
-        "initial_schema_snapshot": initial_schema
-    })
 
 @app.route('/admin')
 def admin_dashboard():
