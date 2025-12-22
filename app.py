@@ -52,8 +52,54 @@ def init_db():
     conn.commit()
     conn.close()
 
-# Initialize DB on startup
+def migrate_database():
+    """
+    Safely migrates the database schema to include the 'session_id' column if missing.
+    Run on application startup.
+    """
+    try:
+        conn = sqlite3.connect('vce_progress.db')
+        cursor = conn.cursor()
+        
+        # Check if table exists first
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='question_attempts'")
+        if not cursor.fetchone():
+            logging.info("Migration skipped: 'question_attempts' table does not exist.")
+            conn.close()
+            return
+
+        # Check for session_id column
+        cursor.execute("PRAGMA table_info(question_attempts)")
+        columns = [row[1] for row in cursor.fetchall()]
+        
+        if 'session_id' not in columns:
+            logging.info("Migration started: Adding 'session_id' column...")
+            try:
+                # 1. Add column
+                cursor.execute("ALTER TABLE question_attempts ADD COLUMN session_id TEXT")
+                
+                # 2. Backfill existing records
+                cursor.execute("UPDATE question_attempts SET session_id = 'legacy_session' WHERE session_id IS NULL")
+                
+                # 3. Add index
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_session_id ON question_attempts(session_id)")
+                
+                conn.commit()
+                logging.info("Migration successful: Added 'session_id' column and backfilled data.")
+            except Exception as e:
+                logging.error(f"Migration error during schema update: {e}")
+        else:
+            logging.info("Migration check: 'session_id' column already exists.")
+            
+    except Exception as e:
+        logging.error(f"Migration failed: {e}")
+    finally:
+        if conn:
+            conn.close()
+
+# Initialize DB and run migrations on startup
 init_db()
+migrate_database()
 
 def get_db():
     conn = sqlite3.connect('vce_progress.db')
