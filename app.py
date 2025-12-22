@@ -2138,6 +2138,41 @@ def admin_force_migrate():
     finally:
         conn.close()
 
+@app.route('/admin/diagnose')
+def admin_diagnose():
+    """Run full diagnostics and return report"""
+    # 1. Access Control
+    admin_key = os.environ.get('ADMIN_KEY')
+    request_key = request.args.get('key')
+    if not admin_key or not request_key or request_key != admin_key:
+        return "Unauthorized", 401
+
+    import sys
+    import io
+    from contextlib import redirect_stdout
+    
+    # Capture output of diagnose script
+    f = io.StringIO()
+    with redirect_stdout(f):
+        try:
+            # We can import and run the diagnose function
+            try:
+                from diagnose import diagnose
+                diagnose()
+            except ImportError:
+                print("Could not import diagnose module. Running inline checks...")
+                print(f"DATABASE_PATH: {DATABASE_PATH}")
+                if os.path.exists(DATABASE_PATH):
+                    print("DB file exists.")
+                else:
+                    print("DB file MISSING.")
+        except Exception as e:
+            print(f"Diagnostic Error: {e}")
+            import traceback
+            traceback.print_exc()
+            
+    return f"<pre>{f.getvalue()}</pre>"
+
 @app.route('/admin/check-schema')
 def admin_check_schema():
     conn = sqlite3.connect(DATABASE_PATH)
@@ -2278,6 +2313,22 @@ def admin_dashboard():
                 recent_activity.append(d)
 
     except sqlite3.OperationalError as e:
+        # Catch specific schema error
+        error_msg = str(e)
+        if "no such column: session_id" in error_msg:
+            # Render admin template with schema error state
+            key_val = request.args.get('key') or os.environ.get('ADMIN_KEY', '')
+            migrate_url = url_for('admin_force_migrate', key=key_val)
+            diagnose_url = url_for('admin_diagnose', key=key_val)
+            
+            return render_template('admin.html', 
+                schema_error=True,
+                error_message=error_msg,
+                migrate_url=migrate_url,
+                diagnose_url=diagnose_url,
+                headline=headline # pass empty/partial headline
+            )
+            
         # Provide the actual error and a helpful action 
         key_val = request.args.get('key') or os.environ.get('ADMIN_KEY', '')
         migrate_url = url_for('admin_force_migrate', key=key_val)
