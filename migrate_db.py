@@ -5,8 +5,13 @@ import shutil
 from datetime import datetime
 
 # Ensure we use the exact same path logic as app.py
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATABASE_PATH = os.path.join(BASE_DIR, 'vce_progress.db')
+# If /opt/render/project/src/vce_progress.db exists, use it.
+RENDER_DB_PATH = '/opt/render/project/src/vce_progress.db'
+if os.path.exists(RENDER_DB_PATH):
+    DATABASE_PATH = RENDER_DB_PATH
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    DATABASE_PATH = os.path.join(BASE_DIR, 'vce_progress.db')
 
 def migrate_db():
     print(f"Target Database: {DATABASE_PATH}")
