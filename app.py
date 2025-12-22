@@ -17,8 +17,11 @@ import sqlite3
 import uuid
 from flask import g, make_response
 
+# Global Database Path
+DATABASE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'vce_progress.db')
+
 def init_db():
-    conn = sqlite3.connect('vce_progress.db')
+    conn = sqlite3.connect(DATABASE_PATH)
     c = conn.cursor()
     
     # 1. Anonymous Sessions Table
@@ -58,7 +61,7 @@ def migrate_database():
     Run on application startup.
     """
     try:
-        conn = sqlite3.connect('vce_progress.db')
+        conn = sqlite3.connect(DATABASE_PATH)
         cursor = conn.cursor()
         
         # Check if table exists first
@@ -102,7 +105,7 @@ init_db()
 migrate_database()
 
 def get_db():
-    conn = sqlite3.connect('vce_progress.db')
+    conn = sqlite3.connect(DATABASE_PATH)
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -2106,6 +2109,13 @@ def admin_force_migrate():
     try:
         cursor = conn.cursor()
         
+        # Diagnostic: Attempt to select from column
+        try:
+            cursor.execute("SELECT session_id FROM question_attempts LIMIT 1")
+            logging.info("Diagnostic: 'session_id' column accessible.")
+        except Exception:
+            logging.info("Diagnostic: 'session_id' column missing, forcing creation...")
+
         # 1. Add column (handle if exists)
         try:
             cursor.execute("ALTER TABLE question_attempts ADD COLUMN session_id TEXT")
@@ -2125,6 +2135,18 @@ def admin_force_migrate():
     except Exception as e:
         logging.error(f"Migration Failed: {e}")
         return f"❌ Error: {str(e)}"
+    finally:
+        conn.close()
+
+@app.route('/admin/check-schema')
+def admin_check_schema():
+    conn = sqlite3.connect(DATABASE_PATH)
+    try:
+        cursor = conn.execute("PRAGMA table_info(question_attempts);")
+        columns = [column[1] for column in cursor.fetchall()]
+        return jsonify({"columns": columns, "database_path": DATABASE_PATH})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
     finally:
         conn.close()
 
