@@ -2047,6 +2047,80 @@ def my_questions():
     
     return render_template("my_questions.html", attempts=attempts)
 
+@app.route('/admin')
+def admin_dashboard():
+    # 1. Access Control
+    admin_key = os.environ.get('ADMIN_KEY')
+    request_key = request.args.get('key')
+    
+    # If key is missing/incorrect, return 401
+    if not admin_key or request_key != admin_key:
+        return "Unauthorized", 401
+
+    headline = {
+        'total_sessions': 0,
+        'questions_24h': 0,
+        'active_users_7d': 0
+    }
+    topic_performance = []
+    recent_activity = []
+    error = None
+
+    conn = get_db()
+    try:
+        # Check if tables exist (sanity check)
+        tables = conn.execute("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('anonymous_sessions', 'question_attempts')").fetchall()
+        if len(tables) < 2:
+             error = "Required database tables not found."
+        else:
+            # 2. Headline Metrics
+            # Total Quiz Sessions
+            res = conn.execute("SELECT COUNT(DISTINCT session_id) FROM anonymous_sessions").fetchone()
+            if res: headline['total_sessions'] = res[0]
+
+            # Questions Answered (Last 24h)
+            res = conn.execute("SELECT COUNT(*) FROM question_attempts WHERE created_at >= datetime('now', '-1 day')").fetchone()
+            if res: headline['questions_24h'] = res[0]
+
+            # Active Users (7d)
+            res = conn.execute("SELECT COUNT(DISTINCT session_id) FROM anonymous_sessions WHERE last_activity >= datetime('now', '-7 days')").fetchone()
+            if res: headline['active_users_7d'] = res[0]
+
+            # 3. Topic Performance
+            # Topic, Total Attempts, Average Accuracy (%)
+            tp_query = '''
+                SELECT topic, COUNT(*) as total_attempts, ROUND(AVG(correct) * 100, 1) as avg_accuracy 
+                FROM question_attempts 
+                GROUP BY topic 
+                ORDER BY total_attempts DESC
+            '''
+            topic_performance = [dict(row) for row in conn.execute(tp_query).fetchall()]
+
+            # 4. Recent Activity Log
+            # Last 50 question_attempts
+            ra_query = '''
+                SELECT created_at, session_id, topic, exam_type, attempt_number, correct, time_spent_seconds 
+                FROM question_attempts 
+                ORDER BY created_at DESC 
+                LIMIT 50
+            '''
+            rows = conn.execute(ra_query).fetchall()
+            recent_activity = []
+            for row in rows:
+                d = dict(row)
+                # Format session_id to first 6 chars for readability
+                if d['session_id']:
+                    d['session_id'] = d['session_id'][:6]
+                recent_activity.append(d)
+
+    except Exception as e:
+        error = f"Database error: {str(e)}"
+        logging.error(f"Admin dashboard error: {e}")
+    finally:
+        conn.close()
+
+    return render_template('admin.html', headline=headline, topic_performance=topic_performance, recent_activity=recent_activity, error=error)
+
 @app.route("/start-topic-quiz")
 def start_topic_quiz():
     topic = request.args.get('topic')
