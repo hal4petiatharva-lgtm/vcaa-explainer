@@ -2252,7 +2252,6 @@ def admin_dashboard():
     request_key = request.args.get('key')
     
     # If key is missing/incorrect, return 401
-    # Correct validation: check if keys are missing OR don't match 
     if not admin_key or not request_key or request_key != admin_key: 
         return "Unauthorized", 401
 
@@ -2264,26 +2263,50 @@ def admin_dashboard():
     topic_performance = []
     recent_activity = []
     error = None
+    
+    # Render-specific absolute path logic as requested
+    # If /opt/render/project/src/vce_progress.db exists, use it.
+    # Otherwise fallback to the calculated path.
+    RENDER_DB_PATH = '/opt/render/project/src/vce_progress.db'
+    if os.path.exists(RENDER_DB_PATH):
+        db_path_to_use = RENDER_DB_PATH
+        logging.info(f"Admin Dashboard: Using Render explicit path: {db_path_to_use}")
+    else:
+        db_path_to_use = DATABASE_PATH
+        logging.info(f"Admin Dashboard: Using default path: {db_path_to_use}")
 
-    conn = get_db()
     try:
+        conn = sqlite3.connect(db_path_to_use)
+        conn.row_factory = sqlite3.Row
+        
         # Check if tables exist (sanity check)
         tables = conn.execute("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('anonymous_sessions', 'question_attempts')").fetchall()
         if len(tables) < 2:
              error = "Required database tables not found."
         else:
             # 2. Headline Metrics
+            # Fix: 'anonymous_sessions' uses 'id', not 'session_id'
+            
             # Total Quiz Sessions
-            res = conn.execute("SELECT COUNT(DISTINCT session_id) FROM anonymous_sessions").fetchone()
-            if res: headline['total_sessions'] = res[0]
+            try:
+                res = conn.execute("SELECT COUNT(DISTINCT id) FROM anonymous_sessions").fetchone()
+                if res: headline['total_sessions'] = res[0]
+            except Exception as e:
+                logging.error(f"Error fetching total sessions: {e}")
 
             # Questions Answered (Last 24h)
-            res = conn.execute("SELECT COUNT(*) FROM question_attempts WHERE created_at >= datetime('now', '-1 day')").fetchone()
-            if res: headline['questions_24h'] = res[0]
+            try:
+                res = conn.execute("SELECT COUNT(*) FROM question_attempts WHERE created_at >= datetime('now', '-1 day')").fetchone()
+                if res: headline['questions_24h'] = res[0]
+            except Exception as e:
+                logging.error(f"Error fetching 24h questions: {e}")
 
             # Active Users (7d)
-            res = conn.execute("SELECT COUNT(DISTINCT session_id) FROM anonymous_sessions WHERE last_activity >= datetime('now', '-7 days')").fetchone()
-            if res: headline['active_users_7d'] = res[0]
+            try:
+                res = conn.execute("SELECT COUNT(DISTINCT id) FROM anonymous_sessions WHERE last_activity >= datetime('now', '-7 days')").fetchone()
+                if res: headline['active_users_7d'] = res[0]
+            except Exception as e:
+                logging.error(f"Error fetching active users: {e}")
 
             # 3. Topic Performance
             # Topic, Total Attempts, Average Accuracy (%)
@@ -2296,9 +2319,12 @@ def admin_dashboard():
             topic_performance = [dict(row) for row in conn.execute(tp_query).fetchall()]
 
             # 4. Recent Activity Log
-            # Last 50 question_attempts
+            # Explicit column selection as requested
             ra_query = '''
-                SELECT created_at, session_id, topic, exam_type, attempt_number, correct, time_spent_seconds 
+                SELECT 
+                    id, session_id, question_id, topic, exam_type, 
+                    correct, attempt_number, time_spent_seconds, 
+                    created_at, user_answer, feedback, question_text
                 FROM question_attempts 
                 ORDER BY created_at DESC 
                 LIMIT 50
@@ -2308,14 +2334,18 @@ def admin_dashboard():
             for row in rows:
                 d = dict(row)
                 # Format session_id to first 6 chars for readability
-                if d['session_id']:
+                if d.get('session_id'):
                     d['session_id'] = d['session_id'][:6]
                 recent_activity.append(d)
+        
+        conn.close()
 
     except sqlite3.OperationalError as e:
         # Catch specific schema error
         error_msg = str(e)
-        if "no such column: session_id" in error_msg:
+        logging.error(f"Admin Dashboard DB Error: {error_msg}")
+        
+        if "no such column: session_id" in error_msg or "no such column" in error_msg:
             # Render admin template with schema error state
             key_val = request.args.get('key') or os.environ.get('ADMIN_KEY', '')
             migrate_url = url_for('admin_force_migrate', key=key_val)
@@ -2323,37 +2353,30 @@ def admin_dashboard():
             
             return render_template('admin.html', 
                 schema_error=True,
-                error_message=error_msg,
+                error_message=f"DB Path: {db_path_to_use}\nError: {error_msg}",
                 migrate_url=migrate_url,
                 diagnose_url=diagnose_url,
-                headline=headline # pass empty/partial headline
+                headline=headline
             )
             
-        # Provide the actual error and a helpful action 
-        key_val = request.args.get('key') or os.environ.get('ADMIN_KEY', '')
-        migrate_url = url_for('admin_force_migrate', key=key_val)
-        
         error_html = f"""
-        <div style="font-family: system-ui, sans-serif; padding: 2rem; max-width: 600px; margin: 2rem auto; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-            <h3 style="color: #dc2626; margin-top: 0;">Database Error</h3>
-            <div style="background: #f3f4f6; padding: 1rem; border-radius: 4px; font-family: monospace; margin: 1rem 0; overflow-x: auto;">
-                {str(e)}
-            </div>
-            <p style="color: #4b5563;">This is often fixed by updating the database schema.</p>
-            <a href='{migrate_url}' style="display: inline-block; background: #2563eb; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 4px; font-weight: 500;">
-                Click here to Run Migration
-            </a>
-        </div>
+        <h1>Database Error</h1>
+        <p>{e}</p>
+        <p>Path used: {db_path_to_use}</p>
         """
-        logging.error(f"Admin Schema Error: {e}")
         return error_html, 500
+        
     except Exception as e:
-        error = f"Database error: {str(e)}"
-        logging.error(f"Admin dashboard error: {e}")
-    finally:
-        conn.close()
+        logging.error(f"General Admin Error: {e}")
+        return f"General Error: {str(e)}", 500
 
-    return render_template('admin.html', headline=headline, topic_performance=topic_performance, recent_activity=recent_activity, error=error)
+    return render_template('admin.html', 
+        headline=headline, 
+        topic_performance=topic_performance, 
+        recent_activity=recent_activity,
+        error=error,
+        schema_error=False
+    )
 
 @app.route("/start-topic-quiz")
 def start_topic_quiz():
