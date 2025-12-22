@@ -2256,14 +2256,24 @@ def admin_dashboard():
                 recent_activity.append(d)
 
     except sqlite3.OperationalError as e:
-        if "no such column: session_id" in str(e):
-             # Generate a clickable link for easy fix
-             migrate_url = url_for('admin_force_migrate', key=request.args.get('key'))
-             error = f"Database schema outdated. <a href='{migrate_url}' style='color: #60a5fa; text-decoration: underline;'>Click here to Run Migration</a>"
-             logging.error(f"Admin Schema Error: {e}")
-        else:
-             error = f"Database error: {str(e)}"
-             logging.error(f"Admin dashboard error: {e}")
+        # Provide the actual error and a helpful action 
+        key_val = request.args.get('key') or os.environ.get('ADMIN_KEY', '')
+        migrate_url = url_for('admin_force_migrate', key=key_val)
+        
+        error_html = f"""
+        <div style="font-family: system-ui, sans-serif; padding: 2rem; max-width: 600px; margin: 2rem auto; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+            <h3 style="color: #dc2626; margin-top: 0;">Database Error</h3>
+            <div style="background: #f3f4f6; padding: 1rem; border-radius: 4px; font-family: monospace; margin: 1rem 0; overflow-x: auto;">
+                {str(e)}
+            </div>
+            <p style="color: #4b5563;">This is often fixed by updating the database schema.</p>
+            <a href='{migrate_url}' style="display: inline-block; background: #2563eb; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 4px; font-weight: 500;">
+                Click here to Run Migration
+            </a>
+        </div>
+        """
+        logging.error(f"Admin Schema Error: {e}")
+        return error_html, 500
     except Exception as e:
         error = f"Database error: {str(e)}"
         logging.error(f"Admin dashboard error: {e}")
