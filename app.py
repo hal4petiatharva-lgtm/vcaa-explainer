@@ -2114,6 +2114,13 @@ def admin_dashboard():
                     d['session_id'] = d['session_id'][:6]
                 recent_activity.append(d)
 
+    except sqlite3.OperationalError as e:
+        if "no such column: session_id" in str(e):
+             error = "Database schema outdated. Please run the migration script."
+             logging.error(f"Admin Schema Error: {e}")
+        else:
+             error = f"Database error: {str(e)}"
+             logging.error(f"Admin dashboard error: {e}")
     except Exception as e:
         error = f"Database error: {str(e)}"
         logging.error(f"Admin dashboard error: {e}")
