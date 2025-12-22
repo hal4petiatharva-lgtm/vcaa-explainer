@@ -2093,6 +2093,66 @@ def my_questions():
     
     return render_template("my_questions.html", attempts=attempts)
 
+@app.route('/admin/migrate')
+def admin_force_migrate():
+    # 1. Access Control
+    admin_key = os.environ.get('ADMIN_KEY')
+    request_key = request.args.get('key')
+    
+    if not admin_key or not request_key or request_key != admin_key:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    log = []
+    initial_schema = []
+    success = False
+    
+    conn = get_db()
+    try:
+        cursor = conn.cursor()
+        
+        # Diagnostic: Check current schema
+        cursor.execute("PRAGMA table_info(question_attempts)")
+        initial_schema = [dict(row) for row in cursor.fetchall()]
+        log.append(f"Initial columns: {[col['name'] for col in initial_schema]}")
+        
+        # Check if session_id exists
+        columns = [col['name'] for col in initial_schema]
+        
+        if 'session_id' not in columns:
+            log.append("Attempting to add 'session_id' column...")
+            try:
+                cursor.execute("ALTER TABLE question_attempts ADD COLUMN session_id TEXT")
+                log.append("SUCCESS: Added 'session_id' column.")
+            except Exception as e:
+                log.append(f"ALTER TABLE failed (might already exist): {e}")
+        else:
+             log.append("'session_id' column already exists.")
+
+        # Backfill data
+        log.append("Backfilling existing records...")
+        cursor.execute("UPDATE question_attempts SET session_id = 'legacy' WHERE session_id IS NULL")
+        log.append("SUCCESS: Backfilled NULL session_ids.")
+        
+        # Create Index
+        log.append("Creating index...")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_session_id ON question_attempts(session_id)")
+        log.append("SUCCESS: Index created/verified.")
+        
+        conn.commit()
+        success = True
+        
+    except Exception as e:
+        log.append(f"CRITICAL ERROR: {str(e)}")
+        logging.error(f"Force Migration Failed: {e}")
+    finally:
+        conn.close()
+        
+    return jsonify({
+        "success": success,
+        "log": log,
+        "initial_schema_snapshot": initial_schema
+    })
+
 @app.route('/admin')
 def admin_dashboard():
     # 1. Access Control
@@ -2162,7 +2222,9 @@ def admin_dashboard():
 
     except sqlite3.OperationalError as e:
         if "no such column: session_id" in str(e):
-             error = "Database schema outdated. Please run the migration script."
+             # Generate a clickable link for easy fix
+             migrate_url = url_for('admin_force_migrate', key=request.args.get('key'))
+             error = f"Database schema outdated. <a href='{migrate_url}' style='color: #60a5fa; text-decoration: underline;'>Click here to Run Migration</a>"
              logging.error(f"Admin Schema Error: {e}")
         else:
              error = f"Database error: {str(e)}"
