@@ -2494,6 +2494,112 @@ def review_question(question_id):
     return render_template("review_question.html", question=question, feedback=feedback, user_answer=user_answer)
 
 
+# --- New Polish Routes ---
+
+@app.route('/api/stats/live')
+def api_stats_live():
+    # 1. Access Control
+    admin_key = os.environ.get('ADMIN_KEY')
+    request_key = request.args.get('key')
+    if not admin_key or not request_key or request_key != admin_key:
+        return jsonify({"error": "Unauthorized"}), 401
+        
+    # Reuse admin dashboard logic but return JSON
+    headline = {'total_sessions': 0, 'questions_24h': 0, 'active_users_7d': 0}
+    
+    # Path logic
+    RENDER_DB_PATH = '/opt/render/project/src/vce_progress.db'
+    db_path = RENDER_DB_PATH if os.path.exists(RENDER_DB_PATH) else DATABASE_PATH
+    
+    try:
+        conn = sqlite3.connect(db_path)
+        
+        # Total Quiz Sessions
+        try:
+            res = conn.execute("SELECT COUNT(DISTINCT id) FROM anonymous_sessions").fetchone()
+            if res: headline['total_sessions'] = res[0]
+        except: pass
+
+        # Questions Answered (Last 24h)
+        try:
+            res = conn.execute("SELECT COUNT(*) FROM question_attempts WHERE created_at >= datetime('now', '-1 day')").fetchone()
+            if res: headline['questions_24h'] = res[0]
+        except: pass
+
+        # Active Users (7d)
+        try:
+            res = conn.execute("SELECT COUNT(DISTINCT id) FROM anonymous_sessions WHERE last_activity >= datetime('now', '-7 days')").fetchone()
+            if res: headline['active_users_7d'] = res[0]
+        except: pass
+        
+        conn.close()
+        return jsonify({"headline": headline})
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/admin/export/csv')
+def admin_export_csv():
+    # 1. Access Control
+    admin_key = os.environ.get('ADMIN_KEY')
+    request_key = request.args.get('key')
+    if not admin_key or not request_key or request_key != admin_key:
+        return "Unauthorized", 401
+        
+    import csv
+    import io
+    
+    # Path logic
+    RENDER_DB_PATH = '/opt/render/project/src/vce_progress.db'
+    db_path = RENDER_DB_PATH if os.path.exists(RENDER_DB_PATH) else DATABASE_PATH
+    
+    try:
+        conn = sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        
+        # Fetch all attempts
+        cursor.execute('''
+            SELECT id, session_id, question_id, topic, exam_type, correct, 
+                   attempt_number, time_spent_seconds, created_at, user_answer 
+            FROM question_attempts 
+            ORDER BY created_at DESC
+        ''')
+        rows = cursor.fetchall()
+        
+        # Generate CSV
+        si = io.StringIO()
+        cw = csv.writer(si)
+        
+        # Headers
+        cw.writerow(['ID', 'Session', 'Question', 'Topic', 'Exam Type', 'Correct', 'Attempt #', 'Time (s)', 'Created At', 'User Answer'])
+        
+        # Data
+        for row in rows:
+            cw.writerow([
+                row['id'], row['session_id'], row['question_id'], row['topic'], 
+                row['exam_type'], row['correct'], row['attempt_number'], 
+                row['time_spent_seconds'], row['created_at'], row['user_answer']
+            ])
+            
+        conn.close()
+        
+        output = make_response(si.getvalue())
+        output.headers["Content-Disposition"] = "attachment; filename=vcaa_export.csv"
+        output.headers["Content-type"] = "text/csv"
+        return output
+        
+    except Exception as e:
+        return f"Export Error: {str(e)}", 500
+
+@app.route('/api/toast/<message>')
+def api_trigger_toast(message):
+    # Helper to return a JSON response that the client could interpret if needed
+    return jsonify({
+        "message": message,
+        "timestamp": time.time()
+    })
+
 if __name__ == "__main__":
     env_port = os.getenv("PORT")
     port = int(env_port) if env_port else _find_available_port()
