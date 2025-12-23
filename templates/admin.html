@@ -3,161 +3,179 @@
 {% block title %}Admin Dashboard — VCEInsider{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='polish.css') }}">
+<!-- Load New Styles -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin-fixes.css') }}">
 
 <div class="admin-container" style="padding: 2rem; max-width: 1200px; margin: 0 auto;">
-    <div class="admin-header">
-        <div>
-            <h1 style="font-size: 2rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0;">
-                Admin Analytics
-            </h1>
-            <span style="color: var(--muted); font-size: 0.9rem;">Live Data Monitor</span>
-        </div>
-        
-        <div class="quick-actions">
-            <a href="#" id="action-refresh" class="action-btn">
-                <span class="action-icon">🔄</span> Refresh
-            </a>
-            <a href="{{ url_for('admin_export_csv', key=request.args.get('key')) }}" id="action-export" class="action-btn">
-                <span class="action-icon">⬇️</span> Export CSV
-            </a>
-            <button id="action-help" class="action-btn">
-                <span class="action-icon">❓</span> Help
-            </button>
-        </div>
+    
+    <!-- Header -->
+    <div class="admin-header" style="margin-bottom: 2rem;">
+        <h1 style="font-size: 2rem; font-weight: 700; color: #333; margin: 0;">
+            Admin Analytics
+        </h1>
+        <span style="color: #666; font-size: 0.9rem;">Live Data Monitor</span>
+    </div>
+
+    <!-- Quick Actions Bar -->
+    <div class="quick-actions-bar">
+        <button id="action-refresh" class="action-btn">
+            <span>🔄</span> Refresh
+        </button>
+        <button id="action-export" class="action-btn btn-export">
+            <span>📥</span> Export CSV
+        </button>
+        <button id="action-help" class="action-btn">
+            <span>❓</span> Help
+        </button>
+        <button id="action-test" class="action-btn">
+            <span>🧪</span> Test Data
+        </button>
     </div>
 
     {% if schema_error %}
     <div style="background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #f87171; padding: 2rem; border-radius: 0.5rem; margin-bottom: 2rem; text-align: center;">
-        <h2 style="margin-top: 0; color: #fca5a5;">⚠️ Database Schema Mismatch</h2>
-        <p style="margin-bottom: 1.5rem; color: #fee2e2;">
-            The application database is missing the required <code>session_id</code> column. This usually happens after a deployment if the migration script didn't run on the correct database file.
-        </p>
-        <div style="background: #1f2937; padding: 1rem; border-radius: 4px; font-family: monospace; text-align: left; margin-bottom: 1.5rem; overflow-x: auto;">
-            {{ error_message }}
-        </div>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a href="{{ migrate_url }}" class="cta-button" style="background: #ef4444; border: none;">
-                🛠️ Fix Database (Run Migration)
-            </a>
-            <a href="{{ diagnose_url }}" target="_blank" class="cta-button" style="background: #4b5563; border: none;">
-                🔍 Run Diagnostics
-            </a>
+        <h2>⚠️ Database Schema Mismatch</h2>
+        <p>{{ error_message }}</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
+            <a href="{{ migrate_url }}" class="btn">🛠️ Fix Database</a>
+            <a href="{{ diagnose_url }}" target="_blank" class="btn" style="background: #666 !important;">🔍 Diagnostics</a>
         </div>
     </div>
     {% endif %}
 
     {% if error and not schema_error %}
-    <div style="background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #f87171; padding: 1rem; border-radius: 0.5rem; margin-bottom: 2rem;">
+    <div style="background: #fee2e2; color: #991b1b; padding: 1rem; border-radius: 6px; margin-bottom: 2rem;">
         {{ error }}
     </div>
     {% endif %}
 
-    {% if not schema_error %}
-    <!-- Headline Metrics -->
-    <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
-        <div class="metric-card" style="background: var(--surface); padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--border);">
-            <div style="color: var(--muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Total Quiz Sessions</div>
-            <div id="metric-sessions" class="metric-value" style="font-size: 2.5rem; font-weight: 700;">{{ headline.total_sessions }}</div>
+    <!-- SKELETON STATE (Visible on Load) -->
+    <div class="dashboard-skeleton">
+        <!-- Stats Skeletons -->
+        <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
         </div>
-        <div class="metric-card" style="background: var(--surface); padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--border);">
-            <div style="color: var(--muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Questions (Last 24h)</div>
-            <div id="metric-questions" class="metric-value" style="font-size: 2.5rem; font-weight: 700;">{{ headline.questions_24h }}</div>
-        </div>
-        <div class="metric-card" style="background: var(--surface); padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--border);">
-            <div style="color: var(--muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Active Users (7d)</div>
-            <div id="metric-users" class="metric-value" style="font-size: 2.5rem; font-weight: 700;">{{ headline.active_users_7d }}</div>
-        </div>
+        <!-- Table Skeleton -->
+        <div class="skeleton skeleton-table"></div>
     </div>
 
-    <!-- Topic Performance -->
-    <div style="margin-bottom: 3rem;">
-        <h2 style="font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">Topic Performance</h2>
-        <div class="table-container" style="background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden;">
-            <table style="width: 100%; border-collapse: collapse; text-align: left;">
-                <thead style="background: rgba(255,255,255,0.03);">
-                    <tr>
-                        <th style="padding: 1rem; border-bottom: 1px solid var(--border); font-weight: 600; color: var(--muted);">Topic</th>
-                        <th style="padding: 1rem; border-bottom: 1px solid var(--border); font-weight: 600; color: var(--muted);">Total Attempts</th>
-                        <th style="padding: 1rem; border-bottom: 1px solid var(--border); font-weight: 600; color: var(--muted);">Avg Accuracy</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if topic_performance %}
-                        {% for row in topic_performance %}
-                        <tr style="border-bottom: 1px solid var(--border);">
-                            <td style="padding: 1rem;">{{ row.topic }}</td>
-                            <td style="padding: 1rem;">{{ row.total_attempts }}</td>
-                            <td style="padding: 1rem;">
-                                <span style="
-                                    padding: 0.25rem 0.5rem; 
-                                    border-radius: 1rem; 
-                                    font-size: 0.85rem;
-                                    background: {% if row.avg_accuracy >= 70 %}rgba(16, 185, 129, 0.2){% elif row.avg_accuracy >= 50 %}rgba(245, 158, 11, 0.2){% else %}rgba(239, 68, 68, 0.2){% endif %};
-                                    color: {% if row.avg_accuracy >= 70 %}#34d399{% elif row.avg_accuracy >= 50 %}#fbbf24{% else %}#f87171{% endif %};
-                                ">
-                                    {{ row.avg_accuracy }}%
-                                </span>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td colspan="3" style="padding: 2rem; text-align: center; color: var(--muted);">No topic data available yet.</td>
-                        </tr>
-                    {% endif %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <!-- CONTENT STATE (Hidden until loaded) -->
+    <div class="dashboard-content loading-hidden">
+        
+        <!-- Headline Metrics -->
+        <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+            
+            <div class="metric-card" style="background: white; padding: 1.5rem; border-radius: 8px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="color: #6b7280; font-size: 0.9rem; margin-bottom: 0.5rem;">Total Sessions</div>
+                <div id="metric-sessions" class="metric-value" style="font-size: 2.5rem; font-weight: 700; color: #111;">
+                    {{ headline.total_sessions }}
+                </div>
+            </div>
 
-    <!-- Recent Activity Log -->
-    <div>
-        <h2 style="font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">Recent Activity</h2>
-        <div class="table-container" style="background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border);">
-            <table style="width: 100%; border-collapse: collapse; text-align: left; min-width: 800px;">
-                <thead style="background: rgba(255,255,255,0.03);">
-                    <tr>
-                        <th style="padding: 1rem; border-bottom: 1px solid var(--border); font-weight: 600; color: var(--muted);">Time</th>
-                        <th style="padding: 1rem; border-bottom: 1px solid var(--border); font-weight: 600; color: var(--muted);">Session</th>
-                        <th style="padding: 1rem; border-bottom: 1px solid var(--border); font-weight: 600; color: var(--muted);">Topic</th>
-                        <th style="padding: 1rem; border-bottom: 1px solid var(--border); font-weight: 600; color: var(--muted);">Action</th>
-                        <th style="padding: 1rem; border-bottom: 1px solid var(--border); font-weight: 600; color: var(--muted);">Details</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if recent_activity %}
-                        {% for log in recent_activity %}
-                        <tr style="border-bottom: 1px solid var(--border);">
-                            <td style="padding: 0.75rem 1rem; font-size: 0.9rem; color: var(--muted);">{{ log.created_at }}</td>
-                            <td style="padding: 0.75rem 1rem; font-family: monospace;">{{ log.session_id }}...</td>
-                            <td style="padding: 0.75rem 1rem;">{{ log.topic }}</td>
-                            <td style="padding: 0.75rem 1rem;">
-                                <span style="font-size: 0.85rem; padding: 0.1rem 0.4rem; border-radius: 4px; background: rgba(255,255,255,0.1);">
-                                    {{ log.exam_type|title }} #{{ log.attempt_number }}
-                                </span>
-                            </td>
-                            <td style="padding: 0.75rem 1rem; font-size: 0.9rem;">
-                                {% if log.correct %}
-                                    <span style="color: #34d399;">Correct</span>
-                                {% else %}
-                                    <span style="color: #f87171;">Incorrect</span>
-                                {% endif %}
-                                <span style="color: var(--muted); margin-left: 0.5rem;">({{ log.time_spent_seconds|round(1) }}s)</span>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td colspan="5" style="padding: 2rem; text-align: center; color: var(--muted);">No recent activity found.</td>
-                        </tr>
-                    {% endif %}
-                </tbody>
-            </table>
+            <div class="metric-card" style="background: white; padding: 1.5rem; border-radius: 8px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="color: #6b7280; font-size: 0.9rem; margin-bottom: 0.5rem;">Questions (24h)</div>
+                <div id="metric-questions" class="metric-value" style="font-size: 2.5rem; font-weight: 700; color: #111;">
+                    {{ headline.questions_24h }}
+                </div>
+            </div>
+
+            <div class="metric-card" style="background: white; padding: 1.5rem; border-radius: 8px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="color: #6b7280; font-size: 0.9rem; margin-bottom: 0.5rem;">Active Users (7d)</div>
+                <div id="metric-users" class="metric-value" style="font-size: 2.5rem; font-weight: 700; color: #111;">
+                    {{ headline.active_users_7d }}
+                </div>
+            </div>
         </div>
-    </div>
-    {% endif %}
+
+        <!-- Recent Activity Table -->
+        <div class="section-container" style="margin-bottom: 3rem;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem;">Recent Activity</h2>
+            
+            <div class="table-container" style="background: white; border-radius: 8px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead style="background: #f9fafb;">
+                        <tr>
+                            <th style="padding: 1rem; border-bottom: 1px solid #e5e7eb; font-weight: 600; color: #374151;">Time</th>
+                            <th style="padding: 1rem; border-bottom: 1px solid #e5e7eb; font-weight: 600; color: #374151;">Session</th>
+                            <th style="padding: 1rem; border-bottom: 1px solid #e5e7eb; font-weight: 600; color: #374151;">Topic</th>
+                            <th style="padding: 1rem; border-bottom: 1px solid #e5e7eb; font-weight: 600; color: #374151;">Action</th>
+                            <th style="padding: 1rem; border-bottom: 1px solid #e5e7eb; font-weight: 600; color: #374151;">Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if recent_activity %}
+                            {% for log in recent_activity %}
+                            <tr style="border-bottom: 1px solid #f3f4f6;">
+                                <td style="padding: 1rem; color: #6b7280; font-size: 0.9rem;">{{ log.created_at }}</td>
+                                <td style="padding: 1rem; font-family: monospace; color: #374151;">{{ log.session_id }}</td>
+                                <td style="padding: 1rem; color: #374151;">{{ log.topic }}</td>
+                                <td style="padding: 1rem;">
+                                    <span style="background: #eff6ff; color: #1d4ed8; padding: 2px 8px; border-radius: 12px; font-size: 0.85rem;">
+                                        {{ log.exam_type }}
+                                    </span>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    {% if log.correct %}
+                                        <span style="color: #10b981; font-weight: 500;">✓ Correct</span>
+                                    {% else %}
+                                        <span style="color: #ef4444; font-weight: 500;">✗ Incorrect</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5" style="padding: 2rem; text-align: center; color: #6b7280;">No activity recorded yet.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Topic Performance Table -->
+        <div class="section-container">
+            <h2 style="font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem;">Topic Performance</h2>
+            <div class="table-container" style="background: white; border-radius: 8px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead style="background: #f9fafb;">
+                        <tr>
+                            <th style="padding: 1rem; border-bottom: 1px solid #e5e7eb; font-weight: 600; color: #374151;">Topic</th>
+                            <th style="padding: 1rem; border-bottom: 1px solid #e5e7eb; font-weight: 600; color: #374151;">Attempts</th>
+                            <th style="padding: 1rem; border-bottom: 1px solid #e5e7eb; font-weight: 600; color: #374151;">Accuracy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if topic_performance %}
+                            {% for row in topic_performance %}
+                            <tr style="border-bottom: 1px solid #f3f4f6;">
+                                <td style="padding: 1rem; color: #374151;">{{ row.topic }}</td>
+                                <td style="padding: 1rem; color: #6b7280;">{{ row.total_attempts }}</td>
+                                <td style="padding: 1rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div style="flex-grow: 1; height: 8px; background: #e5e7eb; border-radius: 4px; width: 100px;">
+                                            <div style="height: 100%; border-radius: 4px; width: {{ row.avg_accuracy }}%; background: {% if row.avg_accuracy >= 70 %}#10b981{% elif row.avg_accuracy >= 50 %}#f59e0b{% else %}#ef4444{% endif %};"></div>
+                                        </div>
+                                        <span style="font-size: 0.9rem; color: #374151;">{{ row.avg_accuracy }}%</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="3" style="padding: 2rem; text-align: center; color: #6b7280;">No performance data available.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div> <!-- End .dashboard-content -->
 </div>
 
-<script src="{{ url_for('static', filename='polish.js') }}"></script>
+<!-- Load New Logic -->
+<script src="{{ url_for('static', filename='js/admin-fixes.js') }}"></script>
 {% endblock %}
