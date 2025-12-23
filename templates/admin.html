@@ -3,12 +3,28 @@
 {% block title %}Admin Dashboard — VCEInsider{% endblock %}
 
 {% block content %}
-<div style="padding: 2rem; max-width: 1200px; margin: 0 auto;">
-    <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="font-size: 2rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-            Admin Analytics
-        </h1>
-        <span style="color: var(--muted); font-size: 0.9rem;">Live Data</span>
+<link rel="stylesheet" href="{{ url_for('static', filename='polish.css') }}">
+
+<div class="admin-container" style="padding: 2rem; max-width: 1200px; margin: 0 auto;">
+    <div class="admin-header">
+        <div>
+            <h1 style="font-size: 2rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0;">
+                Admin Analytics
+            </h1>
+            <span style="color: var(--muted); font-size: 0.9rem;">Live Data Monitor</span>
+        </div>
+        
+        <div class="quick-actions">
+            <a href="#" id="action-refresh" class="action-btn">
+                <span class="action-icon">🔄</span> Refresh
+            </a>
+            <a href="{{ url_for('admin_export_csv', key=request.args.get('key')) }}" id="action-export" class="action-btn">
+                <span class="action-icon">⬇️</span> Export CSV
+            </a>
+            <button id="action-help" class="action-btn">
+                <span class="action-icon">❓</span> Help
+            </button>
+        </div>
     </div>
 
     {% if schema_error %}
@@ -39,25 +55,25 @@
 
     {% if not schema_error %}
     <!-- Headline Metrics -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+    <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
         <div class="metric-card" style="background: var(--surface); padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--border);">
             <div style="color: var(--muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Total Quiz Sessions</div>
-            <div style="font-size: 2.5rem; font-weight: 700;">{{ headline.total_sessions }}</div>
+            <div id="metric-sessions" class="metric-value" style="font-size: 2.5rem; font-weight: 700;">{{ headline.total_sessions }}</div>
         </div>
         <div class="metric-card" style="background: var(--surface); padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--border);">
             <div style="color: var(--muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Questions (Last 24h)</div>
-            <div style="font-size: 2.5rem; font-weight: 700;">{{ headline.questions_24h }}</div>
+            <div id="metric-questions" class="metric-value" style="font-size: 2.5rem; font-weight: 700;">{{ headline.questions_24h }}</div>
         </div>
         <div class="metric-card" style="background: var(--surface); padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--border);">
             <div style="color: var(--muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Active Users (7d)</div>
-            <div style="font-size: 2.5rem; font-weight: 700;">{{ headline.active_users_7d }}</div>
+            <div id="metric-users" class="metric-value" style="font-size: 2.5rem; font-weight: 700;">{{ headline.active_users_7d }}</div>
         </div>
     </div>
 
     <!-- Topic Performance -->
     <div style="margin-bottom: 3rem;">
         <h2 style="font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">Topic Performance</h2>
-        <div style="background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden;">
+        <div class="table-container" style="background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden;">
             <table style="width: 100%; border-collapse: collapse; text-align: left;">
                 <thead style="background: rgba(255,255,255,0.03);">
                     <tr>
@@ -98,7 +114,7 @@
     <!-- Recent Activity Log -->
     <div>
         <h2 style="font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">Recent Activity</h2>
-        <div style="background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); overflow-x: auto;">
+        <div class="table-container" style="background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border);">
             <table style="width: 100%; border-collapse: collapse; text-align: left; min-width: 800px;">
                 <thead style="background: rgba(255,255,255,0.03);">
                     <tr>
@@ -142,4 +158,6 @@
     </div>
     {% endif %}
 </div>
+
+<script src="{{ url_for('static', filename='polish.js') }}"></script>
 {% endblock %}
