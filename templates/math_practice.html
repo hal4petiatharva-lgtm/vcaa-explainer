@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/handwriting.css') }}">
+<script src="https://webcomponents.myscript.com/myscript-math-web.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="practice-wrap">
+  <div class="practice-header">
+    <h1>Handwriting Practice</h1>
+    <div class="subline">Topic: {{ topic }}</div>
+  </div>
+  <div class="question-card">
+    <div class="question-text">{{ question.text|safe }}</div>
+  </div>
+  <div class="handwriting-area">
+    <myscript-math-web id="math-canvas" width="800" height="400"></myscript-math-web>
+    <div id="fallback-area" class="fallback-area" style="display:none;">
+      <textarea id="fallback-input" placeholder="Enter LaTeX here"></textarea>
+    </div>
+    <div class="preview-panel">
+      <div id="latex-preview"></div>
+      <div id="confidence-msg"></div>
+    </div>
+  </div>
+  <div class="actions">
+    <button id="btn-analyze" class="primary">Analyze</button>
+    <a class="secondary" href="{{ url_for('replay_strokes', session_id=session_id) }}">Replay</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  window.PRACTICE_SESSION_ID = "{{ session_id }}";
+  window.PRACTICE_QUESTION_ID = "{{ question.id }}";
+</script>
+<script src="{{ url_for('static', filename='js/myscript.js') }}"></script>
+{% endblock %}
