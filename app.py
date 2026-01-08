@@ -52,6 +52,26 @@ def init_db():
             question_text TEXT
         )
     ''')
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS handwriting_attempts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            session_id TEXT NOT NULL,
+            question_id TEXT NOT NULL,
+            strokes_json TEXT NOT NULL,
+            myscript_latex TEXT,
+            confidence REAL,
+            ai_feedback TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS stroke_replays (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            session_id TEXT UNIQUE,
+            compressed_strokes TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
     conn.commit()
     conn.close()
 
@@ -2604,3 +2624,116 @@ if __name__ == "__main__":
     env_port = os.getenv("PORT")
     port = int(env_port) if env_port else _find_available_port()
     app.run(host="0.0.0.0", port=port, debug=os.getenv("FLASK_ENV") == "development")
+@app.route('/practice/math/<topic>')
+def math_practice(topic):
+    q = next((x for x in CURATED_QUESTION_BANK if str(x.get('topic','')).lower() == str(topic).lower()), None)
+    if not q:
+        q = random.choice(CURATED_QUESTION_BANK) if CURATED_QUESTION_BANK else None
+    return render_template('math_practice.html', question=q, topic=topic, session_id=session.get('session_id'))
+@app.route('/api/myscript', methods=['POST'])
+def myscript_webhook():
+    try:
+        data = request.get_json(silent=True) or {}
+        latex = (data.get('latex') or '').strip()
+        confidence = float(data.get('confidence') or 0.0)
+        strokes = data.get('strokes') or []
+        sid = data.get('session_id') or session.get('session_id') or 'unknown'
+        qid = str(data.get('question_id') or '')
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute('''
+            INSERT INTO handwriting_attempts (session_id, question_id, strokes_json, myscript_latex, confidence)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (sid, qid, json.dumps(strokes), latex, confidence))
+        try:
+            import zlib, base64
+            payload = base64.b64encode(zlib.compress(json.dumps(strokes).encode('utf-8'))).decode('utf-8')
+            cur.execute('''
+                INSERT INTO stroke_replays (session_id, compressed_strokes)
+                VALUES (?, ?)
+                ON CONFLICT(session_id) DO UPDATE SET compressed_strokes=excluded.compressed_strokes, created_at=CURRENT_TIMESTAMP
+            ''', (sid, payload))
+        except Exception:
+            pass
+        conn.commit()
+        conn.close()
+        return jsonify({"status":"ok"})
+    except Exception as e:
+        return jsonify({"error":str(e)}), 500
+@app.route('/practice/analyze', methods=['POST'])
+def analyze_solution():
+    try:
+        data = request.get_json(silent=True) or {}
+        sid = data.get('session_id') or session.get('session_id')
+        final_latex = (data.get('final_latex') or '').strip()
+        qid = str(data.get('question_id') or '')
+        conn = get_db()
+        cur = conn.cursor()
+        row = None
+        if qid:
+            row = cur.execute("SELECT question_id, myscript_latex FROM handwriting_attempts WHERE session_id=? AND question_id=? ORDER BY created_at DESC LIMIT 1", (sid, qid)).fetchone()
+        if not row:
+            row = cur.execute("SELECT question_id, myscript_latex FROM handwriting_attempts WHERE session_id=? ORDER BY created_at DESC LIMIT 1", (sid,)).fetchone()
+        conn.close()
+        qobj = None
+        if row:
+            qobj = next((x for x in CURATED_QUESTION_BANK if str(x.get('id')) == str(row['question_id'])), None)
+        if not qobj and qid:
+            qobj = next((x for x in CURATED_QUESTION_BANK if str(x.get('id')) == str(qid)), None)
+        rubric = (qobj.get('rubric') if qobj else "") or ""
+        correct_ans = (qobj.get('correct_answer') if qobj else "") or ""
+        feedback = ""
+        mark = 0
+        correct = False
+        if client and GROQ_API_KEY:
+            prompt = f"Question: {qobj.get('text') if qobj else ''}\nRubric: {rubric}\nStudent Latex: {final_latex}\nCompare student latex to correct answer and rubric. Give brief feedback and mark out of {qobj.get('marks',1) if qobj else 1}. State whether correct."
+            try:
+                chat = client.chat.completions.create(
+                    messages=[{"role":"user","content":prompt}],
+                    model=GROQ_MODEL,
+                    temperature=0.2,
+                    max_tokens=300
+                )
+                text = (chat.choices[0].message.content or "").strip()
+                feedback = text
+            except Exception:
+                pass
+        if not feedback:
+            a = re.sub(r"\s+","",final_latex or "")
+            b = re.sub(r"\s+","",correct_ans or "")
+            correct = a == b
+            mark = (qobj.get('marks',1) if qobj else 1) if correct else 0
+            feedback = "Correct" if correct else "Incorrect"
+        try:
+            conn = get_db()
+            cur = conn.cursor()
+            cur.execute("UPDATE handwriting_attempts SET ai_feedback=? WHERE session_id=? AND question_id=? ORDER BY created_at DESC", (feedback, sid, qobj.get('id') if qobj else qid))
+            conn.commit()
+            conn.close()
+        except Exception:
+            pass
+        return jsonify({"feedback":feedback,"mark":mark,"correct":correct})
+    except Exception as e:
+        return jsonify({"error":str(e)}), 500
+@app.route('/practice/replay/<session_id>')
+def replay_strokes(session_id):
+    try:
+        conn = get_db()
+        cur = conn.cursor()
+        rep = cur.execute("SELECT compressed_strokes FROM stroke_replays WHERE session_id=?", (session_id,)).fetchone()
+        strokes = "[]"
+        if rep and rep['compressed_strokes']:
+            try:
+                import zlib, base64
+                data = zlib.decompress(base64.b64decode(rep['compressed_strokes'].encode('utf-8'))).decode('utf-8')
+                strokes = data
+            except Exception:
+                pass
+        else:
+            row = cur.execute("SELECT strokes_json FROM handwriting_attempts WHERE session_id=? ORDER BY created_at DESC LIMIT 1", (session_id,)).fetchone()
+            if row and row['strokes_json']:
+                strokes = row['strokes_json']
+        conn.close()
+        return render_template('stroke_replay.html', session_id=session_id, strokes_json=strokes)
+    except Exception as e:
+        return f"{e}", 500
