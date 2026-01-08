@@ -1,5 +1,11 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for, g
 import sqlite3
+
+# ===== VCAADECODE HANDWRITING SYSTEM UPDATE ===== 
+# TIMESTAMP: 2025-12-23_15:00:00_UTC 
+# UPDATE_ID: HW_QUIZ_78901 
+# PURPOSE: Add /math-quiz route for handwriting practice 
+# ================================================ 
 import os
 import random
 import uuid
@@ -346,6 +352,24 @@ def debug_quiz_routes():
     return "<br>".join(routes) if routes else "No quiz routes found"
 
 # ===== END MATH QUIZ SYSTEM =====
+
+@app.route('/debug-quiz-status')
+def debug_quiz_status():
+    """Debug endpoint to verify /math-quiz route exists"""
+    import os
+    routes = []
+    for rule in app.url_map.iter_rules():
+        if 'quiz' in str(rule) or 'math' in str(rule):
+            routes.append(f"{rule.endpoint}: {rule.rule}")
+    
+    return f"""
+    <h1>Quiz System Status</h1>
+    <p>Routes found: {len(routes)}</p>
+    <ul>
+        {"".join(f'<li>{r}</li>' for r in routes)}
+    </ul>
+    <p>Template exists: {os.path.exists('templates/math_quiz.html')}</p>
+    """
 
 if __name__ == '__main__':
     init_db()
