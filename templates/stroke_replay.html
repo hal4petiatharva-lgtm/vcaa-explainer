@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/handwriting.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="practice-wrap">
+  <div class="practice-header">
+    <h1>Stroke Replay</h1>
+    <div class="subline">Session: {{ session_id }}</div>
+  </div>
+  <div class="replay-panel">
+    <canvas id="replayCanvas" width="800" height="400"></canvas>
+    <div class="replay-controls">
+      <select id="replaySpeed">
+        <option value="0.5">0.5x</option>
+        <option value="1" selected>1x</option>
+        <option value="2">2x</option>
+      </select>
+      <button id="btnPlay">Play</button>
+      <button id="btnPause">Pause</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  window.STROKES = {{ strokes_json|tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/replayer.js') }}"></script>
+{% endblock %}
