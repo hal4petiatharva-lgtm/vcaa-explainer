@@ -1807,6 +1807,7 @@ def methods_exit():
 
 @app.route("/methods-practice", methods=["GET", "POST"])
 def methods_practice():
+    return redirect(url_for('math_practice', topic='calculus'))
     # Ensure session is configured
     if not session.get('methods_exam_type'):
         return redirect(url_for('methods_setup'))
