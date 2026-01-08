@@ -134,8 +134,12 @@ def my_progress():
 
 @app.route('/math-quiz')
 def math_quiz():
-    """Main entry point for Mathematical Methods handwriting quiz"""
+    """Main Math Methods handwriting quiz"""
     return render_template('math_quiz.html')
+
+@app.route('/test-route')
+def test_route():
+    return "Flask is running"
 
 @app.route('/api/quiz/start', methods=['POST'])
 def start_quiz():
