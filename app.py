@@ -15,6 +15,7 @@ import json
 import hashlib
 import sqlite3
 import uuid
+from datetime import datetime
 from flask import g, make_response
 
 # Global Database Path
@@ -72,6 +73,36 @@ def init_db():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
+
+    # --- New Math Quiz Tables ---
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS math_quiz_sessions (
+            session_id TEXT PRIMARY KEY,
+            topic TEXT,
+            exam_type TEXT,
+            is_timed BOOLEAN,
+            total_questions INTEGER,
+            current_question INTEGER DEFAULT 1,
+            time_started TIMESTAMP,
+            time_ended TIMESTAMP
+        )
+    ''')
+
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS quiz_attempts (
+            attempt_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            session_id TEXT,
+            question_id TEXT,
+            strokes_json TEXT,
+            myscript_latex TEXT,
+            confidence_score REAL,
+            ai_feedback TEXT,
+            marks_awarded INTEGER,
+            time_spent_seconds INTEGER,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
     conn.commit()
     conn.close()
 
