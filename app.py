@@ -2620,6 +2620,91 @@ def api_trigger_toast(message):
         "timestamp": time.time()
     })
 
+@app.route('/debug-handwriting')
+def debug_handwriting():
+    import os, sys, traceback
+    from datetime import datetime
+    
+    info = ["=== HANDWRITING DEBUG ==="]
+    
+    # 1. Check templates
+    info.append("\n=== TEMPLATES ===")
+    templates = ['math_practice.html', 'stroke_replay.html']
+    for t in templates:
+        path = f'templates/{t}'
+        exists = os.path.exists(path)
+        info.append(f"{'✅' if exists else '❌'} {t}: {exists}")
+        if exists:
+            size = os.path.getsize(path)
+            info.append(f"    Size: {size}b, Has 'myscript': {'yes' if size>0 else 'no'}")
+    
+    # 2. Check routes
+    info.append("\n=== ROUTES ===")
+    try:
+        practice_routes = []
+        for rule in app.url_map.iter_rules():
+            r = str(rule)
+            if 'practice' in r or 'myscript' in r or 'replay' in r:
+                practice_routes.append(r)
+        
+        if practice_routes:
+            info.append("✅ Found:")
+            for r in sorted(practice_routes):
+                info.append(f"    - {r}")
+        else:
+            info.append("❌ NO PRACTICE ROUTES REGISTERED")
+    except Exception as e:
+        info.append(f"❌ Error: {str(e)}")
+    
+    # 3. Check functions exist
+    info.append("\n=== FUNCTIONS ===")
+    funcs = ['math_practice', 'myscript_webhook', 'analyze_solution', 'replay_strokes']
+    for f in funcs:
+        info.append(f"{'✅' if f in globals() else '❌'} {f}()")
+    
+    # 4. Check database
+    info.append("\n=== DATABASE ===")
+    try:
+        import sqlite3
+        db_path = '/opt/render/project/src/vce_progress.db'
+        info.append(f"Path: {db_path}")
+        info.append(f"Exists: {os.path.exists(db_path)}")
+        
+        if os.path.exists(db_path):
+            conn = sqlite3.connect(db_path)
+            c = conn.cursor()
+            c.execute("SELECT name FROM sqlite_master WHERE type='table';")
+            tables = [t[0] for t in c.fetchall()]
+            
+            for tbl in ['handwriting_attempts', 'stroke_replays']:
+                info.append(f"{'✅' if tbl in tables else '❌'} {tbl}")
+            conn.close()
+    except Exception as e:
+        info.append(f"❌ DB error: {str(e)}")
+    
+    # 5. Check app.py structure
+    info.append("\n=== APP.PY ===")
+    try:
+        with open('app.py', 'r') as f:
+            lines = f.readlines()
+        
+        route_lines = []
+        for i, line in enumerate(lines, 1):
+            if '@app.route' in line and ('practice' in line or 'myscript' in line):
+                route_lines.append(f"Line {i}: {line.strip()}")
+        
+        if route_lines:
+            info.append("Routes found:")
+            for rl in route_lines[:5]:
+                info.append(f"    {rl}")
+        else:
+            info.append("❌ No practice routes in source")
+            
+    except Exception as e:
+        info.append(f"Error: {str(e)}")
+    
+    return "<pre>" + "\n".join(info) + "</pre>"
+
 if __name__ == "__main__":
     env_port = os.getenv("PORT")
     port = int(env_port) if env_port else _find_available_port()
