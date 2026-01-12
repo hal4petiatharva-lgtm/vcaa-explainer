@@ -1,4 +1,8 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for, g
+app = Flask(__name__)
+app.secret_key = 'dev'
+DATABASE = 'vce_progress.db'
+
 import sqlite3
 
 # ===== VCAADECODE HANDWRITING SYSTEM UPDATE ===== 
@@ -12,9 +16,9 @@ import uuid
 import json
 import time
 
-app = Flask(__name__)
-app.secret_key = 'dev'
-DATABASE = 'vce_progress.db'
+@app.route('/test-fix')
+def test_fix():
+    return "Flask app is now correctly initialized"
 
 # --- Database Helpers ---
 def get_db():
